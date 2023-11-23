@@ -43,7 +43,6 @@ class StudentProfileController extends Controller
     public function index(Request $request)
 
     {
-
         // Filter
         $campus = $this->campus;
 

@@ -322,7 +322,7 @@
 
           $.ajax({
             type: "POST",
-            url: "{{ url('getBatch') }}",
+            url: "{{ url('admin/getBatch') }}",
             data: {
               id: courseId
             },
@@ -348,7 +348,7 @@
           if (batchId > 0 && batchId != null) {
             $.ajax({
               type: "POST",
-              url: "{{ url('getAcademicYear') }}",
+              url: "{{ url('admin.getAcademicYear') }}",
               data: {
                 id: batchId
               },
@@ -378,7 +378,7 @@
           var studentId = $(this).data('id');
 
 
-          $.get("{{ route('student_profile.index') }}" + '/' + studentId + '/edit', function(data) {
+          $.get("{{ route('admin.student_profile.index') }}" + '/' + studentId + '/edit', function(data) {
 
 
             var roll_no = data.enrollment_number.split("/")[0]
@@ -482,7 +482,7 @@
       function fetchDataToTable() {
         $.ajax({
           type: "GET",
-          url: "{{ route('student_profile.create') }}",
+          url: "{{ route('admin.student_profile.create') }}",
           data: $("#searchForm").serialize(),
           async: false,
           beforeSend: function(xhr) {

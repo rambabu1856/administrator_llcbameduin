@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Select;
+namespace App\Http\Controllers\Admin\Select;
 
 use App\Http\Controllers\Controller;
 use App\Models\Select\AcademicYear;

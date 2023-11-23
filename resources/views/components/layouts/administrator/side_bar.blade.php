@@ -36,7 +36,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ url('/student_profile') }}" class="nav-link active">
+                <a href="{{ url('admin/student_profile') }}" class="nav-link active">
                   <i class="fa-solid fa-users-rays nav-icon"></i>
                   <p>Student Profile</p>
                 </a>
