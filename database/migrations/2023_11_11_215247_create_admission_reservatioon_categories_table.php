@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('reservatioon_categories', function (Blueprint $table) {
+        Schema::create('admission_reservatioon_categories', function (Blueprint $table) {
             $table->id();
             $table->string('title', 150);
             $table->timestamps();
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reservatioon_categories');
+        Schema::dropIfExists('admission_reservatioon_categories');
     }
 };

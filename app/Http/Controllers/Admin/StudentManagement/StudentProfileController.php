@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Select\Campus;
 use App\Models\Select\Course;
 use App\Models\Select\Gender;
+use App\Models\Select\IsActive;
 use App\Models\Select\Religion;
 use App\Models\Select\Community;
 use App\Models\Select\BloodGroup;
@@ -16,9 +17,7 @@ use App\Models\Select\Nationality;
 use App\Models\Select\AcademicYear;
 use App\Models\Select\MotherTongue;
 use App\Http\Controllers\Controller;
-use App\Models\Select\IsActive;
 use App\Models\StudentManagement\Student;
-
 
 class StudentProfileController extends Controller
 {
@@ -100,41 +99,36 @@ class StudentProfileController extends Controller
     public function create(Request $request)
     {
 
-        if ($request->cmbBatch && $request->cmbCourse) {
+        $studentProfileData = Student::with('campus')
+            ->with('department')
+            ->with('course')
+            ->with('batch')
+            ->with('gender')
+            ->with('community')
+            ->with('religion')
+            ->with('bloodGroup')
+            ->with('motherTongue')
+            ->with('nationality')
+            ->with(array('admissionRegisters' => function ($query) {
+                $query
+                    ->with('academicYear.year')
+                    ->with('grade')
+                    ->orderBy('grade_id', 'ASC');
+            }));
 
-            $studentProfileData = Student::with('campus')
-                ->with('department')
-                ->with('course')
-                ->with('batch')
-                ->with('gender')
-                ->with('community')
-                ->with('religion')
-                ->with('bloodGroup')
-                ->with('motherTongue')
-                ->with('nationality')
-                ->with(array('admissionRegisters' => function ($query) {
-                    $query
-                        ->with('academicYear.year')
-                        ->with('grade')
-                        ->orderBy('grade_id', 'ASC');
-                }));
-
-            if ($request->cmbBatch) {
-                $studentProfileData =  $studentProfileData->where('batch_id', $request->cmbBatch);
-            }
-
-            if ($request->cmbGender) {
-                $studentProfileData =  $studentProfileData->where('gender_id', $request->cmbGender);
-            }
-
-            if ($request->cmbCommunity) {
-                $studentProfileData =  $studentProfileData->where('community_id', $request->cmbCommunity);
-            }
-
-            $studentProfileData =  $studentProfileData->orderBy('enrollment_number')->take(5)->get();
-        } else {
-            $studentProfileData = [];
+        if ($request->cmbBatch) {
+            $studentProfileData =  $studentProfileData->where('batch_id', $request->cmbBatch);
         }
+
+        if ($request->cmbGender) {
+            $studentProfileData =  $studentProfileData->where('gender_id', $request->cmbGender);
+        }
+
+        if ($request->cmbCommunity) {
+            $studentProfileData =  $studentProfileData->where('community_id', $request->cmbCommunity);
+        }
+
+        $studentProfileData =  $studentProfileData->orderBy('enrollment_number')->take(5)->get();
 
         return $studentProfileData;
     }

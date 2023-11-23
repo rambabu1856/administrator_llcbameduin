@@ -339,47 +339,16 @@
 
         });
 
-        // BATCH CHANGE
-        $(document).on("change", "#cmbBatch", function() {
-
-          $("#tblStudentProfile tbody").empty();
-          batchId = $('option:selected', this).val();
-
-          if (batchId > 0 && batchId != null) {
-            $.ajax({
-              type: "POST",
-              url: "{{ url('admin.getAcademicYear') }}",
-              data: {
-                id: batchId
-              },
-              beforeSend: function() {
-                $('#cmbAcademicYear').empty().trigger("change");
-              },
-              success: function(response) {
-                $.each(response, function(i, v) {
-                  $('#cmbAcademicYear').append('<option value=' + v.id + '>' + v.slug + '</option>');
-                });
-                fetchDataToTable();
-              }
-            });
-          }
-
-
-        });
-
         $('#btnSearch').on('click', function(e) {
           //   e.preventDefault();
           fetchDataToTable();
         });
 
-
         $(document).on("click", ".btnEditProfile", function(e) {
           //   e.preventDefault();
           var studentId = $(this).data('id');
 
-
           $.get("{{ route('admin.student_profile.index') }}" + '/' + studentId + '/edit', function(data) {
-
 
             var roll_no = data.enrollment_number.split("/")[0]
             var admission_year = data.enrollment_number.split("/")[1]
@@ -392,9 +361,7 @@
               var examRollYear = data.examination_roll_number_year
             }
 
-
             $("#modalEditProfileTitle").html(data.student_name + "  ( " + data.enrollment_number + " )")
-
 
             $("#txtModalStudentId").val(data.id)
             $("#txtmodalImageUrl").val(data.image_url)
@@ -402,7 +369,6 @@
             var url = "{{ asset('storage/media/student_images') }}" + "/" + data
               .image_url +
               "?timestamp=" + new Date().getTime();
-
 
             if (data.image_url) {
               $('#preview').attr('src', url);
@@ -455,7 +421,6 @@
             $("#txtModalPermanentState").val(data.local_state)
             $("#txtModalPermanentPin").val(data.local_state)
 
-
             $("#tblModalAdmissionDetails tbody").empty();
 
             $.each(data.admission_register, function(i, v) {
@@ -471,7 +436,6 @@
             });
 
             $("#tblModalExaminationDetails tbody").empty();
-
 
             $("#modalEditProfile").modal('show');
           })

@@ -6,7 +6,6 @@ use App\Models\Select\Batch;
 use App\Models\Select\Course;
 use App\Models\Select\Gender;
 use App\Models\Select\Religion;
-use App\Models\Select\YnOption;
 use App\Models\Select\Community;
 use App\Models\Select\BloodGroup;
 use App\Models\Select\Nationality;

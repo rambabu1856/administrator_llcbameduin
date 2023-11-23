@@ -9,6 +9,7 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <title>{{ config('app.name', 'LLC-BAM') }}</title>
+  
   <link rel="shortcut icon" href="{{ asset('images/logo.jpg') }}" type="image/x-icon">
 
   <link rel="stylesheet" type='text/css' href="{{ asset('admin_assets/plugins/fontawesome-6/css/all.min.css') }}">
