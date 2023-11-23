@@ -19,7 +19,7 @@
       <div class="container-fluid">
 
         {{-- SEARCH FORM --}}
-        <x-card.card-heading heading="Filter">
+        <x-card.card-heading heading="Filter" name="headingSearchForm">
 
           <x-form.form action="" method="POST" name="searchForm">
 
@@ -41,6 +41,8 @@
 
                 <x-form.select2 grid="col-md-2" lblClass="" lblText="Select Gender" name="cmbGender"
                   :options="$gender"></x-form.select2>
+
+
 
                 <x-form.select2 grid="col-md-2" lblClass="" lblText="Select Community" name="cmbCommunity"
                   :options="$community">
@@ -197,8 +199,9 @@
               data: {
                 batchId: batchId
               },
-
               success: function(response) {
+                $('#cmbAcademicYear').empty();
+                $('#cmbGrade').empty();
                 $.each(response, function(i, v) {
                   $('#cmbAcademicYear').append('<option value=' + v.id + '>' + v.year.title +
                     '</option>');
@@ -254,9 +257,12 @@
             toastr.error("Please Select Batch")
           } else if ($("#cmbAcademicYear").val() == null) {
             toastr.error("Please Select Academic Year")
+          } else if ($("#cmbGrade").val() == null) {
+            toastr.error("Please Select Class")
           } else {
             fetchDataToTable();
           }
+
         });
 
 
@@ -295,7 +301,7 @@
 
             $("#tblModalAdmissionDetails tbody").empty();
 
-            $.each(data.admission_register, function(i, v) {
+            $.each(data.admission_registers, function(i, v) {
               $("#tblModalAdmissionDetails tbody").append('<tr>' +
                 '<td>' + v.enrollment_no + '</td>' +
                 '<td>' + v.roll_no + '</td>' +
@@ -325,8 +331,7 @@
             var sl_no = 0;
             console.log(response)
             $.each(response, function(i, v) {
-
-              $.each(v.admission_register, function(i, row) {
+              $.each(v.admission_registers, function(i, row) {
 
                 if (v.registration_number === null) {
                   var registration_number = ''

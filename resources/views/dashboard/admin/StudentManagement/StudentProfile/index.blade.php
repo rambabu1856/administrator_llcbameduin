@@ -18,7 +18,7 @@
       <div class="container-fluid">
 
         {{-- SEARCH FORM --}}
-        <x-card.card-heading heading="Filter">
+        <x-card.card-heading heading="Filter" name="headingSearchForm">
 
           <x-form.form action="" method="POST" name="searchForm">
 
@@ -457,6 +457,8 @@
 
             $.each(response, function(i, v) {
 
+              sl_no = sl_no + 1;
+
               if (v.registration_number === null) {
                 var registration_number = ''
               } else {
@@ -502,6 +504,8 @@
               )
             });
             $('[data-toggle="tooltip"]').tooltip();
+            $("#headingSearchForm").html('Total Record(s): ' + sl_no);
+
           },
           error: function(xhr, status, error) {
             toastr.info(status);
@@ -512,7 +516,7 @@
         });
       }
 
-            $(".resetForm").click(function(e) {
+      $(".resetForm").click(function(e) {
         $("form select").val(null).trigger("change");
         $('form').trigger("reset");
       })

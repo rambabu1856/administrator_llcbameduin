@@ -131,7 +131,7 @@ class StudentProfileController extends Controller
             $studentProfileData = $studentProfileData->where('community_id', $request->cmbCommunity);
         }
 
-        $studentProfileData = $studentProfileData->orderBy('enrollment_number')->take(5)->get();
+        $studentProfileData = $studentProfileData->orderBy('enrollment_number')->get();
 
         return $studentProfileData;
     }
