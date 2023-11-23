@@ -48,7 +48,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ url('/student_promotion') }}" class="nav-link">
+                <a href="{{ url('admin/student_promotion') }}" class="nav-link">
                   <i class="fa-regular fa-share-from-square nav-icon"></i>
                   <p>Student Promotion</p>
                 </a>

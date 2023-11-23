@@ -329,9 +329,11 @@
           },
           success: function(response) {
             var sl_no = 0;
-            console.log(response)
+
             $.each(response, function(i, v) {
               $.each(v.admission_registers, function(i, row) {
+
+                sl_no = sl_no + 1;
 
                 if (v.registration_number === null) {
                   var registration_number = ''
@@ -381,6 +383,7 @@
               })
             });
             $('[data-toggle="tooltip"]').tooltip();
+            $("#headingSearchForm").html('Total Record(s): ' + sl_no);
           },
           error: function(xhr, status, error) {
             toastr.info(status);

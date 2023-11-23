@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\Select\SelectBox;
 use App\Http\Controllers\Admin\StudentManagement\StudentProfileController;
+use App\Http\Controllers\Admin\StudentManagement\StudentPromotionController;
 use App\Http\Controllers\Admin\StudentManagement\AdmissionRegisterController;
 
 

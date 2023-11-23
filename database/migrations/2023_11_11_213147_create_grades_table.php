@@ -16,15 +16,16 @@ return new class extends Migration
     {
         Schema::create('grades', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('department_id')->default(1)->constrained('departments')->onUpdate('cascade');
             $table->string('title', 50);
             $table->string('slug', 50);
             $table->timestamps();
         });
 
         DB::table('grades')->insert([
-            ['id' => 1, 'title' => 'Pre Law/1st Year',  'slug' => 'P'],
-            ['id' => 2, 'title' => 'Pre Law/2nd Year',  'slug' => 'I'],
-            ['id' => 3, 'title' => 'Final Law/3rd Year',  'slug' => 'F'],
+            ['id' => 1, 'department_id' => 1, 'title' => 'Pre Law/1st Year',  'slug' => 'P'],
+            ['id' => 2, 'department_id' => 1, 'title' => 'Inter Law/2nd Year',  'slug' => 'I'],
+            ['id' => 3, 'department_id' => 1, 'title' => 'Final Law/3rd Year',  'slug' => 'F'],
         ]);
     }
 

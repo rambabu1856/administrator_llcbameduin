@@ -19,7 +19,7 @@
       <div class="container-fluid">
 
         {{-- SEARCH FORM --}}
-        <x-card.card-heading heading="Filter">
+        <x-card.card-heading heading="Filter" name="headingSearchForm">
 
           <x-form.form action="" method="POST" name="searchForm">
 
@@ -147,74 +147,61 @@
 
       $(document).ready(function() {
 
+
         // COURSE CHANGE
         $(document).on("change", "#cmbCourse", function() {
 
           courseId = $('option:selected', this).val();
 
-          if (courseId > 0) {
-
-            $("#tblStudentAdmissionRegister tbody").empty();
-
-            $.ajax({
-              type: "POST",
-              url: "{{ url('getBatch') }}",
-              data: {
-                id: courseId
-              },
-              beforeSend: function() {
-                $('#cmbBatch').empty().trigger("change");
-              },
-              success: function(response) {
-                $.each(response, function(i, v) {
-                  $('#cmbBatch').append('<option value=' + v.id + '>' + v.title + '</option>');
-                });
-                $('#cmbBatch').val(null).trigger('change');
-              }
-            });
-
-          }
-
+          $.ajax({
+            type: "POST",
+            url: "{{ url('admin/getBatch') }}",
+            data: {
+              id: courseId
+            },
+            beforeSend: function() {
+              $('#cmbBatch').empty().trigger("change");
+            },
+            success: function(response) {
+              $.each(response, function(i, v) {
+                $('#cmbBatch').append('<option value=' + v.id + '>' + v.title + '</option>');
+              });
+              $('#cmbBatch').val(null).trigger('change');
+            }
+          });
 
         });
 
         // BATCH CHANGE
         $(document).on("change", "#cmbBatch", function() {
+
+          $("#tblStudentAdmissionRegister tbody").empty();
           batchId = $('option:selected', this).val();
 
-          if (batchId > 0) {
-
-            $("#tblStudentAdmissionRegister tbody").empty();
-
+          if (batchId > 0 && batchId != null) {
             $.ajax({
               type: "POST",
-              url: "{{ url('getAcademicYear') }}",
+              url: "{{ url('admin/getAcademicYear') }}",
               data: {
                 batchId: batchId
               },
-              beforeSend: function() {
-                $('#cmbAcademicYear').empty().trigger("change");
-              },
               success: function(response) {
-
-
+                $('#cmbAcademicYear').empty();
+                $('#cmbGrade').empty();
                 $.each(response, function(i, v) {
-
                   $('#cmbAcademicYear').append('<option value=' + v.id + '>' + v.year.title +
                     '</option>');
-
-
                 });
                 $('#cmbAcademicYear').val(null).trigger('change');
               }
             });
-
           }
-
         });
 
         // ACADEMIC YEAR CHANGE
-        $(document).on("change", "#cmbAcademicYear", function() {
+        $(document).on("change", "#cmbAcademicYear", function(e) {
+          e.preventDefault();
+          $("#tblStudentAdmissionRegister tbody").empty();
 
           academicYearId = $('option:selected', this).val();
 
@@ -224,7 +211,7 @@
 
             $.ajax({
               type: "POST",
-              url: "{{ url('getAcademicYearGrade') }}",
+              url: "{{ url('admin/getAcademicYearGrade') }}",
               data: {
                 batchId: batchId,
                 academicYearId: academicYearId
@@ -243,10 +230,10 @@
                 $('#cmbGrade').val(null).trigger('change');
               }
             });
-
           }
 
         });
+
 
         $('#btnSearch').on('click', function(e) {
 
@@ -271,7 +258,7 @@
           var studentId = $(this).data('id');
 
 
-          $.get("{{ route('student_profile.index') }}" + '/' + studentId + '/edit', function(data) {
+          $.get("{{ route('admin.student_profile.index') }}" + '/' + studentId + '/edit', function(data) {
 
             var roll_no = data.enrollment_number.split("/")[0]
 
@@ -321,7 +308,7 @@
       function fetchDataToTable() {
         $.ajax({
           type: "GET",
-          url: "{{ route('student_promotion.create') }}",
+          url: "{{ route('admin.student_promotion.create') }}",
           data: $("#searchForm").serialize(),
           async: false,
           beforeSend: function(xhr) {
@@ -331,11 +318,11 @@
 
             var sl_no = 0;
 
-            console.log(response)
-
             $.each(response, function(i, v) {
 
               $.each(v.admission_registers, function(i, row) {
+
+                sl_no = sl_no + 1;
 
                 if (v.registration_number === null) {
                   var registration_number = ''
@@ -385,6 +372,7 @@
               })
             });
             $('[data-toggle="tooltip"]').tooltip();
+            $("#headingSearchForm").html('Total Record(s): ' + sl_no);
           },
           error: function(xhr, status, error) {
             toastr.info(status);
