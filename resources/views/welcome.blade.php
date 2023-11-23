@@ -407,7 +407,7 @@
         @auth
           <a href="{{ url('/home') }}" class="text-sm text-gray-700 underline">Home</a>
         @else
-          <a href="{{ route('admin.login') }}" class="text-sm text-gray-700 underline">admin Log in</a>
+          <a type="button" href="{{ route('admin.login') }}" class="btn btn-primary">admin Log in</a>
           <a href="{{ route('user.login') }}" class="text-sm text-gray-700 underline">User Log in</a>
 
           @if (Route::has('user.register'))
