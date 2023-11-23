@@ -19,15 +19,13 @@
 <body class="hold-transition responsive text-sm" style="background-image:url({{ url('images/paisley.webp') }});">
   {{-- height: 100%;   background-position: center; background-repeat: no-repeat; background-size: cover; background-image:url({{ url('images/bg1.jpeg') }}); --}}
 
-
-
   <!-- <div id="overlay" class="text-warning">
         <img src="{{ asset('web_images/loading.gif') }}" class="img-fluid rounded-circle" alt="Responsive image" width="50px">
     </div> -->
   <div class="col-md-4 col-lg-4 offset-md-4">
     <div class="login-logo">
-      <img src="{{ asset('storage/media/web_images/logo.jpg') }}" class="img-fluid img-circle no-border" alt="Responsive image"
-        width="120px">
+      <img src="{{ asset('storage/media/web_images/logo.jpg') }}" class="img-fluid img-circle no-border"
+        alt="Responsive image" width="120px">
       <br>
       {{-- <a href="javascript:;" class="h5 m-0 p-0"><b>LLC-BAM</b></a> --}}
     </div>
@@ -42,13 +40,13 @@
       {{-- @if (Session::get('error'))
         <div class="alert alert-danger text-center">{{ Session::get('error') }}</div>
       @endif --}}
-      <form method="POST" action="{{ route('admin.auth') }}" autocomplete="off">
+      <form method="POST" action="{{ route('admin.check') }}" autocomplete="off">
         <div class="card-body">
           @csrf
           <div class="form-group">
             <label for="email">{{ __('E-Mail Address') }}</label>
-            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email"
-              value="{{ old('email') }}" required autocomplete="email">
+            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
+              name="email" value="{{ old('email') }}" required autocomplete="email">
             <span class="text-fuchsia">
               @error('email')
                 {{ $message }}
@@ -57,8 +55,8 @@
           </div>
           <div class="form-group">
             <label for="password">{{ __('Password') }}</label>
-            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required
-              autocomplete="current-password">
+            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror"
+              name="password" required autocomplete="current-password">
             <span class="text-fuchsia">
               @error('password')
                 {{ $message }}
@@ -100,7 +98,8 @@
         </div>
 
         <div class="card-footer bg-cyan">
-          <button type="submit" class="btn elevation-5 bg-pink float-right"><i class="fa-solid fa-arrow-right-to-bracket mr-2"></i>
+          <button type="submit" class="btn elevation-5 bg-pink float-right"><i
+              class="fa-solid fa-arrow-right-to-bracket mr-2"></i>
             {{ __('Login') }}
           </button>
         </div>
@@ -148,8 +147,6 @@
       }
     }
   </script>
-
-
 
   @if (Session::has('success'))
     <script>

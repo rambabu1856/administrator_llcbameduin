@@ -1,0 +1,501 @@
+html,
+body {
+  font-family: Roboto;
+  /* overflow: hidden; */
+}
+
+.sm-txt {
+  font-size: 12px;
+}
+
+#loading {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background: #343a40;
+  z-index: 99;
+  top: 0;
+  left: 0;
+  padding-top: 25%;
+  text-align: center;
+  opacity: 5;
+  overflow: hide;
+}
+
+/* img {
+  border-radius: 50%;
+} */
+
+img > img-no-border-radius {
+  border-radius: 50%;
+}
+
+.navbar-nav .nav-item .nav-link {
+  font-size: 14px;
+  font-family: 'Roboto';
+  font-weight: 500;
+  color: inherit;
+}
+
+.navbar-nav .nav-item.active,
+.navbar-nav .nav-item.active .nav-link,
+.navbar-nav .nav-item:hover .nav-link {
+  /* color: #6bb2ff; */
+  color: inherit;
+}
+
+.navbar-nav .nav-item.active .dropdown-menu .dropdown-item.active {
+  background-color: rgb(153, 49, 49);
+}
+
+@media all and (min-width: 992px) {
+  .navbar .nav-item .dropdown-menu {
+    display: none;
+  }
+  .navbar .nav-item:hover .dropdown-menu {
+    display: block;
+  }
+  .navbar .nav-item .dropdown-menu {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  a.nav-logo {
+    display: none;
+  }
+  .nav-head {
+    content: 'Lingraj Law College';
+    font-size: 22px;
+  }
+  .nav-subhead {
+    display: none;
+  }
+}
+
+.dropdown-menu {
+  background-color: #fff;
+}
+
+.dropdown-menu > a {
+  color: black;
+}
+
+.dropdown-menu > a:hover {
+  background-color: #17a2b8;
+  background-image: none;
+  color: white;
+}
+
+.dark-mode > dropdown-menu > a:hover {
+  background-color: #17a2b8;
+  background-image: none;
+  color: white;
+}
+
+.sidebar .nav {
+  font-size: 12px;
+  font-family: 'Roboto';
+  z-index: inherit;
+  text-transform: uppercase;
+  /* font-weight: 500; */
+}
+
+.sidebar .nav a:hover {
+  color: #ffffffe3 !important;
+  background: #17a2b8 !important;
+  transform: 0.02;
+}
+
+.sidebar .nav .active {
+  color: #ffffff !important;
+  background: #17a2b8 !important;
+}
+
+[class*='sidebar-dark-']
+  .nav-flat
+  .nav-item
+  .nav-treeview
+  > .nav-item
+  > .nav-link.active {
+  border-color: red;
+  background: darkslateblue;
+}
+
+.nav-tabs .nav-item .nav-link {
+  border: 0.5px solid rgba(192, 192, 192, 0.336);
+  border-radius: 5px;
+  font-family: 'Roboto';
+  font-weight: 400;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+  margin-right: 2px;
+  border-bottom: 3px solid #17a2b8;
+  /* border-top: 5px solid #17a2b8; */
+}
+
+.nav-tabs .nav-item .nav-link:hover {
+  color: red;
+}
+
+.nav-tabs .nav-item .nav-link.active {
+  background: #17a2b8 !important;
+  border-bottom: 3px solid red;
+  color: white;
+}
+
+.tab-content .tab-pane {
+  border: 1px solid lightgray;
+  min-height: 300px;
+  height: auto;
+  padding: 10px;
+}
+
+Label {
+  margin-bottom: 0px;
+  font-size: 0.9em;
+  color: #b4b4b4d8;
+  font-weight: 400 !important;
+}
+
+.required:after {
+  content: ' *';
+  color: red !important;
+  font-weight: 30px;
+  font-size: inherit;
+}
+
+.error-text {
+  font-size: small;
+}
+
+#toast-container > .toast {
+  min-width: 300px;
+  max-width: 600px;
+  width: 100%;
+}
+
+a.underline {
+  color: red;
+  text-decoration: none;
+  border-bottom: 1px solid green;
+}
+
+textarea,
+input[type='text'],
+input[type='password'],
+input[type='datetime'],
+input[type='datetime-local'],
+input[type='date'],
+input[type='month'],
+input[type='time'],
+input[type='week'],
+input[type='number'],
+input[type='email'],
+input[type='url'],
+input[type='search'],
+input[type='tel'],
+input[type='color'],
+.select2-selection,
+.uneditable-input {
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-size: 14px;
+  color: black;
+}
+
+textarea:focus,
+input[type='text']:focus,
+input[type='password']:focus,
+input[type='datetime']:focus,
+input[type='datetime-local']:focus,
+input[type='date']:focus,
+input[type='month']:focus,
+input[type='time']:focus,
+input[type='week']:focus,
+input[type='number']:focus,
+input[type='email']:focus,
+input[type='url']:focus,
+input[type='search']:focus,
+input[type='tel']:focus,
+input[type='color']:focus,
+.select2-selection:focus,
+.uneditable-input:focus {
+  border: 1px solid #17a2b8 !important;
+  outline: 0 none;
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-size: 14px;
+  color: black;
+  /* background-color: #17a3b821 !important; */
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #343a40 inset !important;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+  -webkit-text-fill-color: whitesmoke !important;
+}
+/*Change text in autofill textbox*/
+input:-webkit-autofill {
+  -webkit-text-fill-color: whitesmoke !important;
+}
+
+.form-control[disabled],
+.form-control[readonly],
+fieldset[disabled],
+form-control[placeholder] {
+  border: 1px solid #17a2b8 !important;
+  background-color: #fff;
+  opacity: 1;
+  cursor: not-allowed;
+}
+
+.form-control[disabled]:focus,
+.form-control[readonly]:focus,
+fieldset[disabled]:focus,
+form-control[placeholder]:focus {
+  border: 1px solid rgb(221, 221, 221) !important;
+  background-color: #fff;
+  opacity: 1;
+  cursor: not-allowed;
+  border: none;
+}
+
+.select2-dropdown--above {
+  border: 1px solid #17a2b8 !important;
+  border-bottom: none !important;
+}
+
+.select2-dropdown--below {
+  border: 1px solid #17a2b8 !important;
+  border-top: none !important;
+}
+
+span.select2-selection[aria-expanded='true'] {
+  border: 1px solid #17a2b8 !important;
+}
+
+.select2-selection,
+.form-control {
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+.select2-container--default
+  .select2-selection--single
+  .select2-selection__placeholder {
+  color: #404c57;
+}
+
+.select2-container--default
+  .select2-selection--single
+  .select2-selection__rendered {
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.select2-container--open {
+  z-index: 99999999999999;
+}
+
+/* .select2-results { background-color: #00f; } */
+
+.dataTables_scrollHeadInner,
+.table {
+  width: 100% !important;
+  font-size: 14px;
+  font-weight: 400 !important;
+  font-family: 'Roboto';
+}
+
+div.dataTables_wrapper
+  div.dataTables_paginate
+  ul.pagination
+  .page-item.active
+  .page-link:focus {
+  /* background-color: #000; */
+  background-color: #333;
+}
+
+.dataTable.table-sm > thead > tr > th[class*='sort']:after {
+  content: '' !important;
+}
+
+.dataTable.table-sm > thead > tr > th[class*='sort']:before {
+  content: '' !important;
+}
+
+table.dataTable.table-sm thead > tr > th.sorting_asc,
+table.dataTable.table-sm thead > tr > th.sorting_desc,
+table.dataTable.table-sm thead > tr > th.sorting,
+table.dataTable.table-sm thead > tr > td.sorting_asc,
+table.dataTable.table-sm thead > tr > td.sorting_desc,
+table.dataTable.table-sm thead > tr > td.sorting {
+  padding-right: inherit;
+}
+
+.pagination .page-item.active .page-link:hover {
+  /* background-color: #000; */
+  background-color: #111;
+}
+
+.pagination .page-item.active .page-link {
+  /* background-color: #000; */
+  background-color: #333;
+  border-color: #6c757d;
+}
+
+.bootstrap-datetimepicker-widget table td.today:before,
+.bootstrap-datetimepicker-widget table td.today:after {
+  content: '';
+  display: inline-block;
+  border: solid transparent;
+  border-width: 0 0 7px 7px;
+  border-bottom-color: red;
+  border-top-color: rgba(0, 0, 0, 0.2);
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+}
+
+.bootstrap-datetimepicker-widget.dropdown-menu {
+  border-color: #17a2b8 !important;
+  border-width: 1px;
+  color: grey !important;
+}
+
+.bootstrap-datetimepicker-widget.dropdown-menu a span:hover,
+.bootstrap-datetimepicker-widget.dropdown-menu a span:focus {
+  background-color: #17a2b8 !important;
+  color: black;
+}
+
+.bootstrap-datetimepicker-widget table td.today {
+  background-color: #17a2b8 !important;
+}
+
+.btn-sm {
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+.error {
+  color: tomato;
+  font-size: 0.8rem;
+  height: 10px;
+  text-align: center;
+  background-color: #f8dddd;
+}
+
+.my-swal {
+  display: -webkit-box;
+  display: flex;
+  position: fixed;
+  z-index: 9999;
+}
+
+.hide_me {
+  display: none !important;
+}
+
+/* align input box center of the div  */
+
+.center-block {
+  display: grid;
+  place-items: center;
+}
+
+/* .modal-dialog {
+  overflow-y: initial !important;
+}
+
+
+
+.modal-body {
+  max-height: 75vh;
+  overflow-y: auto;
+} */
+
+.modal-title {
+  text-transform: uppercase;
+}
+
+.btn {
+  text-transform: uppercase;
+}
+
+/* draw line both side of text */
+
+line_both_side {
+  position: relative;
+  font-size: 14px;
+  z-index: 1;
+  overflow: hidden;
+  text-align: center;
+}
+
+line_both_side:before,
+line_both_side:after {
+  position: absolute;
+  top: 35%;
+  overflow: hidden;
+  width: 20%;
+  height: 25%;
+  content: '\a0';
+  background-color: red;
+}
+
+line_both_side:before {
+  margin-left: -20%;
+  text-align: right;
+}
+
+.color {
+  background-color: #ccc;
+  text-align: center;
+}
+
+.select::part(listbox) {
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid red;
+  border-radius: 5px;
+}
+
+.box {
+  /* background-color: lightgrey; */
+  width: 300px;
+  border: 5px solid darkslategray;
+  padding: 20px;
+  margin: 10px;
+  text-align: center;
+}
+
+.hide {
+  display: none;
+}
+
+.table-fixed {
+  width: 100%;
+}
+
+/*This will work on every browser*/
+.table-fixed thead th {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 48px;
+  z-index: 999;
+  background-color: #383f45;
+  /* background-color: #6c757d; */
+  color: #fff;
+}
