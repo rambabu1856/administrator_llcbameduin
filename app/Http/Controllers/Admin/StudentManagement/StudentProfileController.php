@@ -40,7 +40,6 @@ class StudentProfileController extends Controller
     }
 
     public function index(Request $request)
-
     {
         // Filter
         $campus = $this->campus;
@@ -109,26 +108,30 @@ class StudentProfileController extends Controller
             ->with('bloodGroup')
             ->with('motherTongue')
             ->with('nationality')
-            ->with(array('admissionRegisters' => function ($query) {
-                $query
-                    ->with('academicYear.year')
-                    ->with('grade')
-                    ->orderBy('grade_id', 'ASC');
-            }));
+            ->with(
+                array(
+                    'admissionRegisters' => function ($query) {
+                        $query
+                            ->with('academicYear.year')
+                            ->with('grade')
+                            ->orderBy('grade_id', 'ASC');
+                    }
+                )
+            );
 
         if ($request->cmbBatch) {
-            $studentProfileData =  $studentProfileData->where('batch_id', $request->cmbBatch);
+            $studentProfileData = $studentProfileData->where('batch_id', $request->cmbBatch);
         }
 
         if ($request->cmbGender) {
-            $studentProfileData =  $studentProfileData->where('gender_id', $request->cmbGender);
+            $studentProfileData = $studentProfileData->where('gender_id', $request->cmbGender);
         }
 
         if ($request->cmbCommunity) {
-            $studentProfileData =  $studentProfileData->where('community_id', $request->cmbCommunity);
+            $studentProfileData = $studentProfileData->where('community_id', $request->cmbCommunity);
         }
 
-        $studentProfileData =  $studentProfileData->orderBy('enrollment_number')->take(5)->get();
+        $studentProfileData = $studentProfileData->orderBy('enrollment_number')->take(5)->get();
 
         return $studentProfileData;
     }
@@ -144,12 +147,16 @@ class StudentProfileController extends Controller
     public function edit(Request $request, $id)
     {
 
-        $studentProfileData = Student::with(array('admissionRegisters' => function ($query) {
-            $query
-                ->with('academicYear.year')
-                ->with('grade')
-                ->orderBy('grade_id', 'ASC');
-        }))
+        $studentProfileData = Student::with(
+            array(
+                'admissionRegisters' => function ($query) {
+                    $query
+                        ->with('academicYear.year')
+                        ->with('grade')
+                        ->orderBy('grade_id', 'ASC');
+                }
+            )
+        )
             ->findOrFail($id);
 
 
