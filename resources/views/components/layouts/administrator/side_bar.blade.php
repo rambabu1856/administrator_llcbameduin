@@ -42,7 +42,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ url('/student_admission_register') }}" class="nav-link">
+                <a href="{{ url('admin/student_admission_register') }}" class="nav-link">
                   <i class="fa-solid fa-book-open nav-icon"></i>
                   <p>Admission Register</p>
                 </a>

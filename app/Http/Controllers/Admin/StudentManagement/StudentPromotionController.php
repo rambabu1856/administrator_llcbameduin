@@ -62,7 +62,7 @@ class StudentPromotionController extends Controller
         }
 
         return view(
-            'administrator.studentmanagement.studentpromotion.index',
+            'dashboard.admin.studentmanagement.studentpromotion.index',
             compact(
                 'campus',
                 'department',

@@ -423,7 +423,7 @@
 
             $("#tblModalAdmissionDetails tbody").empty();
 
-            $.each(data.admission_register, function(i, v) {
+            $.each(data.admission_registers, function(i, v) {
 
               $("#tblModalAdmissionDetails tbody").append('<tr>' +
                 '<td>' + v.enrollment_no + '</td>' +
@@ -477,7 +477,7 @@
 
               $("#tblStudentProfile tbody").append('<tr>' +
                 '<td>' + sl_no + '</td>' +
-                '<td><span class="badge badge-warning text-sm">' + v.enrollment_number + '</span></td>' +
+                '<td><span class="badge badge-success text-sm">' + v.enrollment_number + '</span></td>' +
                 '<td>' + registration_number + '</td>' +
 
                 '<td class="text-indigo">' + v.student_name + '<br><span class="text-teal">' + v
@@ -492,7 +492,7 @@
                 '<td><span class="badge badge-danger text-sm">' + is_tc_withdrawn + '</span></td>' +
                 '<td>' +
                 '<div class="btn-group">' +
-                '<button type="button" class="btn bg-indigo btnViewProfile" name="btnViewProfile" data- toggle="tooltip" title="View" data-id="' +
+                '<button type="button" class="btn bg-indigo btnViewProfile" name="btnEditProfile" data-toggle="tooltip" title="View" data-id="' +
                 v.id + '"><i class="fa-regular fa-eye"></i></button>' +
                 '<button type="button" class="btn bg-pink btnEditProfile" name="btnEditProfile" data-toggle="tooltip" title="Edit" data-id="' +
                 v.id + '"><i class="fa-regular fa-pen-to-square"></i></button>' +
@@ -512,7 +512,7 @@
         });
       }
 
-      $(".resetForm").click(function(e) {
+            $(".resetForm").click(function(e) {
         $("form select").val(null).trigger("change");
         $('form').trigger("reset");
       })

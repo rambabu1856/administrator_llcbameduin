@@ -19,7 +19,6 @@ class SelectBox extends Controller
     {
         $academicYear = AcademicYear::with('year')
             ->where('batch_id', $request->batchId)->get();
-
         return $academicYear;
     }
 

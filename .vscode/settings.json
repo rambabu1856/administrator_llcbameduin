@@ -1,32 +1,32 @@
 {
-    "editor.fontSize": 16,
-    "bladeFormatter.format.indentSize": 2,
-    "bladeFormatter.format.noMultipleEmptyLines": true,
-    "bladeFormatter.format.sortTailwindcssClasses": true,
-    // "bladeFormatter.format.useTabs": true,
-    "terminal.integrated.fontSize": 14,
-    "terminal.integrated.fontFamily": "'Fira Code', monospace",
-    "terminal.integrated.letterSpacing": 1,
-    "editor.fontFamily": "Fira Code",
-    "editor.fontLigatures": true,
-    "editor.tabSize": 2,
-    "editor.wordWrap": "on",
-    "editor.renderWhitespace": "none",
-    "files.associations": {
-        "*.blade.php": "blade",
-        "*.tpl": "html",
-        "*.module": "php"
-    },
-    "[php]": {
-        "editor.formatOnSave": true,
-        "editor.defaultFormatter": "DEVSENSE.phptools-vscode"
-    },
-    "[blade]": {
-        "editor.formatOnSave": true,
-        "editor.defaultFormatter": "shufo.vscode-blade-formatter"
-    },
-    "[jsonc]": {
-        "editor.formatOnSave": true,
-        "editor.defaultFormatter": "vscode.json-language-features"
-    },
+  "editor.fontSize": 16,
+  "bladeFormatter.format.indentSize": 2,
+  // "bladeFormatter.format.noMultipleEmptyLines": true,
+  // "bladeFormatter.format.sortTailwindcssClasses": true,
+  // "bladeFormatter.format.useTabs": true,
+  "terminal.integrated.fontSize": 14,
+  "terminal.integrated.fontFamily": "'Fira Code', monospace",
+  "terminal.integrated.letterSpacing": 1,
+  "editor.fontFamily": "Fira Code",
+  "editor.fontLigatures": true,
+  "editor.tabSize": 2,
+  // "editor.wordWrap": "on",
+  // "editor.renderWhitespace": "none",
+  "files.associations": {
+    "*.blade.php": "blade",
+    "*.tpl": "html",
+    "*.module": "php"
+  },
+  "[php]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
+  },
+  "[blade]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "shufo.vscode-blade-formatter"
+  },
+  "[jsonc]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
 }

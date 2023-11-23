@@ -36,6 +36,9 @@
                 <x-form.select2 grid="col-md-2" lblClass="required" lblText="Select Academic Year"
                   name="cmbAcademicYear" :options="[]"></x-form.select2>
 
+                <x-form.select2 grid="col-md-2" lblClass="required" lblText="Select Class" name="cmbGrade"
+                  :options="[]"></x-form.select2>
+
                 <x-form.select2 grid="col-md-2" lblClass="" lblText="Select Gender" name="cmbGender"
                   :options="$gender"></x-form.select2>
 
@@ -164,7 +167,7 @@
 
           $.ajax({
             type: "POST",
-            url: "{{ url('getBatch') }}",
+            url: "{{ url('admin/getBatch') }}",
             data: {
               id: courseId
             },
@@ -190,28 +193,56 @@
           if (batchId > 0 && batchId != null) {
             $.ajax({
               type: "POST",
-              url: "{{ url('getAcademicYear') }}",
+              url: "{{ url('admin/getAcademicYear') }}",
               data: {
-                id: batchId
+                batchId: batchId
               },
-              beforeSend: function() {
-                $('#cmbAcademicYear').empty().trigger("change");
-              },
+
               success: function(response) {
                 $.each(response, function(i, v) {
-                  $('#cmbAcademicYear').append('<option value=' + v.id + '>' + v.slug + '</option>');
+                  $('#cmbAcademicYear').append('<option value=' + v.id + '>' + v.year.title +
+                    '</option>');
                 });
                 $('#cmbAcademicYear').val(null).trigger('change');
               }
             });
           }
-
-
         });
 
+        // ACADEMIC YEAR CHANGE
         $(document).on("change", "#cmbAcademicYear", function(e) {
           e.preventDefault();
           $("#tblStudentAdmissionRegister tbody").empty();
+
+          academicYearId = $('option:selected', this).val();
+
+          if (academicYearId > 0) {
+
+            $("#tblStudentAdmissionRegister tbody").empty();
+
+            $.ajax({
+              type: "POST",
+              url: "{{ url('admin/getAcademicYearGrade') }}",
+              data: {
+                batchId: batchId,
+                academicYearId: academicYearId
+              },
+              beforeSend: function() {
+                $('#cmbGrade').empty().trigger("change");
+              },
+              success: function(response) {
+
+                $.each(response, function(i, v) {
+
+                  $('#cmbGrade').append('<option value=' + v.grade.id + '>' + v.grade.title +
+                    '</option>');
+
+                });
+                $('#cmbGrade').val(null).trigger('change');
+              }
+            });
+
+          }
 
         });
 
@@ -234,7 +265,7 @@
           var studentId = $(this).data('id');
 
 
-          $.get("{{ route('student_profile.index') }}" + '/' + studentId + '/edit', function(data) {
+          $.get("{{ route('admin.student_profile.index') }}" + '/' + studentId + '/edit', function(data) {
 
             var roll_no = data.enrollment_number.split("/")[0]
 
@@ -284,7 +315,7 @@
       function fetchDataToTable() {
         $.ajax({
           type: "GET",
-          url: "{{ route('student_admission_register.create') }}",
+          url: "{{ route('admin.student_admission_register.create') }}",
           data: $("#searchForm").serialize(),
           async: false,
           beforeSend: function(xhr) {
