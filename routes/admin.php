@@ -14,6 +14,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::middleware(['auth:admin', 'PreventBackHistory'])->group(function () {
         Route::view('/home', 'dashboard.admin.dashboard')->name('home');
-        Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
+        Route::get('/logout', [AdminController::class, 'logout'])->name('logout');
     });
 });

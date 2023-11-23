@@ -48,7 +48,7 @@
             <a href="" class="dropdown-item"> <i class="fas fa-envelope mr-1"></i>Reset
               Password</a>
             <div class="dropdown-divider"></div>
-            {{-- <a class="dropdown-item" href="{{ route('admin.logout') }}">Logout</a> --}}
+            <a class="dropdown-item" href="{{ route('admin.logout') }}">Logout</a>
           </div>
         </li>
       </ul>
