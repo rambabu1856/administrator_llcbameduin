@@ -1,6 +1,5 @@
 <?php
 
-
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Session;
@@ -9,7 +8,6 @@ use App\Http\Controllers\Admin\Select\SelectBox;
 use App\Http\Controllers\Admin\StudentManagement\StudentProfileController;
 use App\Http\Controllers\Admin\StudentManagement\StudentPromotionController;
 use App\Http\Controllers\Admin\StudentManagement\AdmissionRegisterController;
-
 
 Route::prefix('admin')->name('admin.')->group(function () {
 
