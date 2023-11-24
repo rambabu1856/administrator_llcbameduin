@@ -87,6 +87,10 @@ class StudentPromotionController extends Controller
             ->with('motherTongue')
             ->with('nationality')
             ->where('batch_id', $request->cmbBatch)
+
+
+
+            
             ->with(array('admissionRegisters' => function ($query) use ($request) {
                 $query
                     ->with('academicYear.year')

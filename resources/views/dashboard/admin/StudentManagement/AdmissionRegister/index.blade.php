@@ -31,24 +31,24 @@
 
               <div class="row">
 
-                <x-form.select2 grid="col-md-2" lblClass="required" lblText="Select Course" name="cmbCourse"
+                <x-form.select2 grid="col-md-3" lblClass="required" lblText="Select Course" name="cmbCourse"
                   :options="$course"></x-form.select2>
 
-                <x-form.select2 grid="col-md-2" lblClass="required" lblText="Select Batch" name="cmbBatch"
+                <x-form.select2 grid="col-md-3" lblClass="required" lblText="Select Batch" name="cmbBatch"
                   :options="[]"></x-form.select2>
 
-                <x-form.select2 grid="col-md-2" lblClass="required" lblText="Select Academic Year"
+                <x-form.select2 grid="col-md-3" lblClass="required" lblText="Select Academic Year"
                   name="cmbAcademicYear" :options="[]"></x-form.select2>
 
-                <x-form.select2 grid="col-md-2" lblClass="required" lblText="Select Class" name="cmbGrade"
+                <x-form.select2 grid="col-md-3" lblClass="required" lblText="Select Class" name="cmbGrade"
                   :options="[]"></x-form.select2>
 
-                <x-form.select2 grid="col-md-2" lblClass="" lblText="Select Gender" name="cmbGender"
-                  :options="$gender"></x-form.select2>
 
+              </div>
 
-
-                <x-form.select2 grid="col-md-2" lblClass="" lblText="Select Community" name="cmbCommunity"
+              <div class="row"> <x-form.select2 grid="col-md-2" lblClass="" lblText="Select Gender"
+                  name="cmbGender" :options="$gender"></x-form.select2>
+                <x-form.select2 grid="col-sm-12 col-md-2" lblClass="" lblText="Select Community" name="cmbCommunity"
                   :options="$community">
                 </x-form.select2>
 

@@ -1281,11 +1281,3 @@ INSERT INTO `fee_sub_group_heads` (`id`, `fee_group_head_id`, `title`, `examinat
 (66, 2, 'Center Charge', NULL, 0),
 (67, 13, 'Right to Information Fee', NULL, 0),
 (68, 10, 'Admission Fee (LL.M)', NULL, 0);
-
-
-INSERT INTO `oubu_categories` (`id`, `title`, `slug`, `created_at`, `updated_at`) VALUES
-(1, 'Other University', 'OU', NULL, NULL),
-(2, 'Berhampur University', 'BU', NULL, NULL),
-(3, 'Berhampur University (Migration Withdrawn)', 'BUMW', NULL, NULL),
-(4, 'Khallikote University', 'OU', NULL, NULL),
-(5, 'Khallikote University (Migration Withdrawn)', 'BUMW', NULL, NULL);

@@ -21,8 +21,7 @@ return new class extends Migration
         });
 
         DB::table('is_actives')->insert([
-            ['id' => 1, 'title' => 'NO'],
-            ['id' => 2, 'title' => 'YES'],
+            ['id' => 1, 'title' => 'YES'],
         ]);
     }
 
