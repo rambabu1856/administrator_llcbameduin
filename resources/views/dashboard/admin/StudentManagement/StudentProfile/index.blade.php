@@ -320,7 +320,7 @@
         $(document).on("change", "#cmbCourse", function() {
 
           courseId = $('option:selected', this).val();
-
+          $("#tblStudentProfile tbody").empty();
           $.ajax({
             type: "POST",
             url: "{{ url('admin/getBatch') }}",

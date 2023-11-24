@@ -85,7 +85,7 @@
 
   </x-slot>
 
-  {{-- <x-modal.modal id="modalAdmissionRegister" modalSize="modal-xl">
+  <x-modal.modal id="modalPromoteStudent" modalSize="modal-xl">
 
     <x-modal.modal-title id="modalEditProfileTitle"></x-modal.modal-title>
 
@@ -93,8 +93,8 @@
 
       <x-modal.modal-body>
 
-        <input type="hidden" name="txtmodalStudentId" id="txtmodalStudentId">
-        <input type="hidden" name="txtmodalImageUrl" id="txtmodalImageUrl">
+        <input type="hidden" name="txtModalStudentId" id="txtModalStudentId">
+        <input type="hidden" name="txtModalImageUrl" id="txtModalImageUrl">
 
         <div class="row">
           <div class="col-sm-12 col-md-3">
@@ -112,7 +112,7 @@
 
             <div class="row">
 
-              <x-form.input grid="col-sm-12 col-md-12" lblClass="required" lblText="Student Name" type="text"
+              <x-form.input grid="col-sm-12 col-md-4" lblClass="required" lblText="Student Name" type="text"
                 name="txtModalStudentName"></x-form.input>
 
               <x-form.input grid="col-sm-12 col-md-4" lblClass="required" lblText="Enrollment Number Number"
@@ -121,8 +121,30 @@
               <x-form.input grid="col-sm-12 col-md-4" lblClass="required" lblText="Roll Number" type="text"
                 name="txtModalRollNo"></x-form.input>
 
-              <x-form.date-time-picker grid="col-sm-12 col-md-4" lblClass="required" lblText="Date of Birth"
-                name="txtModalDateOfBirth" dateFormat="DD/MM/YYYY" />
+            </div>
+
+            <div class="row">
+
+              <x-form.select2 grid="col-sm-12 col-md-3" lblClass="required" lblText="Mode of Transaction"
+                name="cmbModalModeOfTransaction" :options="$modeOfTransaction"></x-form.select2>
+
+              <x-form.select2 grid="col-sm-12 col-md-3 sbcRefenceNumber" lblClass="required"
+                lblText="SB Collect Reference Number" name="cmbModalSbcRefenceNumber"
+                :options="[]"></x-form.select2>
+
+              <x-form.input grid="col-sm-12 col-md-3 otherFeeReferenceNumber hide" lblClass="required"
+                lblText="Fee Receipt ReferenceNumber" type="text"
+                name="txtOtherFeeReferenceNumber"></x-form.input>
+
+              <x-form.date-time-picker grid="col-sm-12 col-md-3" lblClass="required" lblText="Fee Receipt Date"
+                name="txtModalReceiptDate" dateFormat="DD/MM/YYYY" />
+
+              <x-form.input grid="col-sm-12 col-md-3 " lblClass="required" lblText="Fee Receipt Amount"
+                type="text" name="txtModalReceiptAmount"></x-form.input>
+
+            </div>
+
+            <div class="row">
 
             </div>
 
@@ -136,7 +158,7 @@
       </x-modal.modal-body>
 
     </x-form.form>
-  </x-modal.modal> --}}
+  </x-modal.modal>
 
   <x-slot name="script">
     <script>
@@ -234,7 +256,7 @@
 
         });
 
-
+        // SEARCH STUDENTS WITH FILTER
         $('#btnSearch').on('click', function(e) {
 
           e.preventDefault();
@@ -253,10 +275,9 @@
         });
 
 
-        $(document).on("click", ".btnEditProfile", function(e) {
+        $(document).on("click", ".btnPromoteStudent", function(e) {
           e.preventDefault();
           var studentId = $(this).data('id');
-
 
           $.get("{{ route('admin.student_profile.index') }}" + '/' + studentId + '/edit', function(data) {
 
@@ -266,7 +287,7 @@
 
             // hidden Inputs
             $("#txtModalStudentId").val(data.id)
-            $("#txtmodalImageUrl").val(data.image_url)
+            $("#txtModalImageUrl").val(data.image_url)
 
             var url = "{{ asset('storage/media/student_images') }}" + "/" + data
               .image_url +
@@ -299,9 +320,25 @@
               )
             });
 
-            $("#modalAdmissionRegister").modal('show');
+            $("#modalPromoteStudent").modal('show');
           })
 
+        });
+
+        $(document).on("change", "#cmbModalModeOfTransaction", function(e) {
+          e.preventDefault();
+
+          var transactionTypeId = $(this).val();
+
+          if (transactionTypeId == 2) {
+            alert(transactionTypeId)
+            $(".otherFeeReferenceNumber").addClass(" hide");
+            $(".sbcRefenceNumber").removeClass(" hide");
+          } else {
+            alert(transactionTypeId)
+            $(".otherFeeReferenceNumber").removeClass(" hide");
+            $(".sbcRefenceNumber").addClass(" hide");
+          }
         });
       });
 
@@ -361,10 +398,8 @@
                   '<td><span class="badge badge-danger text-sm">' + is_tc_withdrawn + '</span></td>' +
                   '<td>' +
                   '<div class="btn-group">' +
-                  '<button type="button" class="btn bg-indigo btnViewProfile" name="btnViewProfile" data- toggle="tooltip" title="View" data-id="' +
-                  v.id + '"><i class="fa-regular fa-eye"></i></button>' +
-                  '<button type="button" class="btn bg-pink btnEditProfile" name="btnEditProfile" data-toggle="tooltip" title="Edit" data-id="' +
-                  v.id + '"><i class="fa-regular fa-pen-to-square"></i></button>' +
+                  '<button type="button" class="btn bg-pink btnPromoteStudent" name="btnPromoteStudent" data-toggle="tooltip" title="Promote" data-id="' +
+                  v.id + '"><i class="fa-regular fa-share-from-square" fa-lg></i></button>' +
                   '</div>' +
                   '</td>' +
                   '</tr>'

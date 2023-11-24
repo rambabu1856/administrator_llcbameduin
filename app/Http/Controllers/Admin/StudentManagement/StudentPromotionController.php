@@ -10,12 +10,13 @@ use App\Models\Select\Course;
 use App\Models\Select\Department;
 use App\Models\Select\AcademicYear;
 use App\Http\Controllers\Controller;
+use App\Models\Select\ModeOfTransaction;
 use App\Models\StudentManagement\Student;
 
 
 class StudentPromotionController extends Controller
 {
-    public $campus, $department, $course, $batch, $academicYear, $grade;
+    public $campus, $department, $course, $batch, $academicYear, $grade, $modeOfTransaction;
 
     public function __construct()
     {
@@ -24,6 +25,7 @@ class StudentPromotionController extends Controller
         $this->course = Course::get();
         $this->batch = Batch::orderBy('title', 'DESC')->get();
         $this->academicYear = AcademicYear::orderBy('batch_id', 'DESC')->orderBy('grade_id', 'ASC')->get();
+        $this->modeOfTransaction = ModeOfTransaction::where('id', '>', 1)->get();
     }
 
     public function index(Request $request)
@@ -61,6 +63,8 @@ class StudentPromotionController extends Controller
             $academicYear = [];
         }
 
+        $modeOfTransaction = $this->modeOfTransaction;
+
         return view(
             'dashboard.admin.studentmanagement.studentpromotion.index',
             compact(
@@ -69,6 +73,7 @@ class StudentPromotionController extends Controller
                 'course',
                 'batch',
                 'academicYear',
+                'modeOfTransaction',
             )
         );
     }
@@ -86,18 +91,25 @@ class StudentPromotionController extends Controller
             ->with('bloodGroup')
             ->with('motherTongue')
             ->with('nationality')
-            ->where('batch_id', $request->cmbBatch)
+            ->where('batch_id', $request->cmbBatch);
 
+        if ($request->txtSearchBy) {
+            $studentsNotPromoted = $studentsNotPromoted->where(function (
+                $q
+            ) use ($request) {
+                $q
+                    ->where('student_name', 'like', '%' . $request->txtSearchBy . '%')
+                    ->orWhere('enrollment_number', 'like', '%' . $request->txtSearchBy . '%');
+            });
+        }
 
-
-            
-            ->with(array('admissionRegisters' => function ($query) use ($request) {
-                $query
-                    ->with('academicYear.year')
-                    ->with('grade')
-                    ->where('academic_year_id', $request->cmbAcademicYear)
-                    ->orderBy('grade_id', 'ASC');
-            }))
+        $studentsNotPromoted = $studentsNotPromoted->with(array('admissionRegisters' => function ($query) use ($request) {
+            $query
+                ->with('academicYear.year')
+                ->with('grade')
+                ->where('academic_year_id', $request->cmbAcademicYear)
+                ->orderBy('grade_id', 'ASC');
+        }))
             ->whereHas('admissionRegisters', function ($query) use ($request) {
                 $query->where('grade_id', $request->cmbGrade) // Filter by Level 1
                     ->whereNotIn('student_id', function ($subQuery) use ($request) {
