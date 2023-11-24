@@ -2,6 +2,8 @@
 
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\Select\SelectBox;
 use App\Http\Controllers\Admin\StudentManagement\StudentProfileController;
@@ -17,6 +19,21 @@ Route::prefix('admin')->name('admin.')->group(function () {
     });
 
     Route::middleware(['auth:admin', 'PreventBackHistory'])->group(function () {
+
+        Route::get('/cache', function () {
+            /**[SAFE] Clears all cache with 1 line!**/
+            Artisan::call('route:clear');
+            Artisan::call('view:clear');
+            Artisan::call('config:clear');
+            Artisan::call('event:clear');
+            Artisan::call('cache:clear');
+            Artisan::call('optimize:clear');
+            Session::flush();
+            Artisan::call('clear-compiled');
+            return redirect()->route('admin.login')->with('success', 'Cache Cleared');
+        });
+
+
         Route::view('/dashboard', 'dashboard.admin.dashboard')->name('dashboard');
         Route::get('/logout', [AdminController::class, 'logout'])->name('logout');
 

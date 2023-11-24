@@ -125,7 +125,7 @@
                 </ul>
               </li>
               <li class="nav-item">
-                <a href="{{ url('/cache') }}" class="nav-link active">
+                <a href="{{ url('admin/cache') }}" class="nav-link active">
                   <i class="fa-solid fa-users-rays nav-icon"></i>
                   <p>Clear Cache</p>
                 </a>

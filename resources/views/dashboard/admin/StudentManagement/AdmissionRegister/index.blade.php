@@ -1,6 +1,10 @@
 <x-layouts.administrator.layout>
 
-  <x-slot name="css"></x-slot>
+  <x-slot name="css">
+    <link rel="stylesheet" href="{{ asset('admin_assets/plugins/jquery-ui/jquery-ui.min.css') }}">
+
+
+  </x-slot>
 
   <x-slot name="content">
 
@@ -104,12 +108,9 @@
 
     <x-modal.modal-title id="modalEditProfileTitle"></x-modal.modal-title>
 
-    <x-form.form action="" method="POST" name="modalEditProfileForm">
+    <x-form.form action="" method="POST" name="modalAdmissionRegisterForm">
 
       <x-modal.modal-body>
-
-        <input type="hidden" name="txtmodalStudentId" id="txtmodalStudentId">
-        <input type="hidden" name="txtmodalImageUrl" id="txtmodalImageUrl">
 
         <div class="row">
           <div class="col-sm-12 col-md-3">
@@ -136,12 +137,11 @@
               <x-form.input grid="col-sm-12 col-md-4" lblClass="required" lblText="Roll Number" type="text"
                 name="txtModalRollNo"></x-form.input>
 
-              <x-form.date-time-picker grid="col-sm-12 col-md-4" lblClass="required" lblText="Date of Birth"
-                name="txtModalDateOfBirth" dateFormat="DD/MM/YYYY" />
-
+              <x-form.date-time-picker grid="col-sm-12 col-md-4" lblClass="required" lblText="Admission Date"
+                name="txtModalAdmissionDate" dateFormat="DD/MM/YYYY" />
             </div>
 
-            <x-table.table id="tblModalAdmissionDetails" :tableHeaders="['Enrollment Number', 'Roll Number', 'Academic Year', 'Grade', 'Admission Date']">
+            <x-table.table id="tblModalAdmissionDetails" :tableHeaders="['Enrollment Number', 'Roll Number', 'Academic Year', 'Grade', 'Admission Date', 'Action']">
               <x-table.table-body>
 
               </x-table.table-body>
@@ -149,11 +149,11 @@
           </div>
         </div>
       </x-modal.modal-body>
-
     </x-form.form>
   </x-modal.modal>
 
   <x-slot name="script">
+    <script src="{{ asset('admin_assets/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
     <script>
       // Course Change Function
 
@@ -272,14 +272,14 @@
 
 
           $.get("{{ route('admin.student_profile.index') }}" + '/' + studentId + '/edit', function(data) {
-
+            console.log(data.id);
             var roll_no = data.enrollment_number.split("/")[0]
 
             $("#modalEditProfileTitle").html(data.student_name + "  ( " + data.enrollment_number + " )")
 
             // hidden Inputs
-            $("#txtModalStudentId").val(data.id)
-            $("#txtmodalImageUrl").val(data.image_url)
+
+
 
             var url = "{{ asset('storage/media/student_images') }}" + "/" + data
               .image_url +
@@ -304,16 +304,64 @@
             $.each(data.admission_registers, function(i, v) {
               $("#tblModalAdmissionDetails tbody").append('<tr>' +
                 '<td>' + v.enrollment_no + '</td>' +
-                '<td>' + v.roll_no + '</td>' +
+
+                '<td>' + '<input type="input" class="form-control form-control-sm "  value="' + v
+                .roll_no +
+                '" + id="' + 'admissionRollNo_' +
+                v.id + '"/></td>' +
+
                 '<td>' + v.academic_year.year.title + '</td>' +
                 '<td>' + v.grade.title + '</td>' +
-                '<td>' + moment(v.admission_date).format("DD/MM/YYYY") + '</td>' +
+
+                '<td>' + '<input type="input" value="' + moment(v.admission_date)
+                .format("DD/MM/YYYY") +
+                '" class="form-control form-control-sm " id="' + 'txtAdmissionDate_' +
+                v.id +
+                '"/></td>' +
+
+                '<td>' +
+                '<button type="button" class="btn btnEditAdmissionDate" name="btnEditProfile" data-toggle="tooltip" title="Update" data-id="' +
+                v.id + '"><i class="fa-regular fa-pen-to-square"></i></button></td>' +
                 '</tr>'
               )
+
+              $("#txtAdmissionDate_" + v.id).datepicker({
+                container: '#modalAdmissionRegister table tbody',
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: "dd/mm/yy",
+                maxDate: '+1D',
+              });
             });
 
+            $('[data-toggle="tooltip"]').tooltip();
             $("#modalAdmissionRegister").modal('show');
           })
+
+        });
+
+
+        $(document).on("click", ".btnEditAdmissionDate", function(e) {
+          e.preventDefault();
+
+          var admissionRegisterId = $(this).data('id');
+          var admissionRollNo = $("#admissionRollNo_" + admissionRegisterId).val();
+          var admissionDate = $("#txtAdmissionDate_" + admissionRegisterId).val();
+
+          $.ajax({
+            type: "POST",
+            url: "{{ route('admin.student_admission_register.store') }}",
+            data: {
+              admissionRegisterId: admissionRegisterId,
+              admissionRollNo: admissionRollNo,
+              admissionDate: admissionDate,
+            },
+            dataType: "json",
+            async: false,
+            success: function(response) {
+
+            }
+          });
 
         });
       });
@@ -372,8 +420,8 @@
                   '<td><span class="badge badge-danger text-sm">' + is_tc_withdrawn + '</span></td>' +
                   '<td>' +
                   '<div class="btn-group">' +
-                  '<button type="button" class="btn bg-indigo btnViewProfile" name="btnViewProfile" data- toggle="tooltip" title="View" data-id="' +
-                  v.id + '"><i class="fa-regular fa-eye"></i></button>' +
+                  '<button type="button" class="btn bg-indigo btnViewProfile" name="btnEditProfile" data-toggle="tooltip" title="View" data-id="' +
+                  v.id + '"><i class="fa-regular fa-pen-to-square"></i></button>' +
                   '<button type="button" class="btn bg-pink btnEditProfile" name="btnEditProfile" data-toggle="tooltip" title="Edit" data-id="' +
                   v.id + '"><i class="fa-regular fa-pen-to-square"></i></button>' +
                   '</div>' +

@@ -9,7 +9,7 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <title>{{ config('app.name', 'LLC-BAM') }}</title>
-  
+
   <link rel="shortcut icon" href="{{ asset('images/logo.jpg') }}" type="image/x-icon">
 
   <link rel="stylesheet" type='text/css' href="{{ asset('admin_assets/plugins/fontawesome-6/css/all.min.css') }}">
@@ -28,11 +28,16 @@
   <link rel="stylesheet"
     href="{{ asset('admin_assets/plugins/datatables-rowgroup/css/rowGroup.bootstrap4.min.css') }}">
 
-  {{ $css }}
+
 
   {{-- <link rel="stylesheet" href="{{ asset('admin_assets/plugins/bs-date-picker/bs-date-picker.css') }}"> --}}
   <link rel="stylesheet" href="{{ asset('admin_assets/plugins/datatables-buttons/css/buttons.bootstrap4.css') }}">
   <link rel="stylesheet" href="{{ asset('admin_assets/plugins/bootstrap-input-tag/css/bootstrap-tagsinput.css') }}">
+
+
+  {{ $css }}
+
+
 
   <link rel="stylesheet" href="{{ asset('admin_assets/dist/css/adminlte.min.css') }}">
 
@@ -115,11 +120,11 @@
   <script>
     var theme_color
 
-    $(document).bind("click", function() {
-      $('[data-toggle="tooltip"]').tooltip("hide");
-    }).bind("ajaxSend", function() {
-      $("[data-toggle='tooltip']").tooltip('hide');
-    });
+    // $(document).bind("click", function() {
+    //   $('[data-toggle="tooltip"]').tooltip("hide");
+    // }).bind("ajaxSend", function() {
+    //   $("[data-toggle='tooltip']").tooltip('hide');
+    // });
 
     // document.addEventListener('contextmenu', event => {
     //   toastr.error('This function is not allowed.');

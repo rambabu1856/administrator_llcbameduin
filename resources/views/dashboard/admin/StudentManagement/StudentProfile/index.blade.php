@@ -94,8 +94,8 @@
 
         <x-modal.modal-body>
 
-          <input type="text" name="txtModalStudentId" id="txtModalStudentId">
-          <input type="text" name="txtmodalImageUrl" id="txtmodalImageUrl">
+          <input type="hidden" name="txtModalStudentId" id="txtModalStudentId">
+          <input type="hidden" name="txtmodalImageUrl" id="txtmodalImageUrl">
 
           <div class="col-sm-12 col-md-12 bg-secondary">
             <h6 class="text-warning text-uppercase text-center">Student Profile</h6>

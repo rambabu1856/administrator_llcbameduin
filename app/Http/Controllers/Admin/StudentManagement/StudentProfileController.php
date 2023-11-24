@@ -143,8 +143,6 @@ class StudentProfileController extends Controller
   public function store(Request $request)
   {
 
-    // dd($request->all());
-
     $model = Student::updateOrCreate(
       [
         'id' => $request->txtModalStudentId,

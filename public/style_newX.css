@@ -592,10 +592,6 @@ line_both_side:before {
 
 
 
-.datepicker{
-
-}
-
 .datepicker.dropdown-menu {
   background-color: #0088ff !important;
   color: #fff !important;
@@ -752,4 +748,6 @@ div.dt-button.buttons-columnVisibility.active {
   }
 }
 
+.ui-datepicker { position: relative; z-index: 10000 !important; }
 
+/* .bootstrap-timepicker-widget.dropdown-menu { z-index: 1050!important; }  */

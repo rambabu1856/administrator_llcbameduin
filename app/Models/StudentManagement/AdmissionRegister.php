@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class AdmissionRegister extends Model
 {
     use HasFactory;
-
+    protected $guarded = []; // this is important
 
     public function grade()
     {
