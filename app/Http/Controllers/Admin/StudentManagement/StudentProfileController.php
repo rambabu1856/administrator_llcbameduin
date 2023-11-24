@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Admin\StudentManagement;
 
 
-use Carbon\Carbon;
 use App\Models\Select\Batch;
 use Illuminate\Http\Request;
 use App\Models\Select\Campus;
 use App\Models\Select\Course;
 use App\Models\Select\Gender;
+use Carbon\Carbon;
 use App\Models\Select\IsActive;
 use App\Models\Select\Religion;
 use App\Models\Select\Community;
@@ -18,14 +18,13 @@ use App\Models\Select\Nationality;
 use App\Models\Select\AcademicYear;
 use App\Models\Select\MotherTongue;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use App\Models\StudentManagement\Student;
 
 class StudentProfileController extends Controller
 {
-  public $campus, $campus_id, $department, $course, $batch, $academicYear, $gender, $community, $religion, $bloodGroup, $motherTongue, $nationality, $is_active;
+  public $campus, $department, $course, $batch, $academicYear, $gender, $community, $religion, $bloodGroup, $motherTongue, $nationality, $is_active;
 
-  public function __construct($campus_id)
+  public function __construct()
   {
     $this->campus       = Campus::get();
     $this->department   = Department::get();
@@ -44,7 +43,7 @@ class StudentProfileController extends Controller
   public function index(Request $request)
   {
     // Filter
-    $campus_id         = Auth::guard('admin')->user()->campus_id;
+    $campus         = $this->campus;
 
     if ($request->cmbCampus) {
       $department   = $this->department->where('campus_id', $request->cmbCampus)->get();
@@ -53,22 +52,12 @@ class StudentProfileController extends Controller
     }
 
     if ($request->cmbDepartment) {
-      $course       = $this->department->where('department_id', $request->cmbDepartment)->get();
+      $course       = $this->course->where('department_id', $request->cmbDepartment)->get();
     } else {
       $course       = $this->course;
     }
 
-    if ($request->cmbCourse) {
-      $batch        = $this->batch->whereIn('course_id', $request->cmbCourse);
-    } else {
-      $batch        = $this->batch;
-    }
-
-    if ($batch != []) {
-      $academicYear = $this->academicYear->whereIn('batch_id', $request->cmbBatch);
-    } else {
-      $academicYear = [];
-    }
+    $batch        = [];
 
     $gender         = $this->gender;
     $community      = $this->community;
@@ -76,7 +65,7 @@ class StudentProfileController extends Controller
     $bloodGroup     = $this->bloodGroup;
     $motherTongue   = $this->motherTongue;
     $nationality    = $this->nationality;
-    $is_active          = $this->is_active;
+    $is_active      = $this->is_active;
 
     return view(
       'dashboard.admin.studentmanagement.studentprofile.index',
@@ -85,7 +74,6 @@ class StudentProfileController extends Controller
         'department',
         'course',
         'batch',
-        'academicYear',
         'gender',
         'community',
         'religion',
@@ -99,8 +87,6 @@ class StudentProfileController extends Controller
 
   public function create(Request $request)
   {
-
-    dd($campus_id);
     // FILTERED DATA TO TABLE
     $studentProfileData = Student::with('campus')
       ->with('department')
@@ -149,7 +135,7 @@ class StudentProfileController extends Controller
       });
     }
 
-    $studentProfileData     = $studentProfileData->where('campus_id',)->orderBy('enrollment_number')->get();
+    $studentProfileData     = $studentProfileData->orderBy('enrollment_number')->get();
 
     return $studentProfileData;
   }
