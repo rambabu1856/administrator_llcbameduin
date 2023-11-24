@@ -359,7 +359,8 @@
             dataType: "json",
             async: false,
             success: function(response) {
-
+              $("#modalAdmissionRegister").modal('hide');
+              fetchDataToTable();
             }
           });
 
