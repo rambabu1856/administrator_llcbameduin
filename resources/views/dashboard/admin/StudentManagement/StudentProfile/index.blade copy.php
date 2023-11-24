@@ -26,34 +26,24 @@
 
               <div class="row">
 
-                <x-form.select2 grid="col-md-2" lblClass="required" lblText="Select Course" name="cmbCourse"
-                  :options="$course"></x-form.select2>
+                <x-form.select2 grid="col-md-2" lblClass="required" lblText="Select Course" name="cmbCourse" :options="$course"></x-form.select2>
 
-                <x-form.select2 grid="col-md-2" lblClass="required" lblText="Select Batch" name="cmbBatch"
-                  :options="[]"></x-form.select2>
+                <x-form.select2 grid="col-md-2" lblClass="required" lblText="Select Batch" name="cmbBatch" :options="[]"></x-form.select2>
 
-                <x-form.select2 grid="col-md-2" lblClass="" lblText="Select Gender" name="cmbGender"
-                  :options="$gender"></x-form.select2>
+                <x-form.select2 grid="col-md-2" lblClass="" lblText="Select Gender" name="cmbGender" :options="$gender"></x-form.select2>
 
-                <x-form.select2 grid="col-md-2" lblClass="" lblText="Select Community" name="cmbCommunity"
-                  :options="$community">
+                <x-form.select2 grid="col-md-2" lblClass="" lblText="Select Community" name="cmbCommunity" :options="$community">
                 </x-form.select2>
 
-                <x-form.select2 grid="col-md-2" lblClass="" lblText="Is belogs to PwD category" name="cmbIsPwd"
-                  :options="$is_active"></x-form.select2>
+                <x-form.select2 grid="col-md-2" lblClass="" lblText="Is belogs to PwD category" name="cmbIsPwd" :options="$yesNo"></x-form.select2>
 
-                <x-form.input grid="col-md-2" lblClass="" lblText="Search By Name / Enrl. No" type="text"
-                  name="txtSearchBy" value=""></x-form.input>
+                <x-form.input grid="col-md-2" lblClass="" lblText="Search By Name / Enrl. No" type="text" name="txtSearchBy" value=""></x-form.input>
               </div>
 
               <div class="input-group">
-                <x-button.button grid="mb-3" type="button" btnClass="bg-primary mr-1" name="btnSearch"
-                  faClass="fa-regular fa-paper-plane mr-2" tooltip="Search" btnText="GET"
-                  dataId=""></x-button.button>
+                <x-button.button grid="mb-3" type="button" btnClass="bg-primary mr-1" name="btnSearch" faClass="fa-regular fa-paper-plane mr-2" tooltip="Search" btnText="GET" dataId=""></x-button.button>
 
-                <x-button.button grid="mb-3" type="button" btnClass="bg-danger mr-1 resetForm"
-                  name="btnAdmissionDetail" faClass="fa-solid fa-rotate mr-2" tooltip="Reset" btnText="RESET"
-                  dataId="">
+                <x-button.button grid="mb-3" type="button" btnClass="bg-danger mr-1 resetForm" name="btnAdmissionDetail" faClass="fa-solid fa-rotate mr-2" tooltip="Reset" btnText="RESET" dataId="">
                 </x-button.button>
               </div>
 
@@ -94,7 +84,7 @@
 
         <x-modal.modal-body>
 
-          <input type="text" name="txtModalStudentId" id="txtModalStudentId">
+          <input type="text" name="txtmodalStudentId" id="txtmodalStudentId">
           <input type="text" name="txtmodalImageUrl" id="txtmodalImageUrl">
 
           <div class="col-sm-12 col-md-12 bg-secondary">
@@ -106,12 +96,10 @@
 
               <div class="col-md-12 text-center">
 
-                <img id="preview" src="{{ asset('storage/media/web_images/student.png') }}" alt="Student Image"
-                  class="img-thumbnail" style="min-height: 220px;" />
+                <img id="preview" src="{{ asset('storage/media/web_images/student.png') }}" alt="Student Image" class="img-thumbnail" style="min-height: 220px;" />
 
                 <label class="btn btn-block btn-success mt-1 text-sm">
-                  <i class="fas fa-cloud-upload-alt mr-2"></i> Browse <input type="file" name="student_image"
-                    id="student_image" hidden>
+                  <i class="fas fa-cloud-upload-alt mr-2"></i> Browse <input type="file" name="student_image" id="student_image" hidden>
                 </label>
               </div>
 
@@ -119,92 +107,78 @@
             <div class="col-sm-12 col-md-9">
               <div class="row">
 
-                <x-form.select2 grid="col-sm-12 col-md-3" lblClass="required" lblText="Campus" name="cmbModalCampus"
-                  :options="$campus" selectedOptionVariables="[]"></x-form.select2>
+                <x-form.select2 grid="col-sm-12 col-md-3" lblClass="required" lblText="Campus" name="cmbModalCampus" :options="$campus" selectedOptionVariables="[]"></x-form.select2>
 
-                <x-form.select2 grid="col-sm-12 col-md-3" lblClass="required" lblText="Department"
-                  name="cmbModalDepartment" :options="$department"></x-form.select2>
+                <x-form.select2 grid="col-sm-12 col-md-3" lblClass="required" lblText="Department" name="cmbModalDepartment" :options="$department"></x-form.select2>
 
-                <x-form.select2 grid="col-sm-12 col-md-3" lblClass="required" lblText="Course" name="cmbModalCourse"
-                  :options="$course"></x-form.select2>
+                <x-form.select2 grid="col-sm-12 col-md-3" lblClass="required" lblText="Course" name="cmbModalCourse" :options="$course"></x-form.select2>
 
-                <x-form.select2 grid="col-sm-12 col-md-3" lblClass="required" lblText="Batch" name="cmbModalBatch"
-                  :options="$batch"></x-form.select2>
+                <x-form.select2 grid="col-sm-12 col-md-3" lblClass="required" lblText="Batch" name="cmbModalBatch" :options="$batch"></x-form.select2>
 
               </div>
 
               <div class="row">
 
-                <x-form.input grid="col-sm-12 col-md-2" lblClass="required" lblText="Roll Number" type="text"
-                  name="txtModalRollNo"></x-form.input>
+                <x-form.input grid="col-sm-12 col-md-2" lblClass="required" lblText="Roll Number" type="text" name="txtModalRollNo"></x-form.input>
 
-                <x-form.input grid="col-sm-12 col-md-2" lblClass="required" lblText="Admission Year" type="text"
-                  name="txtModalEnrollmentYear"></x-form.input>
+                <x-form.input grid="col-sm-12 col-md-2" lblClass="required" lblText="Admission Year" type="text" name="txtModalEnrollmentYear"></x-form.input>
 
-                <x-form.input grid="col-sm-12 col-md-2" lblClass="required" lblText="Registration Number"
-                  type="text" name="txtModalRegistrationNumber"></x-form.input>
+                <x-form.input grid="col-sm-12 col-md-2" lblClass="required" lblText="Registration Number" type="text" name="txtModalRegistrationNumber"></x-form.input>
 
-                <x-form.input grid="col-sm-12 col-md-2" lblClass="required" lblText="Registration Year"
-                  type="text" name="txtModalRegistrationYear"></x-form.input>
+                <x-form.input grid="col-sm-12 col-md-2" lblClass="required" lblText="Registration Year" type="text" name="txtModalRegistrationYear"></x-form.input>
 
-                <x-form.input grid="col-sm-12 col-md-2" lblClass="" lblText="Exam Roll Number" type="text"
-                  name="txtModalExaminationRollNumber"></x-form.input>
+                <x-form.input grid="col-sm-12 col-md-2" lblClass="" lblText="Exam Roll Number" type="text" name="txtModalExaminationRollNumber"></x-form.input>
 
-                <x-form.input grid="col-sm-12 col-md-2" lblClass="" lblText="Exam Regn. Year" type="text"
-                  name="txtModalExaminationRollYear"></x-form.input>
+                <x-form.input grid="col-sm-12 col-md-2" lblClass="" lblText="Exam Regn. Year" type="text" name="txtModalExaminationRollYear"></x-form.input>
 
               </div>
 
               <div class="row">
 
-                <x-form.input grid="col-sm-12 col-md-12" lblClass="required" lblText="Student Name" type="text"
-                  name="txtModalStudentName"></x-form.input>
+                <x-form.input grid="col-sm-12 col-md-12" lblClass="required" lblText="Student Name" type="text" name="txtModalStudentName"></x-form.input>
 
               </div>
 
               <div class="row">
-                <x-form.input grid="col-sm-12 col-md-4" lblClass="required" lblText="Father Name" type="text"
-                  name="txtModalFatherName"></x-form.input>
+                <x-form.input grid="col-sm-12 col-md-4" lblClass="required" lblText="Father Name" type="text" name="txtModalFatherName"></x-form.input>
 
-                <x-form.input grid="col-sm-12 col-md-4" lblClass="required" lblText="Mother Name" type="text"
-                  name="txtModalMotherName"></x-form.input>
+                <x-form.input grid="col-sm-12 col-md-4" lblClass="required" lblText="Mother Name" type="text" name="txtModalMotherName"></x-form.input>
 
-                <x-form.input grid="col-sm-12 col-md-4" lblClass="" lblText="Guardian Name" type="text"
-                  name="txtModalGuardianName"></x-form.input>
+                <x-form.input grid="col-sm-12 col-md-4" lblClass="" lblText="Guardian Name" type="text" name="txtModalGuardianName"></x-form.input>
               </div>
             </div>
           </div>
           <div class="row">
-            <x-form.date-time-picker grid="col-sm-12 col-md-3" lblClass="required" lblText="Date of Birth"
-              name="txtModalDateOfBirth" dateFormat="DD/MM/YYYY" />
+            <x-form.date-time-picker grid="col-sm-12 col-md-3" lblClass="required" lblText="Date of Birth" name="txtModalDateOfBirth" dateFormat="DD/MM/YYYY" />
 
-            <x-form.select2 grid="col-sm-12 col-md-3" lblClass="required" lblText="Gender" name="cmbModalGender"
-              :options="$gender"></x-form.select2>
+            <x-form.select2 grid="col-sm-12 col-md-3" lblClass="required" lblText="Gender" name="cmbModalGender" :options="$gender"></x-form.select2>
 
-            <x-form.select2 grid="col-sm-12 col-md-3" lblClass="required" lblText="Community"
-              name="cmbModalCommunity" :options="$community"></x-form.select2>
+            <x-form.select2 grid="col-sm-12 col-md-3" lblClass="required" lblText="Community" name="cmbModalCommunity" :options="$community"></x-form.select2>
 
-            <x-form.select2 grid="col-sm-12 col-md-3" lblClass="required" lblText="Religion" name="cmbModalReligion"
-              :options="$religion"></x-form.select2>
+            <x-form.select2 grid="col-sm-12 col-md-3" lblClass="required" lblText="Religion" name="cmbModalReligion" :options="$religion"></x-form.select2>
           </div>
 
           <div class="row">
 
-            <x-form.select2 grid="col-sm-12 col-md-3" lblClass="required" lblText="Blood Group"
-              name="cmbModalBloodGroup" :options="$bloodGroup"></x-form.select2>
+            <x-form.select2 grid="col-sm-12 col-md-3" lblClass="required" lblText="Blood Group" name="cmbModalBloodGroup" :options="$bloodGroup"></x-form.select2>
 
-            <x-form.select2 grid="col-sm-12 col-md-3" lblClass="required" lblText="Mother Tongue"
-              name="cmbModalMotherTongue" :options="$motherTongue"></x-form.select2>
+            <x-form.select2 grid="col-sm-12 col-md-3" lblClass="required" lblText="Mother Tongue" name="cmbModalMotherTongue" :options="$motherTongue"></x-form.select2>
 
-            <x-form.select2 grid="col-sm-12 col-md-3" lblClass="required" lblText="Nationality"
-              name="cmbModalNationality" :options="$nationality"></x-form.select2>
+            <x-form.select2 grid="col-sm-12 col-md-3" lblClass="required" lblText="Nationality" name="cmbModalNationality" :options="$nationality"></x-form.select2>
 
-            <x-form.select2 grid="col-sm-12 col-md-3" lblClass="required" lblText="Is PwD" name="cmbModalIsPwd"
-              :options="$is_active"></x-form.select2>
+            <x-form.select2 grid="col-sm-12 col-md-3" lblClass="required" lblText="Is PwD" name="cmbModalIsPwd" :options="$yesNo"></x-form.select2>
 
           </div>
 
+          <div class="row">
 
+            <x-form.input grid="col-sm-12 col-md-6" lblClass="required" lblText="Email" type="email" name="txtModalEmail"></x-form.input>
+
+            <x-form.input grid="col-sm-12 col-md-3" lblClass="required" lblText="Phone Number" type="text" name="txtModalPhoneNumber" minlength="10" maxlength="10"></x-form.input>
+
+            <x-form.input grid="col-sm-12 col-md-3" lblClass="" lblText="Phone Number" type="text" name="txtModalPhoneNumberOther" minlength="10" maxlength="10"></x-form.input>
+
+          </div>
           <hr>
           <div class="row">
 
@@ -214,23 +188,17 @@
               </div>
               <div class="row">
 
-                <x-form.input grid="col-sm-12 col-md-12" type="text" lblClass="required"
-                  lblText="Local Addrsss L1" type="text" name="txtModalLocalAddressL1" />
+                <x-form.input grid="col-sm-12 col-md-12" type="text" lblClass="required" lblText="Local Addrsss L1" type="text" name="txtModalLocalAddressL1" />
 
-                <x-form.input grid="col-sm-12 col-md-12" type="text" lblClass="" lblText="Local Addrsss L2"
-                  type="text" name="txtModalLocalAddressL2" />
+                <x-form.input grid="col-sm-12 col-md-12" type="text" lblClass="" lblText="Local Addrsss L2" type="text" name="txtModalLocalAddressL2" />
 
-                <x-form.input grid="col-sm-12 col-md-12" type="text" lblClass="required"
-                  lblText="Post Office (Local)" name="txtModalLocalPostOffice" />
+                <x-form.input grid="col-sm-12 col-md-12" type="text" lblClass="required" lblText="Post Office (Local)" name="txtModalLocalPostOffice" />
 
-                <x-form.input grid="col-sm-12 col-md-12" type="text" lblClass="required"
-                  lblText="District (Local) " name="txtModalLocalDistrict" />
+                <x-form.input grid="col-sm-12 col-md-12" type="text" lblClass="required" lblText="District (Local) " name="txtModalLocalDistrict" />
 
-                <x-form.input grid="col-sm-12 col-md-12" type="text" lblClass="required" lblText="State (Local)"
-                  name="txtModalLocalState" />
+                <x-form.input grid="col-sm-12 col-md-12" type="text" lblClass="required" lblText="State (Local)" name="txtModalLocalState" />
 
-                <x-form.input grid="col-sm-12 col-md-12" type="text" lblClass="required" lblText="Pin (Local)"
-                  name="txtModalLocalPin" />
+                <x-form.input grid="col-sm-12 col-md-12" type="text" lblClass="required" lblText="Pin (Local)" name="txtModalLocalPin" />
               </div>
             </div>
 
@@ -240,40 +208,22 @@
               </div>
               <div class="row">
 
-                <x-form.input grid="col-sm-12 col-md-12" type="text" lblClass="required"
-                  lblText="Permanent Addrsss L1" type="text" name="txtModalPermanentAddressL1" />
+                <x-form.input grid="col-sm-12 col-md-12" type="text" lblClass="required" lblText="Permanent Addrsss L1" type="text" name="txtModalPermanentAddressL1" />
 
-                <x-form.input grid="col-sm-12 col-md-12" type="text" lblClass=""
-                  lblText="Permanent Addrsss L2" type="text" name="txtModalPermanentAddressL2" />
+                <x-form.input grid="col-sm-12 col-md-12" type="text" lblClass="" lblText="Permanent Addrsss L2" type="text" name="txtModalPermanentAddressL2" />
 
-                <x-form.input grid="col-sm-12 col-md-12" type="text" lblClass="required"
-                  lblText="Post Office (Permanent)" name="txtModalPermanentPostOffice" />
+                <x-form.input grid="col-sm-12 col-md-12" type="text" lblClass="required" lblText="Post Office (Permanent)" name="txtModalPermanentPostOffice" />
 
-                <x-form.input grid="col-sm-12 col-md-12" type="text" lblClass="required"
-                  lblText="District (Permanent) " name="txtModalPermanentDistrict" />
+                <x-form.input grid="col-sm-12 col-md-12" type="text" lblClass="required" lblText="District (Permanent) " name="txtModalPermanentDistrict" />
 
-                <x-form.input grid="col-sm-12 col-md-12" type="text" lblClass="required"
-                  lblText="State (Permanent)" name="txtModalPermanentState" />
+                <x-form.input grid="col-sm-12 col-md-12" type="text" lblClass="required" lblText="State (Permanent)" name="txtModalPermanentState" />
 
-                <x-form.input grid="col-sm-12 col-md-12" type="text" lblClass="required"
-                  lblText="Pin (Permanent)" name="txtModalPermanentPin" />
+                <x-form.input grid="col-sm-12 col-md-12" type="text" lblClass="required" lblText="Pin (Permanent)" name="txtModalPermanentPin" />
 
               </div>
             </div>
           </div>
 
-          <div class="row">
-
-            <x-form.input grid="col-sm-12 col-md-6" lblClass="required" lblText="Email" type="email"
-              name="txtModalEmail"></x-form.input>
-
-            <x-form.input grid="col-sm-12 col-md-3" lblClass="required" lblText="Phone Number" type="text"
-              name="txtModalPhoneNumber" minlength="10" maxlength="10"></x-form.input>
-
-            <x-form.input grid="col-sm-12 col-md-3" lblClass="" lblText="Phone Number" type="text"
-              name="txtModalPhoneNumberOther" minlength="10" maxlength="10"></x-form.input>
-
-          </div>
           <hr>
 
           {{-- Admission Details Table --}}
@@ -297,9 +247,8 @@
 
             </x-table.table-body>
           </x-table.table>
-        </x-modal.modal-body>
 
-        <x-modal.modal-footer name="modalSubmitStudentProfileForm">
+        </x-modal.modal-body name="modalSubmitStudentProfileForm"><x-modal.modal-footer>
 
         </x-modal.modal-footer>
 
@@ -346,7 +295,7 @@
         });
 
         $(document).on("click", ".btnEditProfile", function(e) {
-          //   e.preventDefault();
+          e.preventDefault();
           var studentId = $(this).data('id');
 
           $.get("{{ route('admin.student_profile.index') }}" + '/' + studentId + '/edit', function(data) {
@@ -364,7 +313,7 @@
 
             $("#modalEditProfileTitle").html(data.student_name + "  ( " + data.enrollment_number + " )")
 
-            $("#txtModalStudentId").val(data.id)
+            $("#txtmodalStudentId").val(data.id)
             $("#txtmodalImageUrl").val(data.image_url)
 
             var url = "{{ asset('storage/media/student_images') }}" + "/" + data
@@ -413,14 +362,14 @@
             $("#txtModalLocalPostOffice").val(data.local_po_name)
             $("#txtModalLocalDistrict").val(data.local_district)
             $("#txtModalLocalState").val(data.local_state)
-            $("#txtModalLocalPin").val(data.local_pin)
+            $("#txtModalLocalPin").val(data.local_state)
 
-            $("#txtModalPermanentAddressL1").val(data.permanent_address_l1)
-            $("#txtModalPermanentAddressL2").val(data.permanent_address_l2)
-            $("#txtModalPermanentPostOffice").val(data.permanent_po_name)
-            $("#txtModalPermanentDistrict").val(data.permanent_district)
-            $("#txtModalPermanentState").val(data.permanent_state)
-            $("#txtModalPermanentPin").val(data.permanent_pin)
+            $("#txtModalPermanentAddressL1").val(data.local_address_l1)
+            $("#txtModalPermanentAddressL2").val(data.local_address_l2)
+            $("#txtModalPermanentPostOffice").val(data.local_po_name)
+            $("#txtModalPermanentDistrict").val(data.local_district)
+            $("#txtModalPermanentState").val(data.local_state)
+            $("#txtModalPermanentPin").val(data.local_state)
 
             $("#tblModalAdmissionDetails tbody").empty();
 
@@ -434,7 +383,6 @@
                 '<td>' + moment(v.admission_date).format("DD/MM/YYYY") + '</td>' +
                 '</tr>'
               )
-
             });
 
             $("#tblModalExaminationDetails tbody").empty();
@@ -449,13 +397,12 @@
 
           $.ajax({
             type: "POST",
-            url: "{{ route('admin.student_profile.store') }}",
+            url: "{{ route('admin.student_profile.update') }}",
             data: $("#modalEditProfileForm").serialize(),
             dataType: "json",
             async: false,
             success: function(response) {
-              fetchDataToTable()
-              $("#modalEditProfile").modal('hide');
+              console.log(response);
             }
           });
 
@@ -542,5 +489,4 @@
       })
     </script>
   </x-slot>
-
 </x-layouts.administrator.layout>
