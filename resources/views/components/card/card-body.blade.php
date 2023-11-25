@@ -1,4 +1,4 @@
-<div class="card-body pb-0">
+<div class="card-body pb-3">
 
   {{ $slot }}
 

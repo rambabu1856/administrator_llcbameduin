@@ -3,7 +3,7 @@
 
   <x-slot name="content">
 
-    <x-layouts.administrator.content_header contentHeader="STUDENT PROFILE">
+    <x-layouts.administrator.content_header contentHeader="dashboard">
 
       <x-button.dropdown :links="[
           ['url' => '/link1', 'text' => 'Long Roll'],
@@ -15,7 +15,16 @@
     </x-layouts.administrator.content_header>
 
     <section class="content">
-      <h1>Dashboard</h1>
+      <div class="container-fluid">
+        {{-- SEARCH FORM --}}
+        <x-card.card-heading heading="Filter" name="headingSearchForm">
+
+          <x-card.card-body>
+            Card Body Content
+          </x-card.card-body>
+
+        </x-card.card-heading>
+      </div>
     </section>
 
   </x-slot>

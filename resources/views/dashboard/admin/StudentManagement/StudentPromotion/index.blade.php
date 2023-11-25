@@ -30,7 +30,7 @@
               <div class="row">
 
                 <x-form.select2 grid="col-md-3" lblClass="required" lblText="Select Course" name="cmbCourse"
-                  :options="$course"></x-form.select2>
+                  :options="$course" reqired></x-form.select2>
 
                 <x-form.select2 grid="col-md-3" lblClass="required" lblText="Select Batch" name="cmbBatch"
                   :options="[]"></x-form.select2>
@@ -62,13 +62,12 @@
 
               </div>
 
-
             </x-card.card-body>
           </x-form.form>
         </x-card.card-heading>
 
         {{-- DATA TABLE --}}
-        <div class="card pb-2 pt-0 mt-0">
+        <div class="card ">
           <x-card.card-body>
 
             <x-table.table id="tblStudentAdmissionRegister" :tableHeaders="[
@@ -433,6 +432,8 @@
             });
           }
         });
+
+
       });
 
       function fetchDataToTable() {

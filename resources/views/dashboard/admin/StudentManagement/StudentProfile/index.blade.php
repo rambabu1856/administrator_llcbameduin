@@ -341,8 +341,13 @@
         });
 
         $('#btnSearch').on('click', function(e) {
-          //   e.preventDefault();
-          fetchDataToTable();
+          if ($("#cmbCourse").val() == null || $("#cmbCourse").val() == "") {
+            toastr.error("Please Select Course")
+          } else if ($("#cmbBatch").val() == null) {
+            toastr.error("Please Select Batch")
+          } else {
+            fetchDataToTable();
+          }
         });
 
         $(document).on("click", ".btnEditProfile", function(e) {

@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="row mb-1">
       <div class="col-sm-6">
-        <h5 class="text-indigo m-0"><i class="fas fa-users mr-2"></i>{{ $contentHeader }}<span
+        <h5 class="text-indigo text-uppercase m-0"><i class="fas fa-users mr-2 "></i>{{ $contentHeader }}<span
             class="text-maroon text-sm"></span>
         </h5>
       </div>
