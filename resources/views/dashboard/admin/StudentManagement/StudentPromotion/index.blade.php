@@ -68,7 +68,7 @@
         </x-card.card-heading>
 
         {{-- DATA TABLE --}}
-        <div class="card">
+        <div class="card pb-2 pt-0 mt-0">
           <x-card.card-body>
 
             <x-table.table id="tblStudentAdmissionRegister" :tableHeaders="[
@@ -122,27 +122,26 @@
 
             <div class="row">
 
-              <x-form.input grid="col-sm-12 col-md-4" lblClass="required" lblText="Student Name" type="text"
+              <x-form.input grid="col-sm-12 col-md-3" lblClass="required" lblText="Student Name" type="text"
                 name="txtModalStudentName"></x-form.input>
 
-              <x-form.input grid="col-sm-12 col-md-4" lblClass="required" lblText="Enrollment Number Number"
-                type="text" name="txtModalEnrollmentNumber"></x-form.input>
+              <x-form.input grid="col-sm-12 col-md-3" lblClass="required" lblText="Enrollment Number" type="text"
+                name="txtModalEnrollmentNumber"></x-form.input>
 
-              <x-form.input grid="col-sm-12 col-md-4" lblClass="required" lblText="Roll Number" type="text"
+              <x-form.input grid="col-sm-12 col-md-3" lblClass="required" lblText="Roll Number" type="text"
                 name="txtModalRollNo"></x-form.input>
 
+              <x-form.select2 grid="col-sm-12 col-md-3" lblClass="required" lblText="Mode of Transaction"
+                name="cmbModalModeOfTransaction" :options="$modeOfTransaction"></x-form.select2>
             </div>
 
             <div class="row">
 
-              <x-form.select2 grid="col-sm-12 col-md-3" lblClass="required" lblText="Mode of Transaction"
-                name="cmbModalModeOfTransaction" :options="$modeOfTransaction"></x-form.select2>
-
-              <x-form.select2 grid="col-sm-12 col-md-3 sbcRefenceNumber" lblClass="required"
+              <x-form.select2 grid="col-sm-12 col-md-6 sbcRefenceNumber" lblClass="required"
                 lblText="SB Collect Reference Number" name="cmbModalSbcRefenceNumber"
                 :options="[]"></x-form.select2>
 
-              <x-form.input grid="col-sm-12 col-md-3 otherFeeReferenceNumber hide" lblClass="required"
+              <x-form.input grid="col-sm-12 col-md-6   otherFeeReferenceNumber hide" lblClass="required"
                 lblText="Fee Receipt ReferenceNumber" type="text"
                 name="txtOtherFeeReferenceNumber"></x-form.input>
 
@@ -303,6 +302,7 @@
 
         // POPUP STUDENT PROMOTE MODAL
         $(document).on("click", ".btnPromoteStudent", function(e) {
+
           e.preventDefault();
 
           resetModal();
@@ -392,10 +392,15 @@
 
                 $.each(response, function(i, v) {
 
-                  $('#cmbModalSbcRefenceNumber').append('<option value=' + v.transaction_reference_no +
-                    '>' + v.transaction_reference_no + v.student_name + '</option>');
+                  var studentName = (v.student_name).toUpperCase()
 
+                  $('#cmbModalSbcRefenceNumber').append('<option  value=' + v
+                    .transaction_reference_no +
+                    '><span class="text-uppercase">' + v.transaction_reference_no +
+                    ' <- -> ' + studentName +
+                    '</span></option>');
                 });
+
                 $('#cmbModalSbcRefenceNumber').val(null).trigger('change');
               }
             });
