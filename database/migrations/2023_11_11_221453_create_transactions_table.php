@@ -19,15 +19,21 @@ return new class extends Migration
             $table->string('student_name', 100)->nullable();
             $table->string('father_name', 100)->nullable();
             $table->string('application_id', 100)->nullable();
-            $table->string('enrollment_no', 100)->nullable();
+            $table->string('enrollment_number', 100)->nullable();
+
             $table->foreignId('grade_id')->nullable()->constrained('grades')->default(0)->onUpdate('cascade');
             $table->string('grade_name', 100)->nullable();
+
             $table->foreignId('semester_id')->nullable()->constrained('semesters')->default(0)->onUpdate('cascade');
             $table->string('semester_name', 100)->nullable();
+
             $table->foreignId('academic_year_id')->nullable()->default(0)->constrained('academic_years')->onUpdate('cascade')->comment('Academic Year/Year');
             $table->string('academic_year', 20)->nullable();
+
             $table->foreignId('mode_of_transaction_id')->nullable()->constrained('mode_of_transactions')->onUpdate('cascade')->comment('SBC, Cash etc');
+
             $table->string('transaction_reference_no', 20)->nullable();
+            $table->boolean('is_sbc_used')->default(false);
 
             $table->foreignId('fee_group_head_id')->nullable()->constrained('fee_group_heads')->onUpdate('cascade')->comment('Fee: Main Head');
 

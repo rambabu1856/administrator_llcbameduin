@@ -146,11 +146,11 @@
                 lblText="Fee Receipt ReferenceNumber" type="text"
                 name="txtOtherFeeReferenceNumber"></x-form.input>
 
-              <x-form.date-time-picker grid="col-sm-12 col-md-3" lblClass="required" lblText="Fee Receipt Date"
-                name="txtModalReceiptDate" dateFormat="DD/MM/YYYY" />
+              <x-form.input grid="col-sm-12 col-md-3" lblClass="required" lblText="Fee Receipt Date" type="text"
+                name="txtModalReceiptDate" value="" readonly></x-form.input>
 
               <x-form.input grid="col-sm-12 col-md-3 " lblClass="required" lblText="Fee Receipt Amount"
-                type="text" name="txtModalReceiptAmount"></x-form.input>
+                type="text" name="txtModalReceiptAmount" readonly></x-form.input>
 
             </div>
 
@@ -186,8 +186,8 @@
       var courseId, batchId;
 
       $(document).ready(function() {
-        var dateMin = new Date();
-        $("#txtFeeReceiptFromDate, #txtFeeReceiptToDate").datepicker({
+
+        $("#txtFeeReceiptFromDate, #txtFeeReceiptToDate, #txtModalReceiptDate").datepicker({
           changeMonth: true,
           changeYear: true,
           dateFormat: "dd/mm/yy",
@@ -304,6 +304,9 @@
         // POPUP STUDENT PROMOTE MODAL
         $(document).on("click", ".btnPromoteStudent", function(e) {
           e.preventDefault();
+
+          resetModal();
+
           var studentId = $(this).data('id');
 
           $.get("{{ route('admin.student_profile.index') }}" + '/' + studentId + '/edit', function(data) {
@@ -355,17 +358,21 @@
         // MODAL
         // MODE OF TRANSACTION CHANGE EVENT In Modal
         $(document).on("change", "#cmbModalModeOfTransaction", function(e) {
+
           e.preventDefault();
 
           var transactionModeId = $(this).val();
 
           var feeReceiptFromDate = $('#txtFeeReceiptFromDate').val()
           var feeReceiptToDate = $('#txtFeeReceiptToDate').val()
+          var enrollmentNumber = $('#txtModalEnrollmentNumber').val()
 
           if (transactionModeId == 2) {
+            // Toggle
             $(".otherFeeReferenceNumber").addClass(" hide");
             $(".sbcRefenceNumber").removeClass(" hide");
 
+            var subStringOfName = $('#txtModalStudentName').val().split(" ", 1)[0]
 
             $.ajax({
               type: "POST",
@@ -373,24 +380,54 @@
               data: {
                 'transactionModeId': transactionModeId,
                 'feeReceiptFromDate': feeReceiptFromDate,
-                'feeReceiptToDate': transactionModeId,
+                'feeReceiptToDate': feeReceiptToDate,
+                'enrollmentNumber': enrollmentNumber,
+                'feeGroup': 1,
+                'subStringOfName': subStringOfName,
               },
               dataType: "json",
               success: function(response) {
-                console.log(response);
+
+                $("#cmbModalSbcRefenceNumber").empty();
+
+                $.each(response, function(i, v) {
+
+                  $('#cmbModalSbcRefenceNumber').append('<option value=' + v.transaction_reference_no +
+                    '>' + v.transaction_reference_no + v.student_name + '</option>');
+
+                });
+                $('#cmbModalSbcRefenceNumber').val(null).trigger('change');
               }
             });
-
-
-
-
           } else {
+            // Toggle
             $(".otherFeeReferenceNumber").removeClass(" hide");
             $(".sbcRefenceNumber").addClass(" hide");
           }
         });
 
+        // SB COLLECT REFERENCE NUMBER CHANGE
+        $(document).on("change", "#cmbModalSbcRefenceNumber", function(e) {
 
+          e.preventDefault();
+
+          var sbcRefenceNumber = $(this).val();
+
+          if (sbcRefenceNumber !== null && sbcRefenceNumber != "") {
+            $.ajax({
+              type: "POST",
+              url: "{{ url('admin/getSbcReferenceNumber') }}",
+              data: {
+                'sbcRefenceNumber': sbcRefenceNumber,
+              },
+              dataType: "json",
+              success: function(response) {
+                $('#txtModalReceiptDate').val(moment(response.transaction_date).format("DD/MM/YYYY"))
+                $('#txtModalReceiptAmount').val(response.receipt_amount)
+              }
+            });
+          }
+        });
       });
 
       function fetchDataToTable() {
@@ -473,6 +510,11 @@
         $("form select").val(null).trigger("change");
         $('form').trigger("reset");
       })
+
+      function resetModal() {
+        $("#modalEditProfileForm select").val(null).trigger("change");
+        $('#modalEditProfileForm').trigger("reset");
+      }
     </script>
   </x-slot>
 
