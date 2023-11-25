@@ -16,9 +16,14 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->string('sbc_category_name', 100)->nullable();
+
+            $table->foreignId('student_id')->nullable()->constrained('students')->default(0)->onUpdate('cascade');
             $table->string('student_name', 100)->nullable();
+
             $table->string('father_name', 100)->nullable();
+
             $table->string('application_id', 100)->nullable();
+
             $table->string('enrollment_number', 100)->nullable();
 
             $table->foreignId('grade_id')->nullable()->constrained('grades')->default(0)->onUpdate('cascade');
