@@ -27,17 +27,9 @@
     href="{{ asset('admin_assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
   <link rel="stylesheet"
     href="{{ asset('admin_assets/plugins/datatables-rowgroup/css/rowGroup.bootstrap4.min.css') }}">
-
-
-
-  {{-- <link rel="stylesheet" href="{{ asset('admin_assets/plugins/bs-date-picker/bs-date-picker.css') }}"> --}}
   <link rel="stylesheet" href="{{ asset('admin_assets/plugins/datatables-buttons/css/buttons.bootstrap4.css') }}">
-  <link rel="stylesheet" href="{{ asset('admin_assets/plugins/bootstrap-input-tag/css/bootstrap-tagsinput.css') }}">
-
 
   {{ $css }}
-
-
 
   <link rel="stylesheet" href="{{ asset('admin_assets/dist/css/adminlte.min.css') }}">
 
@@ -47,16 +39,8 @@
     href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900italic,900'>
 
   <link rel="stylesheet" href="{{ asset('style_newX.css') }}">
-  {{--
-  <link rel="stylesheet" href="{{ asset('admin_assets/draggable_modal.css') }}"> --}}
 
 </head>
-
-{{-- <div id="loading" class="flex-column justify-content-center align-items-center"
-  style="z-index: 1000000000; opacity: .8; background: rgb(2, 2, 2)">
-  <img src="{{ asset('storage/media/web_images/logo.jpg') }}" alt="LLC" />
-  <p class="text-muted text-bold text-xs"></p>
-</div> --}}
 
 <div class="loading" id="loading">
   <div class="lds-ripple">
@@ -80,20 +64,16 @@
       @component('components.layouts.administrator.footer')
       @endcomponent
 
-      <!-- Control Sidebar -->
-      <aside class="control-sidebar control-sidebar-dark">
-        <!-- Control sidebar content goes here -->
-      </aside>
-      <!-- /.control-sidebar -->
+      <aside class="control-sidebar control-sidebar-dark"></aside>
+
     </div>
   </div>
-  <!-- ./wrapper -->
+
 
   <script src="{{ asset('admin_assets/plugins/jquery/jquery.min.js') }}"></script>
   <script src="{{ asset('admin_assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ asset('admin_assets/plugins/moment/moment.min.js') }}"></script>
-  <script src="{{ asset('admin_assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}">
-  </script>
+
   <script src="{{ asset('admin_assets/plugins/daterangepicker/daterangepicker.js') }}"></script>
   <script src="{{ asset('admin_assets/plugins/select2/js/select2.full.js') }}"></script>
   <script src="{{ asset('admin_assets/plugins/toastr/toastr.min.js') }}"></script>
@@ -104,14 +84,12 @@
   <script src="{{ asset('admin_assets/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
   <script src="{{ asset('admin_assets/plugins/datatables-rowgroup/js/dataTables.rowGroup.js') }}"></script>
 
-  {{-- <script src="{{ asset('admin_assets/plugins/bs-date-picker/bs-date-picker.js') }}"></script> --}}
-  <script src="{{ asset('admin_assets/plugins/bootstrap-input-tag/js/bootstrap-tagsinput.js') }}"></script>
-
+  <script src="{{ asset('admin_assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}">
+  </script>
+  <script src="{{ asset('admin_assets/plugins/chart.js/Chart.min.js') }}"></script>
   <script src="{{ asset('admin_assets/dist/js/adminlte.min.js') }}"></script>
 
-  <script src="{{ asset('admin_assets/plugins/chart.js/Chart.min.js') }}"></script>
-  <!-- AdminLTE for demo purposes -->
-  <script src="{{ asset('admin_assets/dist/js/demo.js') }}"></script>
+
 
   {{ $script }}
 

@@ -1,6 +1,8 @@
 <x-layouts.administrator.layout>
 
-  <x-slot name="css"></x-slot>
+  <x-slot name="css">
+    <link rel="stylesheet" href="{{ asset('admin_assets/plugins/jquery-ui/jquery-ui.min.css') }}">
+  </x-slot>
 
   <x-slot name="content">
 
@@ -27,17 +29,24 @@
 
               <div class="row">
 
-                <x-form.select2 grid="col-md-2" lblClass="required" lblText="Select Course" name="cmbCourse"
+                <x-form.select2 grid="col-md-3" lblClass="required" lblText="Select Course" name="cmbCourse"
                   :options="$course"></x-form.select2>
 
-                <x-form.select2 grid="col-md-2" lblClass="required" lblText="Select Batch" name="cmbBatch"
+                <x-form.select2 grid="col-md-3" lblClass="required" lblText="Select Batch" name="cmbBatch"
                   :options="[]"></x-form.select2>
 
-                <x-form.select2 grid="col-md-2" lblClass="required" lblText="Select Academic Year"
+                <x-form.select2 grid="col-md-3" lblClass="required" lblText="Select Academic Year"
                   name="cmbAcademicYear" :options="[]"></x-form.select2>
 
-                <x-form.select2 grid="col-md-2" lblClass="required" lblText="Select Class" name="cmbGrade"
+                <x-form.select2 grid="col-md-3" lblClass="required" lblText="Select Class" name="cmbGrade"
                   :options="[]"></x-form.select2>
+              </div>
+              <div class="row">
+                <x-form.input grid="col-sm-12 col-md-2" lblClass="required" lblText="Fee Receipt From Date"
+                  type="text" name="txtFeeReceiptFromDate" value=""></x-form.input>
+
+                <x-form.input grid="col-sm-12 col-md-2" lblClass="required" lblText="Fee Receipt From Date"
+                  type="text" name="txtFeeReceiptToDate" value=""></x-form.input>
 
                 <x-form.input grid="col-sm-12 col-md-2" lblClass="" lblText="Search By Name / Enrl. No"
                   type="text" name="txtSearchBy" value=""></x-form.input>
@@ -52,6 +61,7 @@
                 </x-button.button>
 
               </div>
+
 
             </x-card.card-body>
           </x-form.form>
@@ -145,14 +155,23 @@
             </div>
 
             <div class="row">
-
+              <table id="feeGroup" class="table-hover tablesorter table table-fixed">
+                <thead>
+                  <tr>
+                    <th><input type="checkbox" aria-label="Checkbox for following text input" id="chkSelectAll"
+                        name="chkSelectAll"></th>
+                    <th style="width:15%">Academic Year</th>
+                    <th style="width:15%">Semester</th>
+                    <th style="width:50%">Fee Head</th>
+                    <th style="width:15%">Amount</th>
+                    <th style="width:15%;"><button class="btn btn-warning d-none" id="btnSaveFeeGroup">Save
+                        Selected Fee Group</button></th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
             </div>
-
-            <x-table.table id="tblModalAdmissionDetails" :tableHeaders="['Enrollment Number', 'Roll Number', 'Academic Year', 'Grade', 'Admission Date']">
-              <x-table.table-body>
-
-              </x-table.table-body>
-            </x-table.table>
           </div>
         </div>
       </x-modal.modal-body>
@@ -161,14 +180,22 @@
   </x-modal.modal>
 
   <x-slot name="script">
+    <script src="{{ asset('admin_assets/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
     <script>
       // Course Change Function
-
-
       var courseId, batchId;
 
       $(document).ready(function() {
-
+        var dateMin = new Date();
+        $("#txtFeeReceiptFromDate, #txtFeeReceiptToDate").datepicker({
+          changeMonth: true,
+          changeYear: true,
+          dateFormat: "dd/mm/yy",
+          showButtonPanel: true,
+          yearRange: "-100:+0",
+          maxDate: "+0D",
+          showAnim: 'slide'
+        });
 
         // COURSE CHANGE
         $(document).on("change", "#cmbCourse", function() {
@@ -274,7 +301,7 @@
           }
         });
 
-
+        // POPUP STUDENT PROMOTE MODAL
         $(document).on("click", ".btnPromoteStudent", function(e) {
           e.preventDefault();
           var studentId = $(this).data('id');
@@ -325,21 +352,45 @@
 
         });
 
+        // MODAL
+        // MODE OF TRANSACTION CHANGE EVENT In Modal
         $(document).on("change", "#cmbModalModeOfTransaction", function(e) {
           e.preventDefault();
 
-          var transactionTypeId = $(this).val();
+          var transactionModeId = $(this).val();
 
-          if (transactionTypeId == 2) {
-            alert(transactionTypeId)
+          var feeReceiptFromDate = $('#txtFeeReceiptFromDate').val()
+          var feeReceiptToDate = $('#txtFeeReceiptToDate').val()
+
+          if (transactionModeId == 2) {
             $(".otherFeeReferenceNumber").addClass(" hide");
             $(".sbcRefenceNumber").removeClass(" hide");
+
+
+            $.ajax({
+              type: "POST",
+              url: "{{ url('admin/getSbcReferenceNumber') }}",
+              data: {
+                'transactionModeId': transactionModeId,
+                'feeReceiptFromDate': feeReceiptFromDate,
+                'feeReceiptToDate': transactionModeId,
+              },
+              dataType: "json",
+              success: function(response) {
+                console.log(response);
+              }
+            });
+
+
+
+
           } else {
-            alert(transactionTypeId)
             $(".otherFeeReferenceNumber").removeClass(" hide");
             $(".sbcRefenceNumber").addClass(" hide");
           }
         });
+
+
       });
 
       function fetchDataToTable() {

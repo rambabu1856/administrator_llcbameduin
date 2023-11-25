@@ -14,14 +14,21 @@ return new class extends Migration
     public function up()
     {
         Schema::create('admins', function (Blueprint $table) {
+
             $table->id();
-            $table->string('enrollment_no', 8)->nullable();
-            $table->string('name');
+
+            $table->string('name', 100)->nullable();
+            $table->integer('role');
+
+            $table->foreignId('campus_id')->constrained('campuses')->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            $table->foreignId('course_id')->constrained('courses')->onUpdate('cascade')
+                ->onDelete('cascade');
+
             $table->string('email')->unique();
-            $table->string('whatapp_number')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('user_role')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

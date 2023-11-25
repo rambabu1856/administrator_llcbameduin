@@ -39,6 +39,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::POST('getBatch', [SelectBox::class, 'getBatch'])->name('getBatch');
         Route::POST('getAcademicYear', [SelectBox::class, 'getAcademicYear'])->name('getAcademicYear');
         Route::POST('getAcademicYearGrade', [SelectBox::class, 'getAcademicYearGrade'])->name('getAcademicYearGrade');
+        Route::POST('getSbcReferenceNumber', [SelectBox::class, 'getSbcReferenceNumber'])->name('getSbcReferenceNumber');
 
         // STUDENT MANAGEMENT
         Route::resource('/student_profile', StudentProfileController::class);

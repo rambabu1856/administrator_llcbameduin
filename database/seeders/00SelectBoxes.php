@@ -1,3 +1,8 @@
+INSERT INTO `admins` (`id`, `name`, `role`, `campus_id`, `course_id`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Ram Babu', NULL, 1, 1, 'admin@gmail.com', '2023-05-29 02:34:15', '$2y$10$YwZxXNWb7veiC5nWsCqDO.wK2Vl8DvgsWC0Ry7itvd5ICQXt7kAti', NULL, '2023-05-29 02:34:15', '2023-05-29 02:34:15'),
+(2, 'Smita Mohanty', NULL, 1, 1, 'smita111@gmail.com', '2023-05-29 02:34:15', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NULL, '2023-05-29 02:34:15', '2023-08-11 06:17:40');
+
+
 INSERT INTO `academic_years` (`id`, `batch_id`, `grade_id`, `year_id`, `slug`, `is_active`, `created_at`, `updated_at`) VALUES
 (1, 1, 1, '1', '2001-2002->PRE LAW', 0, '2022-02-08 14:55:00', '2022-02-08 14:55:00'),
 (2, 1, 2, '2', '2002-2003->INTER LAW', 0, '2022-02-08 14:55:00', '2022-02-08 14:55:00'),
@@ -1179,7 +1184,7 @@ INSERT INTO `mode_of_transactions` (`id`, `title`, `is_active`, `created_at`, `u
 (5, 'Cheque', 0, NULL, NULL),
 (6, 'Challan', 0, NULL, NULL);
 
-INSERT INTO `creditor` (`id`, `title`) VALUES
+INSERT INTO `creditors` (`id`, `title`) VALUES
 (1, 'S. Adi Patra'),
 (2, 'TPSODL, BED-1'),
 (3, 'Susant Kumar Tripathy (For Railtel )'),

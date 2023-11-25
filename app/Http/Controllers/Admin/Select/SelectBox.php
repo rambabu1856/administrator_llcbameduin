@@ -32,4 +32,11 @@ class SelectBox extends Controller
 
         return $academicYear;
     }
+
+    public function getSbcReferenceNumber(Request $request)
+    {
+        dd($request->all());
+
+        $scbReferenceNumbers = Transaction::
+    }
 }
