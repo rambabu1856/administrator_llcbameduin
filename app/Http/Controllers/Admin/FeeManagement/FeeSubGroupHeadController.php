@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin\FeeManagement;
 
-use App\Models\Select\FeeSubGroupGroupHead;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class FeeSubGroupHead extends Controller
+class FeeSubGroupHeadController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class FeeSubGroupHead extends Controller
      */
     public function index()
     {
-        //
+        dd('sub_group_head');
     }
 
     /**
@@ -41,10 +41,10 @@ class FeeSubGroupHead extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Select\FeeSubGroupGroupHead  $feeSubGroupGroupHead
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(FeeSubGroupGroupHead $feeSubGroupGroupHead)
+    public function show($id)
     {
         //
     }
@@ -52,10 +52,10 @@ class FeeSubGroupHead extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Select\FeeSubGroupGroupHead  $feeSubGroupGroupHead
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(FeeSubGroupGroupHead $feeSubGroupGroupHead)
+    public function edit($id)
     {
         //
     }
@@ -64,10 +64,10 @@ class FeeSubGroupHead extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Select\FeeSubGroupGroupHead  $feeSubGroupGroupHead
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, FeeSubGroupGroupHead $feeSubGroupGroupHead)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -75,10 +75,10 @@ class FeeSubGroupHead extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Select\FeeSubGroupGroupHead  $feeSubGroupGroupHead
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(FeeSubGroupGroupHead $feeSubGroupGroupHead)
+    public function destroy($id)
     {
         //
     }

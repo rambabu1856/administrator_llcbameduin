@@ -5,9 +5,14 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\Select\SelectBox;
+use App\Http\Controllers\Admin\FeeManagement\FeeGroupHeadController;
+use App\Http\Controllers\Admin\FeeManagement\FeeStractureController;
+use App\Http\Controllers\Admin\FeeManagement\FeeStructureController;
+use App\Http\Controllers\Admin\FeeManagement\FeeSubGroupHeadController;
 use App\Http\Controllers\Admin\StudentManagement\StudentProfileController;
 use App\Http\Controllers\Admin\StudentManagement\StudentPromotionController;
 use App\Http\Controllers\Admin\StudentManagement\AdmissionRegisterController;
+use App\Models\StudentFee\FeeStructure;
 
 Route::prefix('admin')->name('admin.')->group(function () {
 
@@ -45,5 +50,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('/student_profile', StudentProfileController::class);
         Route::resource('/student_admission_register', AdmissionRegisterController::class);
         Route::resource('/student_promotion', StudentPromotionController::class);
+
+        // FEE MANAGEMENT
+
+        Route::resource('/fee_structure', FeeStructureController::class);
+        Route::resource('/fee_group_head', FeeGroupHeadController::class);
+        Route::resource('/fee_sub_group_head', FeeSubGroupHeadController::class);
     });
 });

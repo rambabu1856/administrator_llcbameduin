@@ -26,9 +26,9 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item menu-open">
-            <a href="#" class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+          <li class="nav-item"> {{-- menu-open --}}
+            <a href="#" class="nav-link ">
+              <i class="nav-icon fa-solid fa-graduation-cap"></i>
               <p>
                 Student Management
                 <i class="right fas fa-angle-left"></i>
@@ -36,7 +36,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ url('admin/student_profile') }}" class="nav-link active">
+                <a href="{{ url('admin/student_profile') }}" class="nav-link ">
                   <i class="fa-solid fa-users-rays nav-icon"></i>
                   <p>Student Profile</p>
                 </a>
@@ -124,14 +124,95 @@
                   </li>
                 </ul>
               </li>
+
+            </ul>
+          </li>
+
+          <li class="nav-item menu-open">
+            <a href="#" class="nav-link active">
+              <i class="nav-icon fa-solid fa-indian-rupee-sign"></i>
+              <p>
+                Fee Management
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ url('admin/cache') }}" class="nav-link active">
-                  <i class="fa-solid fa-users-rays nav-icon"></i>
-                  <p>Clear Cache</p>
+                <a href="{{ url('admin/fee_structure') }}" class="nav-link">
+                  <i class="nav-icon fa-solid fa-list-check"></i>
+                  <p>Fee Structure</p>
                 </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="fa-solid fa-book-open-reader nav-icon"></i>
+                  <p>
+                    REPORT
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ url('/') }}" class="nav-link">
+                      <i class="fa-solid fa-check nav-icon"></i>
+                      <p>Processing Fee</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ url('/') }}" class="nav-link">
+                      <i class="fa-solid fa-check nav-icon"></i>
+                      <p>Admission Fee (Pre Law)</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ url('/') }}" class="nav-link">
+                      <i class="fa-solid fa-check nav-icon"></i>
+                      <p>Existing Student Fee</p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a href="{{ url('/') }}" class="nav-link">
+                  <i class="fa-solid fa-download nav-icon"></i>
+                  <p>
+                    Download
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ url('/') }}" class="nav-link">
+                      <i class="fa-brands fa-wpforms nav-icon"></i>
+                      <p>1 fee</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ url('/') }}" class="nav-link">
+                      <i class="fa-brands fa-wpforms nav-icon"></i>
+                      <p>2 Fee</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ url('/') }}" class="nav-link">
+                      <i class="fa-brands fa-wpforms nav-icon"></i>
+                      <p>3 Fee</p>
+                    </a>
+                  </li>
+                </ul>
               </li>
             </ul>
           </li>
+
+          <li class="nav-item">
+            <a href="{{ url('admin/cache') }}" class="nav-link ">
+              <i class="fa-solid fa-users-rays nav-icon"></i>
+              <p>Clear Cache</p>
+            </a>
+          </li>
+
+
+
           {{-- <li class="nav-item">
             <a href="pages/widgets.html" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
@@ -140,8 +221,8 @@
                 <span class="right badge badge-danger">New</span>
               </p>
             </a>
-          </li>
-          <li class="nav-item">
+          </li> --}}
+          {{--           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-copy"></i>
               <p>

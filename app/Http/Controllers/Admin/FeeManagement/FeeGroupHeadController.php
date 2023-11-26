@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin\FeeManagement;
 
-use App\Models\Select\FeeGroupHead;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class FeeGroupHeadController extends Controller
@@ -14,7 +14,7 @@ class FeeGroupHeadController extends Controller
      */
     public function index()
     {
-        //
+        dd('group_head');
     }
 
     /**
@@ -41,10 +41,10 @@ class FeeGroupHeadController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Select\FeeGroupHead  $feeGroupHead
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(FeeGroupHead $feeGroupHead)
+    public function show($id)
     {
         //
     }
@@ -52,10 +52,10 @@ class FeeGroupHeadController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Select\FeeGroupHead  $feeGroupHead
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(FeeGroupHead $feeGroupHead)
+    public function edit($id)
     {
         //
     }
@@ -64,10 +64,10 @@ class FeeGroupHeadController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Select\FeeGroupHead  $feeGroupHead
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, FeeGroupHead $feeGroupHead)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -75,10 +75,10 @@ class FeeGroupHeadController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Select\FeeGroupHead  $feeGroupHead
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(FeeGroupHead $feeGroupHead)
+    public function destroy($id)
     {
         //
     }
