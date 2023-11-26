@@ -200,22 +200,34 @@
 
           courseId = $('option:selected', this).val();
 
-          $.ajax({
-            type: "POST",
-            url: "{{ url('admin/getBatch') }}",
-            data: {
-              id: courseId
-            },
-            beforeSend: function() {
-              $('#cmbBatch').empty().trigger("change");
-            },
-            success: function(response) {
-              $.each(response, function(i, v) {
-                $('#cmbBatch').append('<option value=' + v.id + '>' + v.title + '</option>');
-              });
-              $('#cmbBatch').val(null).trigger('change');
-            }
-          });
+          $('#cmbBatch').empty();
+
+          if (courseId > 0) {
+            $.ajax({
+              type: "POST",
+              url: "{{ url('admin/getBatch') }}",
+              data: {
+                id: courseId
+              },
+              beforeSend: function() {
+                $('#cmbBatch').empty();
+                $('.loading').show();
+              },
+              success: function(response) {
+                $.each(response, function(i, v) {
+                  $('#cmbBatch').append('<option value=' + v.id + '>' + v.title + '</option>');
+                });
+                $('#cmbBatch').val(null).trigger('change');
+              },
+              error: function(xhr, status, text) {
+
+              },
+              complete: function() {
+                $('.loading').hide();
+              }
+            });
+          }
+
 
         });
 
@@ -232,14 +244,24 @@
               data: {
                 batchId: batchId
               },
-              success: function(response) {
+              beforeSend: function() {
                 $('#cmbAcademicYear').empty();
+                $('.loading').show();
+              },
+              success: function(response) {
+
                 $('#cmbGrade').empty();
                 $.each(response, function(i, v) {
                   $('#cmbAcademicYear').append('<option value=' + v.id + '>' + v.year.title +
                     '</option>');
                 });
                 $('#cmbAcademicYear').val(null).trigger('change');
+              },
+              error: function(xhr, status, text) {
+
+              },
+              complete: function() {
+                $('.loading').hide();
               }
             });
           }
@@ -264,7 +286,8 @@
                 academicYearId: academicYearId
               },
               beforeSend: function() {
-                $('#cmbGrade').empty().trigger("change");
+                $('#cmbGrade').empty();
+                $('.loading').show();
               },
               success: function(response) {
 
@@ -275,6 +298,12 @@
 
                 });
                 $('#cmbGrade').val(null).trigger('change');
+              },
+              error: function(xhr, status, text) {
+
+              },
+              complete: function() {
+                $('.loading').hide();
               }
             });
           }
@@ -308,37 +337,89 @@
 
           var studentId = $(this).data('id');
 
-          $.get("{{ route('admin.student_profile.index') }}" + '/' + studentId + '/edit', function(data) {
+          // GET FEE FOR BATCH, ACADEMIC YEAR AND GRADE
+          $.ajax({
+            type: 'POST',
+            url: "{{ url('admin/getEligibleFee') }}",
+            data: {
+              studentId: studentId,
+              feeGroupHeadId: 1,
+              courseId: $('#cmbCourse').val(),
+              batchId: $('#cmbBatch').val(),
+              gradeId: $('#cmbGrade').val(),
+            },
+            dataType: "json",
+            beforeSend: function() {
+              $('#feeGroup tbody').empty();
+              $('.loading').show();
+            },
+            success: function(response) {
 
-            var roll_no = data.enrollment_number.split("/")[0]
+              var sl_no = 0;
+              var total_amount = 0;
 
-            $("#modalEditProfileTitle").html(data.student_name + "  ( " + data.enrollment_number + " )")
+              $.each(response, function(i, v) {
+
+                sl_no = sl_no + 1;
+
+                $("#feeGroup tbody").append('<tr>' +
+
+                  '<td>' + sl_no + '</td>' +
+                  '<td>' + v.batch.title + '</td>' +
+                  '<td>' + v.fee_group_head.title + '</td>' +
+                  '<td>' + v.fee_sub_group_head.title + '</td>' +
+                  '<td>' + v.amount + '</td>' +
+
+                  '</tr>'
+                )
+
+              });
+              $('[data-toggle="tooltip"]').tooltip();
+              //   $("#headingSearchForm").html('Total Record(s): ' + sl_no);
+            },
+            error: function(xhr, status, text) {
+              $('.loading').hide();
+            },
+            complete: function() {
+              $('.loading').hide();
+            }
+          });
+
+
+
+
+          $.get("{{ route('admin.student_promotion.index') }}" + '/' + studentId, function(response) {
+
+            var roll_no = response.data.enrollment_number.split("/")[0]
+
+            $("#modalEditProfileTitle").html(response.data.student_name + "  ( " + response.data
+              .enrollment_number + " )")
 
             // hidden Inputs
-            $("#txtModalStudentId").val(data.id)
-            $("#txtModalImageUrl").val(data.image_url)
+            $("#txtModalStudentId").val(response.data.id)
+            $("#txtModalImageUrl").val(response.data.image_url)
 
-            var url = "{{ asset('storage/media/student_images') }}" + "/" + data
+            var url = "{{ asset('storage/media/student_images') }}" + "/" + response.data
               .image_url +
               "?timestamp=" + new Date().getTime();
 
 
-            if (data.image_url) {
+            if (response.data.image_url) {
               $('#preview').attr('src', url);
             } else {
               $('#preview').attr('src', "{{ asset('storage/media/web_images/student.png') }}");
             }
 
-            $("#txtModalStudentName").val(data.student_name).prop("disabled", true)
+            $("#txtModalStudentName").val(response.data.student_name).prop("disabled", true)
 
-            $("#txtModalEnrollmentNumber").val(data.enrollment_number)
+            $("#txtModalEnrollmentNumber").val(response.data.enrollment_number)
             $("#txtModalEnrollmentNumber").prop("disabled", true);
 
             $("#txtModalRollNo").val(roll_no)
 
             $("#tblModalAdmissionDetails tbody").empty();
 
-            $.each(data.admission_register, function(i, v) {
+            $.each(response.data.admission_register, function(i, v) {
               $("#tblModalAdmissionDetails tbody").append('<tr>' +
                 '<td>' + v.enrollment_no + '</td>' +
                 '<td>' + v.roll_no + '</td>' +
