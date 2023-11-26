@@ -1,4 +1,4 @@
-<div class="table-responsive mt-2 p-0" style="max-height: 400px;">
+<div class="table-responsive mt-2 p-0 text-nowrap" style="max-height: 350px;">
   <table id="{{ $id }}" class="table-head-fixed table-striped table">
     <thead>
       <tr>

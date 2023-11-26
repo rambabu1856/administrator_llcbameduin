@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('academic_years', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('course_id')->default(1)->constrained('courses')->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->foreignId('batch_id')->constrained('batches')->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->foreignId('grade_id')->constrained('grades')->onUpdate('cascade')

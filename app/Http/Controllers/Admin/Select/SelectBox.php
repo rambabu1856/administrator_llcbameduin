@@ -17,6 +17,27 @@ class SelectBox extends Controller
         return $batch;
     }
 
+    public function promoteStudentFromGrade(Request $request)
+    {
+        $maxGrade = AcademicYear::max('grade_id');
+        // From Grade
+        $fromGrades = AcademicYear::with('grade')
+            ->where('batch_id', $request->batchId)
+            ->where('grade_id', '<', (int)$maxGrade)->get();
+        return $fromGrades;
+    }
+
+    public function promoteStudentToGrade(Request $request)
+    {
+
+        // To Grade
+        $toGrades = AcademicYear::with('grade')
+            ->where('batch_id', $request->batchId)
+            ->where('grade_id', (int)$request->gradeId + 1)->get();
+
+        return $toGrades;
+    }
+
     public function getAcademicYear(Request $request)
     {
         $academicYear = AcademicYear::with('year')

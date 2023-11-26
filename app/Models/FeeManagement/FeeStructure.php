@@ -7,6 +7,7 @@ use App\Models\Select\Grade;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\FeeManagement\FeeGroupHead;
 use App\Models\FeeManagement\FeeSubGroupHead;
+use App\Models\Select\Year;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class FeeStructure extends Model
@@ -31,5 +32,10 @@ class FeeStructure extends Model
     public function grade()
     {
         return $this->belongsTo(Grade::class, 'grade_id');
+    }
+
+    public function year()
+    {
+        return $this->belongsTo(Year::class, 'year_id');
     }
 }

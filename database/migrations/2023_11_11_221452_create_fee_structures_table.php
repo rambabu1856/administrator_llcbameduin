@@ -28,6 +28,9 @@ return new class extends Migration
             $table->foreignId('batch_id')->constrained('batches')->onUpdate('cascade')
                 ->onDelete('cascade');
 
+            $table->foreignId('year_id')->constrained('years')->onUpdate('cascade')
+                ->onDelete('cascade');
+
             $table->foreignId('grade_id')->constrained('grades')->onUpdate('cascade')
                 ->onDelete('cascade');
 

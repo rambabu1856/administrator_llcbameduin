@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('admission_registers', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('course_id')->default(1)->constrained('courses')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('student_id')->constrained('students')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('academic_year_id')->constrained('academic_years')->onUpdate('cascade')->onDelete('cascade');;
             $table->foreignId('grade_id')->constrained('grades')->onUpdate('cascade')->onDelete('cascade');

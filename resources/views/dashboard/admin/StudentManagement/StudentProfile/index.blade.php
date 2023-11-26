@@ -299,7 +299,7 @@
           </x-table.table>
         </x-modal.modal-body>
 
-        <x-modal.modal-footer name="modalSubmitStudentProfileForm">
+        <x-modal.modal-footer name="btnModalSubmitStudentProfileForm">
 
         </x-modal.modal-footer>
 
@@ -449,7 +449,7 @@
 
         });
 
-        $(document).on("click", "#modalSubmitStudentProfileForm", function(e) {
+        $(document).on("click", "#btnModalSubmitStudentProfileForm", function(e) {
           e.preventDefault();
 
           $.ajax({

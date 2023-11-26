@@ -27,6 +27,9 @@
 
             <x-card.card-body>
 
+
+              <input type="hidden" id="txtToGrade" name="txtToGrade">
+
               <div class="row">
 
                 <x-form.select2 grid="col-md-3" lblClass="required" lblText="Select Course" name="cmbCourse"
@@ -35,11 +38,14 @@
                 <x-form.select2 grid="col-md-3" lblClass="required" lblText="Select Batch" name="cmbBatch"
                   :options="[]"></x-form.select2>
 
-                <x-form.select2 grid="col-md-3" lblClass="required" lblText="Select Academic Year"
-                  name="cmbAcademicYear" :options="[]"></x-form.select2>
-
-                <x-form.select2 grid="col-md-3" lblClass="required" lblText="Select Class" name="cmbGrade"
+                <x-form.select2 grid="col-md-3" lblClass="required" lblText="Select From Class" name="cmbFromGrade"
                   :options="[]"></x-form.select2>
+
+                <x-form.select2 grid="col-md-3" lblClass="required" lblText="Select To Class" name="cmbToGrade"
+                  :options="[]"></x-form.select2>
+
+                {{-- <x-form.select2 grid="col-md-3" lblClass="required" lblText="Select Academic Year"
+                  name="cmbAcademicYear" :options="[]"></x-form.select2> --}}
               </div>
               <div class="row">
                 <x-form.input grid="col-sm-12 col-md-2" lblClass="required" lblText="Fee Receipt From Date"
@@ -151,26 +157,33 @@
                 type="text" name="txtModalReceiptAmount" readonly></x-form.input>
 
             </div>
+            <div class="p-1" style="background:#cfe9ee;">
 
-            <div class="row">
-              <table id="feeGroup" class="table-hover tablesorter table table-fixed">
-                <thead>
-                  <tr>
-                    <th><input type="checkbox" aria-label="Checkbox for following text input" id="chkSelectAll"
-                        name="chkSelectAll"></th>
-                    <th style="width:15%">Academic Year</th>
-                    <th style="width:15%">Semester</th>
-                    <th style="width:50%">Fee Head</th>
-                    <th style="width:15%">Amount</th>
-                    <th style="width:15%;"><button class="btn btn-warning d-none" id="btnSaveFeeGroup">Save
-                        Selected Fee Group</button></th>
-                  </tr>
-                </thead>
-                <tbody>
-                </tbody>
-              </table>
+              <div class="form-group row p-0 m-0 ">
+                <label for="" class="col-sm-8 col-md-10 text-dark">Eligible Fee</label>
+                <label for="" class="col-sm-4 col-md-2 text-right text-dark" id="lblEligibleAmount"></label>
+              </div>
+
+              <div class="form-group row  p-0 m-0">
+                <label for="" class="col-sm-8 col-md-10 text-dark">Amount Received</label>
+                <label for="" class="col-sm-4 col-md-2 text-right text-dark" id="lblReceiptAmount"></label>
+              </div>
+
+              <div class="form-group row  p-0 m-0 mt-2 mb-1">
+                <label for="" class="col-sm-8 col-md-10 pt-1 pb-1 text-dark text-right">Balance</label>
+                <label for="" class="col-sm-4 col-md-2  pt-1 pb-1 text-dark text-right "
+                  style="border-top: 1px solid black; border-bottom: 3px double black;" id="lblBalanceAmount"></label>
+              </div>
             </div>
+
+            <x-modal.modal-footer name="btnModalSubmitStudentPromotionForm"></x-modal.modal-footer>
+
           </div>
+          <x-table.table id="feeGroup" :tableHeaders="['#', 'Batch', 'Session <-> Class', 'Fee Group <-> Head of Account', 'Amount']">
+            <x-table.table-body></x-table.table-body>
+          </x-table.table>
+
+
         </div>
       </x-modal.modal-body>
 
@@ -182,6 +195,7 @@
     <script>
       // Course Change Function
       var courseId, batchId;
+      var totalEligibleAmount, totalReceivedAmount, balanceAmount
 
       $(document).ready(function() {
 
@@ -240,22 +254,68 @@
           if (batchId > 0 && batchId != null) {
             $.ajax({
               type: "POST",
-              url: "{{ url('admin/getAcademicYear') }}",
+              url: "{{ url('admin/promoteStudentFromGrade') }}",
               data: {
                 batchId: batchId
               },
               beforeSend: function() {
-                $('#cmbAcademicYear').empty();
+                $('#cmbFromGrade').empty();
                 $('.loading').show();
               },
               success: function(response) {
 
-                $('#cmbGrade').empty();
                 $.each(response, function(i, v) {
-                  $('#cmbAcademicYear').append('<option value=' + v.id + '>' + v.year.title +
+
+                  $('#cmbFromGrade').append('<option value=' + v.grade.id + '>' + v.grade.title +
                     '</option>');
+
                 });
-                $('#cmbAcademicYear').val(null).trigger('change');
+                $('#cmbFromGrade').val(null).trigger('change');
+              },
+              error: function(xhr, status, text) {
+
+              },
+              complete: function() {
+                $('.loading').hide();
+              }
+            });
+          }
+        });
+
+        // GRADE CHANGE
+        $(document).on("change", "#cmbFromGrade", function() {
+
+          $("#tblStudentAdmissionRegister tbody").empty();
+
+          gradeId = $('option:selected', this).val();
+          batchId = $('#cmbBatch').val();
+
+          if (batchId > 0 && batchId != null && gradeId > 0 && gradeId != null) {
+            $.ajax({
+              type: "POST",
+              url: "{{ url('admin/promoteStudentToGrade') }}",
+              data: {
+                gradeId: gradeId,
+                batchId: batchId
+              },
+              beforeSend: function() {
+                $('#cmbToGrade').empty();
+                $('.loading').show();
+              },
+              success: function(response) {
+
+                console.log(response);
+
+                $.each(response, function(i, v) {
+
+                  $('#cmbToGrade').append('<option value="' + v.grade.id + '" selected >' + v.grade
+                    .title +
+                    '</option>');
+
+                });
+                $("#txtToGrade").val($('option:selected', '#cmbToGrade').val());
+                $("#cmbToGrade").prop("disabled", true);
+                // $('#cmbToGrade').val(null).trigger('change');
               },
               error: function(xhr, status, text) {
 
@@ -268,62 +328,65 @@
         });
 
         // ACADEMIC YEAR CHANGE
-        $(document).on("change", "#cmbAcademicYear", function(e) {
-          e.preventDefault();
-          $("#tblStudentAdmissionRegister tbody").empty();
+        // $(document).on("change", "#cmbAcademicYear", function(e) {
+        //   e.preventDefault();
+        //   $("#tblStudentAdmissionRegister tbody").empty();
 
-          academicYearId = $('option:selected', this).val();
+        //   academicYearId = $('option:selected', this).val();
 
-          if (academicYearId > 0) {
+        //   if (academicYearId > 0) {
 
-            $("#tblStudentAdmissionRegister tbody").empty();
+        //     $("#tblStudentAdmissionRegister tbody").empty();
 
-            $.ajax({
-              type: "POST",
-              url: "{{ url('admin/getAcademicYearGrade') }}",
-              data: {
-                batchId: batchId,
-                academicYearId: academicYearId
-              },
-              beforeSend: function() {
-                $('#cmbGrade').empty();
-                $('.loading').show();
-              },
-              success: function(response) {
+        //     $.ajax({
+        //       type: "POST",
+        //       url: "{{ url('admin/getAcademicYearGrade') }}",
+        //       data: {
+        //         batchId: batchId,
+        //         academicYearId: academicYearId
+        //       },
+        //       beforeSend: function() {
+        //         $('#cmbGrade').empty();
+        //         $('.loading').show();
+        //       },
+        //       success: function(response) {
 
-                $.each(response, function(i, v) {
+        //         $.each(response, function(i, v) {
 
-                  $('#cmbGrade').append('<option value=' + v.grade.id + '>' + v.grade.title +
-                    '</option>');
+        //           $('#cmbGrade').append('<option value=' + v.grade.id + '>' + v.grade.title +
+        //             '</option>');
 
-                });
-                $('#cmbGrade').val(null).trigger('change');
-              },
-              error: function(xhr, status, text) {
+        //         });
+        //         $('#cmbGrade').val(null).trigger('change');
+        //       },
+        //       error: function(xhr, status, text) {
 
-              },
-              complete: function() {
-                $('.loading').hide();
-              }
-            });
-          }
+        //       },
+        //       complete: function() {
+        //         $('.loading').hide();
+        //       }
+        //     });
+        //   }
 
-        });
+        // });
 
         // SEARCH STUDENTS WITH FILTER
         $('#btnSearch').on('click', function(e) {
 
-          e.preventDefault();
+          //   e.preventDefault();
 
           if ($("#cmbCourse").val() == null || $("#cmbCourse").val() == "") {
             toastr.error("Please Select Course")
           } else if ($("#cmbBatch").val() == null) {
             toastr.error("Please Select Batch")
-          } else if ($("#cmbAcademicYear").val() == null) {
-            toastr.error("Please Select Academic Year")
-          } else if ($("#cmbGrade").val() == null) {
-            toastr.error("Please Select Class")
+            //   } else if ($("#cmbAcademicYear").val() == null) {
+            //     toastr.error("Please Select Academic Year")
+          } else if ($("#cmbFromGrade").val() == null) {
+            toastr.error("Please Select From Class")
+          } else if ($("#cmbToGrade").val() == null) {
+            toastr.error("Please Select To Class")
           } else {
+            $('.loading').show();
             fetchDataToTable()
           }
         });
@@ -346,7 +409,7 @@
               feeGroupHeadId: 1,
               courseId: $('#cmbCourse').val(),
               batchId: $('#cmbBatch').val(),
-              gradeId: $('#cmbGrade').val(),
+              gradeId: $('#cmbToGrade').val(),
             },
             dataType: "json",
             beforeSend: function() {
@@ -356,26 +419,28 @@
             success: function(response) {
 
               var sl_no = 0;
-              var total_amount = 0;
+              totalEligibleAmount = 0;
 
               $.each(response, function(i, v) {
 
                 sl_no = sl_no + 1;
+                totalEligibleAmount = totalEligibleAmount + parseFloat(v.amount)
+                var feeGroupTitle = v.fee_group_head.title.slice(v.fee_group_head.title.indexOf('. ') + 1)
 
                 $("#feeGroup tbody").append('<tr>' +
 
                   '<td>' + sl_no + '</td>' +
                   '<td>' + v.batch.title + '</td>' +
-                  '<td>' + v.fee_group_head.title + '</td>' +
-                  '<td>' + v.fee_sub_group_head.title + '</td>' +
-                  '<td>' + v.amount + '</td>' +
-
+                  '<td>' + v.year.title + ' <-> ' + v.grade.title + '</td>' +
+                  '<td>' + feeGroupTitle + ' <-> ' + v
+                  .fee_sub_group_head.title + '</td>' +
+                  '<td class="text-right">' + v.amount + '</td>' +
                   '</tr>'
                 )
 
               });
               $('[data-toggle="tooltip"]').tooltip();
-              //   $("#headingSearchForm").html('Total Record(s): ' + sl_no);
+              $("#lblEligibleAmount").html(toIndianCurrency(totalEligibleAmount));
             },
             error: function(xhr, status, text) {
               $('.loading').hide();
@@ -384,8 +449,6 @@
               $('.loading').hide();
             }
           });
-
-
 
 
           $.get("{{ route('admin.student_promotion.index') }}" + '/' + studentId, function(response) {
@@ -507,8 +570,17 @@
               },
               dataType: "json",
               success: function(response) {
+
+
                 $('#txtModalReceiptDate').val(moment(response.transaction_date).format("DD/MM/YYYY"))
                 $('#txtModalReceiptAmount').val(response.receipt_amount)
+
+                totalReceiptAmount = parseFloat(response.receipt_amount)
+                $("#lblReceiptAmount").html(toIndianCurrency(totalReceiptAmount));
+
+                balanceAmount = totalEligibleAmount - totalReceiptAmount;
+                $("#lblBalanceAmount").html(toIndianCurrency(balanceAmount));
+
               }
             });
           }
@@ -517,14 +589,15 @@
 
       });
 
-      function fetchDataToTable() {
+      function fetchDataToTable(e) {
         $.ajax({
           type: "GET",
           url: "{{ route('admin.student_promotion.create') }}",
           data: $("#searchForm").serialize(),
           async: false,
-          beforeSend: function(xhr) {
-            $("#tblStudentAdmissionRegister tbody").empty();
+          beforeSend: function() {
+            $('#tblStudentAdmissionRegister tbody').empty();
+            $('.loading').show();
           },
           success: function(response) {
 
@@ -587,8 +660,8 @@
           error: function(xhr, status, error) {
             toastr.info(status);
           },
-          complete: function(xhr, status) {
-            toastr.success(status);
+          complete: function() {
+            $('.loading').hide();
           }
         });
       }

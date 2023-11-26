@@ -15,12 +15,11 @@ class FeeStructureController extends Controller
 
 
     public function getEligibleFee(Request $request)
-
     {
 
         $students = Student::where('id', $request->studentId)->first();
 
-        $feeStructure = FeeStructure::with('feeGroupHead', 'feeSubGroupHead', 'batch', 'grade')
+        $feeStructure = FeeStructure::with('feeGroupHead', 'feeSubGroupHead', 'batch', 'grade', 'year')
             ->where('fee_group_head_id', $request->feeGroupHeadId)
             ->where('course_id', $request->courseId)
             ->where('batch_id', $request->batchId)

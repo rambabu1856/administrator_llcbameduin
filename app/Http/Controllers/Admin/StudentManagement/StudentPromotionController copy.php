@@ -31,61 +31,56 @@ class StudentPromotionController extends Controller
 
     public function index(Request $request)
     {
-        // Filter
-        $campus = $this->campus;
+        dd('here');
+        // $campus = $this->campus;
 
-        if ($request->cmbCampus) {
-            $department = $this->department->where('campus_id', $request->cmbCampus)->get();
-        } else {
-            $department = $this->department;
-        }
+        // if ($request->cmbCampus) {
+        //     $department = $this->department->where('campus_id', $request->cmbCampus)->get();
+        // } else {
+        //     $department = $this->department;
+        // }
 
-        if ($request->cmbDepartment) {
-            $course = $this->department->where('department_id', $request->cmbDepartment)->get();
-        } else {
-            $course = $this->course;
-        }
+        // if ($request->cmbDepartment) {
+        //     $course = $this->department->where('department_id', $request->cmbDepartment)->get();
+        // } else {
+        //     $course = $this->course;
+        // }
 
-        if ($request->cmbCourse) {
-            $batch = $this->batch->where('course_id', $request->cmbCourse);
-        } else {
-            $batch = $this->batch;
-        }
+        // if ($request->cmbCourse) {
+        //     $batch = $this->batch->where('course_id', $request->cmbCourse);
+        // } else {
+        //     $batch = $this->batch;
+        // }
 
-        if ($batch != []) {
-            $academicYear = $this->academicYear->where('batch_id', $request->cmbBatch);
-        } else {
-            $academicYear = [];
-        }
+        // if ($batch != []) {
+        //     $academicYear = $this->academicYear->where('batch_id', $request->cmbBatch);
+        // } else {
+        //     $academicYear = [];
+        // }
 
-        if ($batch != []) {
-            $academicYear = $this->academicYear->where('batch_id', $request->cmbBatch);
-        } else {
-            $academicYear = [];
-        }
+        // if ($batch != []) {
+        //     $academicYear = $this->academicYear->where('batch_id', $request->cmbBatch);
+        // } else {
+        //     $academicYear = [];
+        // }
 
-        $modeOfTransaction = $this->modeOfTransaction;
+        // $modeOfTransaction = $this->modeOfTransaction;
 
-        return view(
-            'dashboard.admin.studentmanagement.studentpromotion.index',
-            compact(
-                'campus',
-                'department',
-                'course',
-                'batch',
-                'academicYear',
-                'modeOfTransaction',
-            )
-        );
+        // return view(
+        //     'dashboard.admin.studentmanagement.studentpromotion.index',
+        //     compact(
+        //         'campus',
+        //         'department',
+        //         'course',
+        //         'batch',
+        //         'academicYear',
+        //         'modeOfTransaction',
+        //     )
+        // );
     }
 
     public function create(Request $request)
     {
-
-        $academicYear = AcademicYear::where('course_id', $request->cmbCourse)
-            ->where('batch_id', $request->cmbBatch)
-            ->where('grade_id', $request->cmbFromGrade)->first();
-        // dd($academicYear);
 
         $studentsNotPromoted = Student::with('campus')
             ->with('department')
@@ -97,7 +92,7 @@ class StudentPromotionController extends Controller
             ->with('bloodGroup')
             ->with('motherTongue')
             ->with('nationality')
-            ->where('batch_id', $academicYear->batch_id);
+            ->where('batch_id', $request->cmbBatch);
 
         if ($request->txtSearchBy) {
             $studentsNotPromoted = $studentsNotPromoted->where(function (
@@ -109,19 +104,19 @@ class StudentPromotionController extends Controller
             });
         }
 
-        $studentsNotPromoted = $studentsNotPromoted->with(array('admissionRegisters' => function ($query) use ($academicYear) {
+        $studentsNotPromoted = $studentsNotPromoted->with(array('admissionRegisters' => function ($query) use ($request) {
             $query
                 ->with('academicYear.year')
                 ->with('grade')
-                ->where('academic_year_id', $academicYear->id)
+                ->where('academic_year_id', $request->cmbAcademicYear)
                 ->orderBy('grade_id', 'ASC');
         }))
-            ->whereHas('admissionRegisters', function ($query) use ($academicYear) {
-                $query->where('grade_id', $academicYear->grade_id) // Filter by Level 1
-                    ->whereNotIn('student_id', function ($subQuery) use ($academicYear) {
+            ->whereHas('admissionRegisters', function ($query) use ($request) {
+                $query->where('grade_id', $request->cmbGrade) // Filter by Level 1
+                    ->whereNotIn('student_id', function ($subQuery) use ($request) {
                         $subQuery->select('student_id')
                             ->from('admission_registers')
-                            ->where('grade_id', (int)$academicYear->grade_id + 1);
+                            ->where('grade_id', (int)$request->cmbGrade + 1);
                     });
             })->get();
 
