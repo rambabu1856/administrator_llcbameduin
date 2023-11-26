@@ -10,6 +10,7 @@ class FeeStructureController extends Controller
 
     public function index()
     {
+        dd('fee_structure');
     }
 
 

@@ -22,11 +22,11 @@ return new class extends Migration
         });
 
         DB::table('examination_fee_groups')->insert([
-            ['id' => 1, 'title' => 'Regular', 'is_active'=>0],
-            ['id' => 2, 'title' => 'Back', 'is_active'=>0],
-            ['id' => 3, 'title' => 'Improvement', 'is_active'=>0],
-            ['id' => 4, 'title' => 'Improvement', 'is_active'=>0],
-            ['id' => 5, 'title' => 'Improvement', 'is_active'=>0],
+            ['id' => 1, 'title' => 'Normal Fee', 'is_active' => 0],
+            ['id' => 2, 'title' => 'Late Fee', 'is_active' => 0],
+            ['id' => 3, 'title' => 'Tatkal Fee', 'is_active' => 0],
+            ['id' => 4, 'title' => 'Super Tatkal Fee', 'is_active' => 0],
+            ['id' => 5, 'title' => 'Fee With Vc Permission', 'is_active' => 0],
         ]);
     }
 

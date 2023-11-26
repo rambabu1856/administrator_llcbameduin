@@ -16,11 +16,11 @@ return new class extends Migration
         Schema::create('fee_sub_group_heads', function (Blueprint $table) {
             $table->id();
             $table->foreignId('fee_group_head_id')->constrained('fee_group_heads')->onUpdate('cascade')
-            ->onDelete('cascade');
-            $table->foreignId('semester')->nullable()->constrained('examination_fee_groups')->onUpdate('cascade')
-            ->onDelete('cascade');
+                ->onDelete('cascade');
+            $table->foreignId('semester_id')->nullable()->constrained('semesters')->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->foreignId('examination_fee_group_id')->nullable()->constrained('examination_fee_groups')->onUpdate('cascade')
-            ->onDelete('cascade');
+                ->onDelete('cascade');
             $table->string('title', 100);
             $table->boolean('is_active')->default(0);
 
