@@ -11,7 +11,7 @@ class FeeSubGroupHead extends Model
 {
     use HasFactory;
 
-    public function feeGroup()
+    public function feeGroupHead()
     {
         return $this->belongsTo(FeeGroupHead::class);
     }

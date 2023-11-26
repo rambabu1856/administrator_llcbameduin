@@ -14,4 +14,9 @@ class FeeGroupHead extends Model
     {
         return $this->hasMany(FeeSubGroupHead::class);
     }
+
+    public function feeStructures()
+    {
+        return $this->hasMany(FeeStructure::class);
+    }
 }

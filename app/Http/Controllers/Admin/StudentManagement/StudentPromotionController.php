@@ -10,6 +10,7 @@ use App\Models\Select\Course;
 use App\Models\Select\Department;
 use App\Models\Select\AcademicYear;
 use App\Http\Controllers\Controller;
+use App\Models\FeeManagement\FeeGroupHead;
 use App\Models\Select\ModeOfTransaction;
 use App\Models\StudentManagement\Student;
 
@@ -123,57 +124,40 @@ class StudentPromotionController extends Controller
         return $studentsNotPromoted;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
+
+        $studentProfileData = Student::with(
+            array(
+                'admissionRegisters' => function ($query) {
+                    $query
+                        ->with('academicYear.year')
+                        ->with('grade')
+                        ->orderBy('grade_id', 'ASC');
+                }
+            )
+        )->findOrFail($id);
+
+        return response()->json(['code' => 2, 'data' => $studentProfileData]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         //

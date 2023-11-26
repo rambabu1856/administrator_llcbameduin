@@ -52,7 +52,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('/student_promotion', StudentPromotionController::class);
 
         // FEE MANAGEMENT
-
+        Route::POST('getEligibleFee', [FeeStructureController::class, 'getEligibleFee'])->name('getEligibleFee');
         Route::resource('/fee_structure', FeeStructureController::class);
         Route::resource('/fee_group_head', FeeGroupHeadController::class);
         Route::resource('/fee_sub_group_head', FeeSubGroupHeadController::class);

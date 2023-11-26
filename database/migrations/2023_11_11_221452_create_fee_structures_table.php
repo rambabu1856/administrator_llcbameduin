@@ -22,6 +22,9 @@ return new class extends Migration
             $table->foreignId('fee_sub_group_head_id')->constrained('fee_sub_group_heads')->onUpdate('cascade')
                 ->onDelete('cascade');
 
+            $table->foreignId('course_id')->default(1)->constrained('courses')->onUpdate('cascade')
+                ->onDelete('cascade');
+
             $table->foreignId('batch_id')->constrained('batches')->onUpdate('cascade')
                 ->onDelete('cascade');
 
