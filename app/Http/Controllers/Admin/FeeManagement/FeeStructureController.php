@@ -2,15 +2,27 @@
 
 namespace App\Http\Controllers\Admin\FeeManagement;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\FeeManagement\FeeGroupHead;
 
 class FeeStructureController extends Controller
 {
 
     public function index()
     {
-        dd('fee_structure');
+
+        // $feeGroup = FeeGroupHead::with('feeSubGroupHeads.feeStructures')->find(1);
+        // foreach ($feeGroup->feeSubGroups as $feeSubGroup) {
+        //     echo $feeSubGroup->name;
+
+        //     foreach ($feeSubGroup->feeStructures as $feeStructure) {
+        //         echo $feeStructure->name;
+        //     }
+        // }
+
+
+
     }
 
 
