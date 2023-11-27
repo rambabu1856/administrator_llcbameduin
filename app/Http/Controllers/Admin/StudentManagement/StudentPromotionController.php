@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\StudentManagement;
 
 
+use Carbon\Carbon;
 use App\Models\Select\Batch;
 use Illuminate\Http\Request;
 use App\Models\Select\Campus;
@@ -10,9 +11,9 @@ use App\Models\Select\Course;
 use App\Models\Select\Department;
 use App\Models\Select\AcademicYear;
 use App\Http\Controllers\Controller;
-use App\Models\FeeManagement\FeeGroupHead;
 use App\Models\Select\ModeOfTransaction;
 use App\Models\StudentManagement\Student;
+use App\Models\StudentManagement\AdmissionRegister;
 
 
 class StudentPromotionController extends Controller
@@ -130,8 +131,31 @@ class StudentPromotionController extends Controller
     }
 
     public function store(Request $request)
+
     {
-        
+
+        $academicYear = AcademicYear::where('course_id', $request->cmbCourseId)
+            ->where('batch_id', $request->cmbBatchId)
+            ->where('grade_id', $request->txtToGradeId)->first(['id', 'slug']);
+
+        $model = AdmissionRegister::updateOrCreate(
+            [
+                'student_id' => $request->txtstudentId,
+                'course_id' => $request->cmbCourseId,
+                'academic_year_id' => $academicYear->id,
+                'grade_id' => $request->txtToGradeId,
+            ],
+            [
+                'roll_no' => (int)$request->txtRollNo,
+                'slug' => $academicYear->slug,
+                'enrollment_no' => $request->txtEnrollmentNumber,
+                'admission_date' => Carbon::createFromFormat('d/m/Y', $request->txtReceiptDate)->format('Y-m-d'),
+            ]
+        );
+
+        if ($model->id) {
+            
+        }
     }
 
     public function show($id)

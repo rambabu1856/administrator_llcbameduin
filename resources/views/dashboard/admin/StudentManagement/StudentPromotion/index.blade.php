@@ -1,6 +1,7 @@
 <x-layouts.administrator.layout>
 
   <x-slot name="css">
+    <link rel="stylesheet" href="{{ asset('admin_assets/plugins/jquery_ui_info/jquery-ui.min.css') }}">
 
   </x-slot>
 
@@ -155,27 +156,28 @@
                   type="text" name="txtModalReceiptAmount" value=""></x-form.input>
 
               </div>
-
-              <div class="p-1" style="background:#cfe9ee;">
-                <div class="form-group row p-0 m-0 ">
-                  <label for="" class="col-sm-8 col-md-10 text-dark">Eligible Fee</label>
-                  <label for="" class="col-sm-4 col-md-2 text-right text-dark"
-                    id="lblEligibleAmount"></label>
+              <div class="section">
+                <div class="p-1" style="background:#cfe9ee;">
+                  <div class="form-group row p-0 m-0 ">
+                    <label for="" class="col-sm-8 col-md-10 text-dark">Eligible Fee</label>
+                    <label for="" class="col-sm-4 col-md-2 text-right text-dark"
+                      id="lblEligibleAmount"></label>
+                  </div>
+                  <div class="form-group row  p-0 m-0">
+                    <label for="" class="col-sm-8 col-md-10 text-dark">Amount Received</label>
+                    <label for="" class="col-sm-4 col-md-2 text-right text-dark"
+                      id="lblReceiptAmount"></label>
+                  </div>
+                  <div class="form-group row  p-0 m-0 mt-2 mb-1">
+                    <label for="" class="col-sm-8 col-md-10 pt-1 pb-1 text-dark text-right">Balance</label>
+                    <label for="" class="col-sm-4 col-md-2  pt-1 pb-1 text-dark text-right "
+                      style="border-top: 1px solid black; border-bottom: 3px double black;"
+                      id="lblBalanceAmount"></label>
+                  </div>
                 </div>
-                <div class="form-group row  p-0 m-0">
-                  <label for="" class="col-sm-8 col-md-10 text-dark">Amount Received</label>
-                  <label for="" class="col-sm-4 col-md-2 text-right text-dark" id="lblReceiptAmount"></label>
-                </div>
-                {{-- <div class="form-group row  p-0 m-0 mt-2 mb-1">
-                  <label for="" class="col-sm-8 col-md-10 pt-1 pb-1 text-dark text-right">Balance</label>
-                  <label for="" class="col-sm-4 col-md-2  pt-1 pb-1 text-dark text-right "
-                    style="border-top: 1px solid black; border-bottom: 3px double black;"
-                    id="lblBalanceAmount"></label>
-                </div> --}}
+                <x-modal.modal-footer name="btnModalSubmitStudentPromotionForm"></x-modal.modal-footer>
               </div>
-              <x-modal.modal-footer name="btnModalSubmitStudentPromotionForm"></x-modal.modal-footer>
             </div>
-
             <x-table.table id="feeGroup" :tableHeaders="['#', 'Batch', 'Session <-> Class', 'Fee Group <-> Head of Account', 'Amount']">
               <x-table.table-body></x-table.table-body>
             </x-table.table>
@@ -191,7 +193,7 @@
   </x-slot>
 
   <x-slot name="script">
-
+    <script src="{{ asset('admin_assets/plugins/jquery_ui_info/jquery-ui.min.js') }}"></script>
     <script>
       // Course Change Function
       var courseId, batchId;
@@ -206,7 +208,13 @@
           showButtonPanel: true,
           yearRange: "-100:+0",
           maxDate: "+0D",
-          showAnim: 'slide'
+          showAnim: 'slide',
+          beforeShow: function(input, inst) {
+            $(document).off('focusin.bs.modal');
+          },
+          onClose: function() {
+            $(document).on('focusin.bs.modal');
+          },
         });
 
         // COURSE CHANGE
@@ -304,8 +312,6 @@
               },
               success: function(response) {
 
-                console.log(response);
-
                 $.each(response, function(i, v) {
 
                   $('#cmbToGrade').append('<option value="' + v.grade.id + '" selected >' + v.grade
@@ -315,7 +321,6 @@
                 });
                 $("#txtToGrade").val($('option:selected', '#cmbToGrade').val());
                 $("#cmbToGrade").prop("disabled", true);
-                // $('#cmbToGrade').val(null).trigger('change');
               },
               error: function(xhr, status, text) {
 
@@ -574,7 +579,6 @@
           var txtReceiptDate = $('#txtModalReceiptDate').val();
           var txtReceiptAmount = $('#txtModalReceiptAmount').val();
 
-
           var feeReference = cmbModalSbcReferenceNumber !== null ? cmbModalSbcReferenceNumber : (
             txtOtherFeeReferenceNumber)
 
@@ -587,6 +591,7 @@
           } else if ($('#txtModalReceiptAmount').val() === null || $('#txtModalReceiptAmount').val() === "") {
             toastr.error('Enter Fee Amount');
           } else {
+
             $.ajax({
               type: "POST",
               url: "{{ route('admin.student_promotion.store') }}",
@@ -602,14 +607,33 @@
                 'txtReceiptDate': txtReceiptDate,
                 'txtReceiptAmount': txtReceiptAmount,
               },
-              dataType: "json",
               async: false,
+              cache: false,
+              dataType: 'JSON',
               success: function(response) {
-                console.log(response);
+                console.log(response)
               }
             });
           }
+          //   $.ajax({
+          //     type: "POST",
 
+          //     data: {
+          //       'txtstudentId': txtstudentId,
+          //       'cmbCourseId': cmbCourseId,
+          //       'cmbBatchId': cmbBatchId,
+          //       'txtToGradeId': txtToGradeId,
+          //       'txtRollNo': txtRollNo,
+          //       'txtEnrollmentNumber': txtEnrollmentNumber,
+          //       'cmbModeOfTransactionId': cmbModeOfTransactionId,
+          //       'feeReference': feeReference,
+          //       'txtReceiptDate': txtReceiptDate,
+          //       'txtReceiptAmount': txtReceiptAmount,
+          //     },
+          //     success: function(response) {
+          //       console.log(response);
+          //     }
+          //   });
 
         });
       });

@@ -330,8 +330,18 @@
                 changeMonth: true,
                 changeYear: true,
                 dateFormat: "dd/mm/yy",
-                maxDate: '+1D',
+                maxDate: '+0D',
+                showAnim: 'slide',
+                yearRange: "-50:+0",
+                showButtonPanel: true,
+                beforeShow: function(input, inst) {
+                  $(document).off('focusin.bs.modal');
+                },
+                onClose: function() {
+                  $(document).on('focusin.bs.modal');
+                },
               });
+
             });
 
             $('[data-toggle="tooltip"]').tooltip();
