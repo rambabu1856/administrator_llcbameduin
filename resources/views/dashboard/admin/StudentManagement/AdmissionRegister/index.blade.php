@@ -46,8 +46,8 @@
 
               </div>
 
-              <div class="row"> <x-form.select2 grid="col-md-2" lblClass="" lblText="Select Gender"
-                  name="cmbGender" :options="$gender"></x-form.select2>
+              <div class="row"> <x-form.select2 grid="col-md-2" lblClass="" lblText="Select Gender" name="cmbGender"
+                  :options="$gender"></x-form.select2>
                 <x-form.select2 grid="col-sm-12 col-md-2" lblClass="" lblText="Select Community" name="cmbCommunity"
                   :options="$community">
                 </x-form.select2>
@@ -58,16 +58,14 @@
                 <x-form.select2 grid="col-sm-12 col-md-2" lblClass="" lblText="Is belogs to PwD category"
                   name="cmbIsPwd" :options="$yesNo"></x-form.select2>
 
-                <x-form.input grid="col-sm-12 col-md-2" lblClass="" lblText="Search By Name / Enrl. No"
-                  type="text" name="txtSearchBy" value=""></x-form.input>
+                <x-form.input grid="col-sm-12 col-md-2" lblClass="" lblText="Search By Name / Enrl. No" type="text"
+                  name="txtSearchBy" value=""></x-form.input>
 
                 <x-button.button grid="col- mt-3" type="button" btnClass="bg-primary mr-1" name="btnSearch"
-                  faClass="fa-regular fa-paper-plane mr-2" tooltip="Search" btnText="GET"
-                  dataId=""></x-button.button>
+                  faClass="fa-regular fa-paper-plane mr-2" tooltip="Search" btnText="GET" dataId=""></x-button.button>
 
                 <x-button.button grid="col- mt-3" type="button" btnClass="bg-danger mr-1 resetForm"
-                  name="btnAdmissionDetail" faClass="fa-solid fa-rotate mr-2" tooltip="Reset" btnText="RESET"
-                  dataId="">
+                  name="btnAdmissionDetail" faClass="fa-solid fa-rotate mr-2" tooltip="Reset" btnText="RESET" dataId="">
                 </x-button.button>
 
               </div>
@@ -131,8 +129,8 @@
               <x-form.input grid="col-sm-12 col-md-6" lblClass="required" lblText="Student Name" type="text"
                 name="txtModalStudentName"></x-form.input>
 
-              <x-form.input grid="col-sm-12 col-md-3" lblClass="required" lblText="Enrollment Number Number"
-                type="text" name="txtModalEnrollmentNumber"></x-form.input>
+              <x-form.input grid="col-sm-12 col-md-3" lblClass="required" lblText="Enrollment Number Number" type="text"
+                name="txtModalEnrollmentNumber"></x-form.input>
 
               <x-form.input grid="col-sm-12 col-md-3" lblClass="required" lblText="Roll Number" type="text"
                 name="txtModalRollNo"></x-form.input>
@@ -141,7 +139,8 @@
             <div class="col-sm-12 col-md-12 bg-secondary">
               <h6 class="text-warning text-uppercase text-center">Admission Details</h6>
             </div>
-            <x-table.table id="tblModalAdmissionDetails" :tableHeaders="['Enrollment Number', 'Roll Number', 'Academic Year', 'Grade', 'Admission Date', 'Action']">
+            <x-table.table id="tblModalAdmissionDetails"
+              :tableHeaders="['Enrollment Number', 'Roll Number', 'Academic Year', 'Grade', 'Admission Date', 'Action']">
               <x-table.table-body>
 
               </x-table.table-body>
@@ -160,10 +159,10 @@
 
       var courseId, batchId;
 
-      $(document).ready(function() {
+      $(document).ready(function () {
 
         // COURSE CHANGE
-        $(document).on("change", "#cmbCourse", function() {
+        $(document).on("change", "#cmbCourse", function () {
 
           courseId = $('option:selected', this).val();
 
@@ -173,13 +172,13 @@
             data: {
               id: courseId
             },
-            beforeSend: function() {
+            beforeSend: function () {
               $('#cmbBatch').empty();
               $('.loading').show();
             },
-            success: function(response) {
+            success: function (response) {
               $('.loading').hide();
-              $.each(response, function(i, v) {
+              $.each(response, function (i, v) {
                 $('#cmbBatch').append('<option value=' + v.id + '>' + v.title + '</option>');
               });
               $('#cmbBatch').val(null).trigger('change');
@@ -189,7 +188,7 @@
         });
 
         // BATCH CHANGE
-        $(document).on("change", "#cmbBatch", function() {
+        $(document).on("change", "#cmbBatch", function () {
 
           $("#tblStudentAdmissionRegister tbody").empty();
           batchId = $('option:selected', this).val();
@@ -201,14 +200,14 @@
               data: {
                 batchId: batchId
               },
-              beforeSend: function() {
+              beforeSend: function () {
                 $('#cmbAcademicYear').empty();
                 $('.loading').show();
               },
-              success: function(response) {
+              success: function (response) {
                 $('.loading').hide();
                 $('#cmbGrade').empty();
-                $.each(response, function(i, v) {
+                $.each(response, function (i, v) {
                   $('#cmbAcademicYear').append('<option value=' + v.id + '>' + v.year.title +
                     '</option>');
                 });
@@ -219,7 +218,7 @@
         });
 
         // ACADEMIC YEAR CHANGE
-        $(document).on("change", "#cmbAcademicYear", function(e) {
+        $(document).on("change", "#cmbAcademicYear", function (e) {
           e.preventDefault();
           $("#tblStudentAdmissionRegister tbody").empty();
 
@@ -236,13 +235,13 @@
                 batchId: batchId,
                 academicYearId: academicYearId
               },
-              beforeSend: function() {
+              beforeSend: function () {
                 $('#cmbGrade').empty();
                 $('.loading').show();
               },
-              success: function(response) {
+              success: function (response) {
                 $('.loading').hide();
-                $.each(response, function(i, v) {
+                $.each(response, function (i, v) {
 
                   $('#cmbGrade').append('<option value=' + v.grade.id + '>' + v.grade.title +
                     '</option>');
@@ -256,7 +255,7 @@
 
         });
 
-        $('#btnSearch').on('click', function(e) {
+        $('#btnSearch').on('click', function (e) {
 
           e.preventDefault();
 
@@ -273,13 +272,13 @@
         });
 
 
-        $(document).on("click", ".btnEditProfile", function(e) {
+        $(document).on("click", ".btnEditProfile", function (e) {
           e.preventDefault();
           var studentId = $(this).data('id');
 
           $('.loading').show();
 
-          $.get("{{ route('admin.student_profile.index') }}" + '/' + studentId + '/edit', function(data) {
+          $.get("{{ route('admin.student_profile.index') }}" + '/' + studentId + '/edit', function (data) {
 
             $('.loading').hide();
             var roll_no = data.enrollment_number.split("/")[0]
@@ -310,12 +309,12 @@
 
             $("#tblModalAdmissionDetails tbody").empty();
 
-            $.each(data.admission_registers, function(i, v) {
+            $.each(data.admission_registers, function (i, v) {
               $("#tblModalAdmissionDetails tbody").append('<tr>' +
                 '<td>' + v.enrollment_no + '</td>' +
 
                 '<td>' + '<input type="input" class="form-control form-control-sm "  value="' + v
-                .roll_no +
+                  .roll_no +
                 '" + id="' + 'admissionRollNo_' +
                 v.id + '"/></td>' +
 
@@ -323,7 +322,7 @@
                 '<td>' + v.grade.title + '</td>' +
 
                 '<td>' + '<input type="input" value="' + moment(v.admission_date)
-                .format("DD/MM/YYYY") +
+                  .format("DD/MM/YYYY") +
                 '" class="form-control form-control-sm " id="' + 'txtAdmissionDate_' +
                 v.id +
                 '"/></td>' +
@@ -343,10 +342,10 @@
                 showAnim: 'slide',
                 yearRange: "-50:+0",
                 showButtonPanel: true,
-                beforeShow: function(input, inst) {
+                beforeShow: function (input, inst) {
                   $(document).off('focusin.bs.modal');
                 },
-                onClose: function() {
+                onClose: function () {
                   $(document).on('focusin.bs.modal');
                 },
               });
@@ -360,7 +359,7 @@
         });
 
 
-        $(document).on("click", ".btnEditAdmissionDate", function(e) {
+        $(document).on("click", ".btnEditAdmissionDate", function (e) {
           e.preventDefault();
 
           var admissionRegisterId = $(this).data('id');
@@ -377,10 +376,10 @@
             },
             dataType: "json",
             async: true,
-            beforeSend: function() {
+            beforeSend: function () {
 
             },
-            success: function(response) {
+            success: function (response) {
               $("#modalAdmissionRegister").modal('hide');
               fetchDataToTable();
               $('.loading').show();
@@ -397,16 +396,16 @@
           async: true,
           cache: false,
           dataType: 'json',
-          beforeSend: function(xhr) {
+          beforeSend: function (xhr) {
             $("#tblStudentAdmissionRegister tbody").empty();
             $('.loading').show();
           },
-          success: function(response) {
+          success: function (response) {
             $('.loading').hide();
             var sl_no = 0;
 
-            $.each(response, function(i, v) {
-              $.each(v.admission_registers, function(i, row) {
+            $.each(response, function (i, v) {
+              $.each(v.admission_registers, function (i, row) {
 
                 sl_no = sl_no + 1;
 
@@ -435,7 +434,7 @@
                   '<td>' + row.roll_no + '</td>' +
                   '<td>' + row.grade.title + '</td>' +
                   '<td class="text-indigo">' + v.student_name + '<br><span class="text-teal">' + v
-                  .father_name + '</span>' + '<br><span class="text-pink">' + v.mother_name +
+                    .father_name + '</span>' + '<br><span class="text-pink">' + v.mother_name +
                   '</span></td>' +
 
                   '<td>' + v.gender.title + '</td>' +
@@ -460,16 +459,16 @@
             $('[data-toggle="tooltip"]').tooltip();
             $("#headingSearchForm").html('Total Record(s): ' + sl_no);
           },
-          error: function(xhr, status, error) {
+          error: function (xhr, status, error) {
             toastr.info(status);
           },
-          complete: function(xhr, status) {
+          complete: function (xhr, status) {
             toastr.success(status);
           }
         });
       }
 
-      $(".resetForm").click(function(e) {
+      $(".resetForm").click(function (e) {
         $("form select").val(null).trigger("change");
         $('form').trigger("reset");
       })

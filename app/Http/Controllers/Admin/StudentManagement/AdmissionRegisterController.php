@@ -23,39 +23,39 @@ class AdmissionRegisterController extends Controller
 
     public function __construct()
     {
-        $this->campus       = Campus::get();
-        $this->department   = Department::get();
-        $this->course       = Course::get();
-        $this->batch        = Batch::orderBy('title', 'DESC')->get();
+        $this->campus = Campus::get();
+        $this->department = Department::get();
+        $this->course = Course::get();
+        $this->batch = Batch::orderBy('title', 'DESC')->get();
         $this->academicYear = AcademicYear::orderBy('batch_id', 'DESC')->orderBy('grade_id', 'ASC')->get();
-        $this->gender       = Gender::get();
-        $this->community    = Community::get();
-        $this->religion     = Religion::get();
-        $this->yesNo        = IsActive::select('id', 'title')->get();
+        $this->gender = Gender::get();
+        $this->community = Community::get();
+        $this->religion = Religion::get();
+        $this->yesNo = IsActive::select('id', 'title')->get();
     }
 
     public function index(Request $request)
     {
 
         // Filter
-        $campus           = $this->campus;
+        $campus = $this->campus;
 
         if ($request->cmbCampus) {
-            $department   = $this->department->where('campus_id', $request->cmbCampus)->get();
+            $department = $this->department->where('campus_id', $request->cmbCampus)->get();
         } else {
-            $department   = $this->department;
+            $department = $this->department;
         }
 
         if ($request->cmbDepartment) {
-            $course       = $this->department->where('department_id', $request->cmbDepartment)->get();
+            $course = $this->department->where('department_id', $request->cmbDepartment)->get();
         } else {
-            $course       = $this->course;
+            $course = $this->course;
         }
 
         if ($request->cmbCourse) {
-            $batch        = $this->batch->whereIn('course_id', $request->cmbCourse);
+            $batch = $this->batch->whereIn('course_id', $request->cmbCourse);
         } else {
-            $batch        = $this->batch;
+            $batch = $this->batch;
         }
 
         if ($batch != []) {
@@ -64,10 +64,10 @@ class AdmissionRegisterController extends Controller
             $academicYear = [];
         }
 
-        $gender           = $this->gender;
-        $community        = $this->community;
-        $religion         = $this->religion;
-        $yesNo            = $this->yesNo;
+        $gender = $this->gender;
+        $community = $this->community;
+        $religion = $this->religion;
+        $yesNo = $this->yesNo;
 
         return view(
             'dashboard.admin.studentmanagement.admissionregister.index',
@@ -113,32 +113,30 @@ class AdmissionRegisterController extends Controller
             );
 
         if ($request->cmbGender) {
-            $studentProfileData   = $studentProfileData->where('gender_id', $request->cmbGender);
+            $studentProfileData = $studentProfileData->where('gender_id', $request->cmbGender);
         }
 
         if ($request->cmbCommunity) {
-            $studentProfileData   = $studentProfileData->where('community_id', $request->cmbCommunity);
+            $studentProfileData = $studentProfileData->where('community_id', $request->cmbCommunity);
         }
 
         if ($request->cmbReligion) {
-            $studentProfileData   = $studentProfileData->where('religion_id', $request->cmbReligion);
+            $studentProfileData = $studentProfileData->where('religion_id', $request->cmbReligion);
         }
 
         if ($request->cmbIsPwd) {
-            $studentProfileData   = $studentProfileData->where('is_pwd', $request->cmbIsPwd);
+            $studentProfileData = $studentProfileData->where('is_pwd', $request->cmbIsPwd);
         }
 
         if ($request->txtSearchBy) {
-            $studentProfileData = $studentProfileData->where(function (
-                $q
-            ) use ($request) {
+            $studentProfileData = $studentProfileData->where(function ($q) use ($request) {
                 $q
                     ->where('student_name', 'like', '%' . $request->txtSearchBy . '%')
                     ->orWhere('enrollment_number', 'like', '%' . $request->txtSearchBy . '%');
             });
         }
 
-        $studentProfileData       = $studentProfileData->orderBy('enrollment_number')->get();
+        $studentProfileData = $studentProfileData->orderBy('enrollment_number')->get();
 
 
         return $studentProfileData;
@@ -169,20 +167,24 @@ class AdmissionRegisterController extends Controller
     public function edit(Request $request, AdmissionRegister $admissionRegister)
     {
 
-        $studentProfileData   = Student::with('campus')
+        $studentProfileData = Student::with('campus')
             ->with('department')
             ->with('course')
             ->with('batch')
             ->with('gender')
             ->with('community')
 
-            ->with(array('admissionRegisters' => function ($query) use ($request) {
-                $query
-                    ->with('academicYear.year')
-                    ->with('grade')
-                    ->where('academic_year_id', $request->cmbAcademicYear)
-                    ->orderBy('grade_id', 'ASC');
-            }))
+            ->with(
+                array(
+                    'admissionRegisters' => function ($query) use ($request) {
+                        $query
+                            ->with('academicYear.year')
+                            ->with('grade')
+                            ->where('academic_year_id', $request->cmbAcademicYear)
+                            ->orderBy('grade_id', 'ASC');
+                    }
+                )
+            )
             ->orderBy('enrollment_number')->get();
 
         return $studentProfileData;

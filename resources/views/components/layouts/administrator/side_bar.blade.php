@@ -204,6 +204,84 @@
             </ul>
           </li>
 
+          <li class="nav-item menu-open">
+            <a href="#" class="nav-link active">
+              <i class="nav-icon fa-solid fa-indian-rupee-sign"></i>
+              <p>
+                Examination Management
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ url('admin/fee_structure') }}" class="nav-link">
+                  <i class="nav-icon fa-solid fa-list-check"></i>
+                  <p>Subject Registration</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ url('admin/fee_structure') }}" class="nav-link">
+                  <i class="nav-icon fa-solid fa-list-check"></i>
+                  <p>Examination Registration</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ url('admin/fee_structure') }}" class="nav-link">
+                  <i class="nav-icon fa-solid fa-list-check"></i>
+                  <p>Update Examination Roll No</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ url('admin/fee_structure') }}" class="nav-link">
+                  <i class="nav-icon fa-solid fa-list-check"></i>
+                  <p>Mid Semester Marks</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ url('admin/fee_structure') }}" class="nav-link">
+                  <i class="nav-icon fa-solid fa-list-check"></i>
+                  <p>Marks Entry (Semester)</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ url('admin/fee_structure') }}" class="nav-link">
+                  <i class="nav-icon fa-solid fa-list-check"></i>
+                  <p>Score Card</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="{{ url('/') }}" class="nav-link">
+                  <i class="fa-solid fa-download nav-icon"></i>
+                  <p>
+                    Report
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ url('/') }}" class="nav-link">
+                      <i class="fa-brands fa-wpforms nav-icon"></i>
+                      <p>1 fee</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ url('/') }}" class="nav-link">
+                      <i class="fa-brands fa-wpforms nav-icon"></i>
+                      <p>2 Fee</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ url('/') }}" class="nav-link">
+                      <i class="fa-brands fa-wpforms nav-icon"></i>
+                      <p>3 Fee</p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+
           <li class="nav-item">
             <a href="{{ url('admin/cache') }}" class="nav-link ">
               <i class="fa-solid fa-users-rays nav-icon"></i>
