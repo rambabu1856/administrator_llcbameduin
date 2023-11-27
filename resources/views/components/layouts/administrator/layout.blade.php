@@ -305,7 +305,7 @@
       "closeButton": true,
       "debug": false,
       "progressBar": false,
-      "positionClass": "toast-top-full-width mt-5 float-right", //top-right,bottom-left,top-left,top-full-width,bottom-full-width,top-center,bottom-center
+      "positionClass": "toast-top-right", //top-right,bottom-left,top-left,top-full-width,bottom-full-width,top-center,bottom-center
       "onclick": null,
       "showDuration": "20000",
       "hideDuration": "1000",

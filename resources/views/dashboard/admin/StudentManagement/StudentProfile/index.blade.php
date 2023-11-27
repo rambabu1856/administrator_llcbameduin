@@ -1,5 +1,7 @@
 <x-layouts.administrator.layout>
-  <x-slot name="css"></x-slot>
+  <x-slot name="css">
+    <link rel="stylesheet" href="{{ asset('admin_assets/plugins/jquery_ui_info/jquery-ui.min.css') }}">
+  </x-slot>
 
   <x-slot name="content">
 
@@ -175,8 +177,9 @@
             </div>
           </div>
           <div class="row">
-            <x-form.date-time-picker grid="col-sm-12 col-md-3" lblClass="required" lblText="Date of Birth"
-              name="txtModalDateOfBirth" dateFormat="DD/MM/YYYY" />
+
+            <x-form.input grid="col-sm-12 col-md-3" lblClass="required" lblText="Fee Receipt Date" type="text"
+              name="txtModalDateOfBirth" value=""></x-form.input>
 
             <x-form.select2 grid="col-sm-12 col-md-3" lblClass="required" lblText="Gender" name="cmbModalGender"
               :options="$gender"></x-form.select2>
@@ -309,12 +312,30 @@
   </x-slot>
 
   <x-slot name="script">
+    <script src="{{ asset('admin_assets/plugins/jquery_ui_info/jquery-ui.min.js') }}"></script>
     <script>
       // Course Change Function
 
       var courseId, batchId;
 
       $(document).ready(function() {
+
+
+        $("#txtModalDateOfBirth").datepicker({
+          changeMonth: true,
+          changeYear: true,
+          dateFormat: "dd/mm/yy",
+          showButtonPanel: true,
+          yearRange: "-100:+0",
+          maxDate: "+0D",
+          showAnim: 'slide',
+          beforeShow: function(input, inst) {
+            $(document).off('focusin.bs.modal');
+          },
+          onClose: function() {
+            $(document).on('focusin.bs.modal');
+          },
+        });
 
         // COURSE CHANGE
         $(document).on("change", "#cmbCourse", function() {
@@ -328,9 +349,11 @@
               id: courseId
             },
             beforeSend: function() {
-              $('#cmbBatch').empty().trigger("change");
+              $('#cmbBatch').empty();
+              $('.loading').show();
             },
             success: function(response) {
+              $('.loading').hide();
               $.each(response, function(i, v) {
                 $('#cmbBatch').append('<option value=' + v.id + '>' + v.title + '</option>');
               });
@@ -353,7 +376,7 @@
         $(document).on("click", ".btnEditProfile", function(e) {
           //   e.preventDefault();
           var studentId = $(this).data('id');
-
+          $('#preview').attr('src', "{{ asset('storage/media/web_images/student.png') }}");
           $.get("{{ route('admin.student_profile.index') }}" + '/' + studentId + '/edit', function(data) {
 
             var roll_no = data.enrollment_number.split("/")[0]
@@ -372,15 +395,19 @@
             $("#txtModalStudentId").val(data.id)
             $("#txtmodalImageUrl").val(data.image_url)
 
+
             var url = "{{ asset('storage/media/student_images') }}" + "/" + data
               .image_url +
               "?timestamp=" + new Date().getTime();
 
-            if (data.image_url) {
-              $('#preview').attr('src', url);
-            } else {
-              $('#preview').attr('src', "{{ asset('storage/media/web_images/student.png') }}");
-            }
+            urlExists(url, function(success) {
+
+              if (success) {
+                $('#preview').attr('src', url);
+              } else {
+                $('#preview').attr('src', "{{ asset('storage/media/web_images/student.png') }}");
+              }
+            });
 
             $("#cmbModalCampus").val(data.campus_id).trigger('change')
             $("#cmbModalDepartment").val(data.department_id).trigger('change')
@@ -457,10 +484,14 @@
             url: "{{ route('admin.student_profile.store') }}",
             data: $("#modalEditProfileForm").serialize(),
             dataType: "json",
-            async: false,
+            async: true,
+            beforeSend: function() {
+              $('.loading').show();
+            },
             success: function(response) {
               fetchDataToTable()
               $("#modalEditProfile").modal('hide');
+              $('.loading').show();
             }
           });
 
@@ -473,11 +504,15 @@
           type: "GET",
           url: "{{ route('admin.student_profile.create') }}",
           data: $("#searchForm").serialize(),
-          async: false,
+          async: true,
+          cache: false,
+          dataType: 'json',
           beforeSend: function(xhr) {
             $("#tblStudentProfile tbody").empty();
+            $('.loading').show();
           },
           success: function(response) {
+            $('.loading').hide();
             var sl_no = 0;
 
             $.each(response, function(i, v) {
@@ -539,6 +574,12 @@
             toastr.success(status);
           }
         });
+      }
+
+      // RESET MODAL ON POPUP
+      function resetModal() {
+        $("#modalEditProfile select").val(null).trigger("change");
+        $('#modalEditProfile').trigger("reset");
       }
 
       $(".resetForm").click(function(e) {

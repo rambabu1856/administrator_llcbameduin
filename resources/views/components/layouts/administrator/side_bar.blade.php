@@ -145,9 +145,9 @@
               </li>
               <li class="nav-item">
                 <a href="#" class="nav-link">
-                  <i class="fa-solid fa-book-open-reader nav-icon"></i>
+                  <i class="fa-solid fa-cloud-arrow-up  nav-icon"></i>
                   <p>
-                    REPORT
+                    Upload with Excel
                     <i class="right fas fa-angle-left"></i>
                   </p>
                 </a>
@@ -176,7 +176,7 @@
                 <a href="{{ url('/') }}" class="nav-link">
                   <i class="fa-solid fa-download nav-icon"></i>
                   <p>
-                    Download
+                    Report
                     <i class="right fas fa-angle-left"></i>
                   </p>
                 </a>

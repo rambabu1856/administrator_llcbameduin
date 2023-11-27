@@ -9,13 +9,6 @@
 
     <x-layouts.administrator.content_header contentHeader="STUDENT PROMOTION">
 
-      <x-button.dropdown :links="[
-          ['url' => '/link1', 'text' => 'Long Roll'],
-          ['url' => '/link2', 'text' => 'Contact Details'],
-          ['url' => '/link2', 'text' => 'Migration Details'],
-          ['url' => '/link2', 'text' => 'Phone Numbers'],
-      ]" btnClass="btn btn-success dropdown-toggle" />
-
     </x-layouts.administrator.content_header>
 
     <section class="content">
@@ -24,7 +17,7 @@
         {{-- SEARCH FORM --}}
         <x-card.card-heading heading="Filter" name="headingSearchForm">
 
-          <x-form.form action="" method="POST" name="searchForm">
+          <x-form.form action="" method="" name="searchForm">
 
             <x-card.card-body>
 
@@ -351,7 +344,6 @@
           } else if ($("#cmbToGrade").val() == null) {
             toastr.error("Please Select To Class")
           } else {
-            $('.loading').show();
             fetchDataToTable()
           }
         });
@@ -388,7 +380,6 @@
               $('.loading').show();
             },
             success: function(response) {
-
               var sl_no = 0;
               totalEligibleAmount = 0;
 
@@ -415,14 +406,14 @@
 
               $(".otherFeeReferenceNumber").addClass(" hide");
               $(".sbcRefenceNumber").removeClass(" hide");
+
             },
             error: function(xhr, status, text) {
               $('.loading').hide();
             },
-            complete: function() {
-              $('.loading').hide();
-            }
+
           });
+
 
           $.get("{{ route('admin.student_promotion.index') }}" + '/' + studentId, function(response) {
 
@@ -472,6 +463,7 @@
             });
 
             $("#modalPromoteStudent").modal('show');
+            $('.loading').hide();
           })
 
         });
@@ -508,9 +500,12 @@
                 'feeGroup': 1,
                 'subStringOfName': subStringOfName,
               },
+              beforeSend: function() {
+                $('.loading').show();
+              },
               dataType: "json",
               success: function(response) {
-
+                $('.loading').hide();
                 $("#cmbModalSbcReferenceNumber").empty();
 
                 $.each(response, function(i, v) {
@@ -553,9 +548,12 @@
               data: {
                 'sbcRefenceNumber': sbcRefenceNumber,
               },
+              beforeSend: function() {
+                $('.loading').show();
+              },
               dataType: "json",
               success: function(response) {
-
+                $('.loading').hide();
                 $('#txtModalReceiptDate').val(moment(response.transaction_date).format("DD/MM/YYYY"))
                 $("#txtModalReceiptDate").prop("disabled", true);
 
@@ -616,12 +614,16 @@
                 'txtReceiptAmount': txtReceiptAmount,
                 'txtareaRemark': txtareaRemark,
               },
-              async: false,
+              async: true,
               cache: false,
               dataType: 'JSON',
+              beforeSend: function() {
+                $('.loading').show();
+              },
               success: function(response) {
                 fetchDataToTable();
                 $('#modalPromoteStudent').modal('hide');
+                $('.loading').hide();
 
               }
             });
@@ -635,13 +637,15 @@
           type: "GET",
           url: "{{ route('admin.student_promotion.create') }}",
           data: $("#searchForm").serialize(),
-          async: false,
+          async: true,
+          cache: false,
+          dataType: 'json',
           beforeSend: function() {
-            $('#tblStudentPromotion tbody').empty();
             $('.loading').show();
           },
           success: function(response) {
-
+            $('.loading').hide();
+            $('#tblStudentPromotion tbody').empty();
             var sl_no = 0;
 
             $.each(response, function(i, v) {

@@ -174,9 +174,11 @@
               id: courseId
             },
             beforeSend: function() {
-              $('#cmbBatch').empty().trigger("change");
+              $('#cmbBatch').empty();
+              $('.loading').show();
             },
             success: function(response) {
+              $('.loading').hide();
               $.each(response, function(i, v) {
                 $('#cmbBatch').append('<option value=' + v.id + '>' + v.title + '</option>');
               });
@@ -199,8 +201,12 @@
               data: {
                 batchId: batchId
               },
-              success: function(response) {
+              beforeSend: function() {
                 $('#cmbAcademicYear').empty();
+                $('.loading').show();
+              },
+              success: function(response) {
+                $('.loading').hide();
                 $('#cmbGrade').empty();
                 $.each(response, function(i, v) {
                   $('#cmbAcademicYear').append('<option value=' + v.id + '>' + v.year.title +
@@ -231,10 +237,11 @@
                 academicYearId: academicYearId
               },
               beforeSend: function() {
-                $('#cmbGrade').empty().trigger("change");
+                $('#cmbGrade').empty();
+                $('.loading').show();
               },
               success: function(response) {
-
+                $('.loading').hide();
                 $.each(response, function(i, v) {
 
                   $('#cmbGrade').append('<option value=' + v.grade.id + '>' + v.grade.title +
@@ -270,9 +277,11 @@
           e.preventDefault();
           var studentId = $(this).data('id');
 
+          $('.loading').show();
 
           $.get("{{ route('admin.student_profile.index') }}" + '/' + studentId + '/edit', function(data) {
-            console.log(data.id);
+
+            $('.loading').hide();
             var roll_no = data.enrollment_number.split("/")[0]
 
             $("#modalEditProfileTitle").html(data.student_name + "  ( " + data.enrollment_number + " )")
@@ -367,10 +376,14 @@
               admissionDate: admissionDate,
             },
             dataType: "json",
-            async: false,
+            async: true,
+            beforeSend: function() {
+
+            },
             success: function(response) {
               $("#modalAdmissionRegister").modal('hide');
               fetchDataToTable();
+              $('.loading').show();
             }
           });
         });
@@ -381,11 +394,15 @@
           type: "GET",
           url: "{{ route('admin.student_admission_register.create') }}",
           data: $("#searchForm").serialize(),
-          async: false,
+          async: true,
+          cache: false,
+          dataType: 'json',
           beforeSend: function(xhr) {
             $("#tblStudentAdmissionRegister tbody").empty();
+            $('.loading').show();
           },
           success: function(response) {
+            $('.loading').hide();
             var sl_no = 0;
 
             $.each(response, function(i, v) {
