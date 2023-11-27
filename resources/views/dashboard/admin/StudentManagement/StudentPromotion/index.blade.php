@@ -156,27 +156,30 @@
                   type="text" name="txtModalReceiptAmount" value=""></x-form.input>
 
               </div>
-              <div class="section">
-                <div class="p-1" style="background:#cfe9ee;">
-                  <div class="form-group row p-0 m-0 ">
-                    <label for="" class="col-sm-8 col-md-10 text-dark">Eligible Fee</label>
-                    <label for="" class="col-sm-4 col-md-2 text-right text-dark"
-                      id="lblEligibleAmount"></label>
-                  </div>
-                  <div class="form-group row  p-0 m-0">
-                    <label for="" class="col-sm-8 col-md-10 text-dark">Amount Received</label>
-                    <label for="" class="col-sm-4 col-md-2 text-right text-dark"
-                      id="lblReceiptAmount"></label>
-                  </div>
-                  <div class="form-group row  p-0 m-0 mt-2 mb-1">
-                    <label for="" class="col-sm-8 col-md-10 pt-1 pb-1 text-dark text-right">Balance</label>
-                    <label for="" class="col-sm-4 col-md-2  pt-1 pb-1 text-dark text-right "
-                      style="border-top: 1px solid black; border-bottom: 3px double black;"
-                      id="lblBalanceAmount"></label>
-                  </div>
-                </div>
-                <x-modal.modal-footer name="btnModalSubmitStudentPromotionForm"></x-modal.modal-footer>
+              <div class="row">
+                <x-form.text-area grid="col-sm-12 col-md-12" lblClass="" lblText="Remark" name="txtareaRemark"
+                  value=""></x-form.text-area>
               </div>
+
+              <div class="p-1" style="background:#cfe9ee;">
+                <div class="form-group row p-0 m-0 ">
+                  <label for="" class="col-sm-8 col-md-10 text-dark">Eligible Fee</label>
+                  <label for="" class="col-sm-4 col-md-2 text-right text-dark"
+                    id="lblEligibleAmount"></label>
+                </div>
+                <div class="form-group row  p-0 m-0">
+                  <label for="" class="col-sm-8 col-md-10 text-dark">Amount Received</label>
+                  <label for="" class="col-sm-4 col-md-2 text-right text-dark" id="lblReceiptAmount"></label>
+                </div>
+                <div class="form-group row  p-0 m-0 mt-2 mb-1">
+                  <label for="" class="col-sm-8 col-md-10 pt-1 pb-1 text-dark text-right">Balance</label>
+                  <label for="" class="col-sm-4 col-md-2  pt-1 pb-1 text-dark text-right "
+                    style="border-top: 1px solid black; border-bottom: 3px double black;"
+                    id="lblBalanceAmount"></label>
+                </div>
+              </div>
+              <x-modal.modal-footer name="btnModalSubmitStudentPromotionForm"></x-modal.modal-footer>
+
             </div>
             <x-table.table id="feeGroup" :tableHeaders="['#', 'Batch', 'Session <-> Class', 'Fee Group <-> Head of Account', 'Amount']">
               <x-table.table-body></x-table.table-body>
@@ -421,7 +424,6 @@
             }
           });
 
-
           $.get("{{ route('admin.student_promotion.index') }}" + '/' + studentId, function(response) {
 
             var roll_no = response.data.enrollment_number.split("/")[0]
@@ -433,16 +435,21 @@
             $("#txtModalStudentId").val(response.data.id)
             $("#txtModalImageUrl").val(response.data.image_url)
 
+
+
             var url = "{{ asset('storage/media/student_images') }}" + "/" + response.data
               .image_url +
               "?timestamp=" + new Date().getTime();
 
+            urlExists(url, function(success) {
 
-            if (response.data.image_url) {
-              $('#preview').attr('src', url);
-            } else {
-              $('#preview').attr('src', "{{ asset('storage/media/web_images/student.png') }}");
-            }
+              if (success) {
+                $('#preview').attr('src', url);
+              } else {
+                $('#preview').attr('src', "{{ asset('storage/media/web_images/student.png') }}");
+              }
+            });
+
 
             $("#txtModalStudentName").val(response.data.student_name).prop("disabled", true)
 
@@ -578,6 +585,7 @@
           var txtOtherFeeReferenceNumber = $('#txtOtherFeeReferenceNumber').val();
           var txtReceiptDate = $('#txtModalReceiptDate').val();
           var txtReceiptAmount = $('#txtModalReceiptAmount').val();
+          var txtareaRemark = $('#txtareaRemark').val();
 
           var feeReference = cmbModalSbcReferenceNumber !== null ? cmbModalSbcReferenceNumber : (
             txtOtherFeeReferenceNumber)
@@ -606,40 +614,23 @@
                 'feeReference': feeReference,
                 'txtReceiptDate': txtReceiptDate,
                 'txtReceiptAmount': txtReceiptAmount,
+                'txtareaRemark': txtareaRemark,
               },
               async: false,
               cache: false,
               dataType: 'JSON',
               success: function(response) {
-                console.log(response)
+                fetchDataToTable();
+                $('#modalPromoteStudent').modal('hide');
+
               }
             });
           }
-          //   $.ajax({
-          //     type: "POST",
-
-          //     data: {
-          //       'txtstudentId': txtstudentId,
-          //       'cmbCourseId': cmbCourseId,
-          //       'cmbBatchId': cmbBatchId,
-          //       'txtToGradeId': txtToGradeId,
-          //       'txtRollNo': txtRollNo,
-          //       'txtEnrollmentNumber': txtEnrollmentNumber,
-          //       'cmbModeOfTransactionId': cmbModeOfTransactionId,
-          //       'feeReference': feeReference,
-          //       'txtReceiptDate': txtReceiptDate,
-          //       'txtReceiptAmount': txtReceiptAmount,
-          //     },
-          //     success: function(response) {
-          //       console.log(response);
-          //     }
-          //   });
-
         });
       });
 
       //   STUDENT LIST TABLE
-      function fetchDataToTable(e) {
+      function fetchDataToTable() {
         $.ajax({
           type: "GET",
           url: "{{ route('admin.student_promotion.create') }}",

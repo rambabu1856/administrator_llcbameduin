@@ -11,6 +11,7 @@ use App\Models\Select\Course;
 use App\Models\Select\Department;
 use App\Models\Select\AcademicYear;
 use App\Http\Controllers\Controller;
+use App\Models\Accounts\Transaction;
 use App\Models\Select\ModeOfTransaction;
 use App\Models\StudentManagement\Student;
 use App\Models\StudentManagement\AdmissionRegister;
@@ -133,10 +134,10 @@ class StudentPromotionController extends Controller
     public function store(Request $request)
 
     {
-
-        $academicYear = AcademicYear::where('course_id', $request->cmbCourseId)
+        $academicYear = AcademicYear::with('year')->where('course_id', $request->cmbCourseId)
             ->where('batch_id', $request->cmbBatchId)
-            ->where('grade_id', $request->txtToGradeId)->first(['id', 'slug']);
+            ->where('grade_id', $request->txtToGradeId)->first();
+
 
         $model = AdmissionRegister::updateOrCreate(
             [
@@ -154,8 +155,23 @@ class StudentPromotionController extends Controller
         );
 
         if ($model->id) {
-            
+            $modelTransaction = Transaction::updateOrCreate(
+                [
+                    'transaction_reference_no' => $request->feeReference,
+                ],
+                [
+                    'student_id' => $request->txtstudentId,
+                    'enrollment_number' => $request->txtEnrollmentNumber,
+                    'grade_id' => $request->txtToGradeId,
+                    'academic_year_id' => $academicYear->id,
+                    'academic_year' => $academicYear->year->title,
+                    'fee_group_head_id' => 1,
+                    'is_sbc_used' => 1,
+                    'office_remark' => $request->txtareaRemark,
+                ]
+            );
         }
+        return $modelTransaction;
     }
 
     public function show($id)

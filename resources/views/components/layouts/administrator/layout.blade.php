@@ -184,12 +184,17 @@
 
       $(".btn-sm").addClass("elevation-5");
 
-      $(".select2").select2({
-        placeholder: "Select",
-        allowClear: true,
-      });
+      //   $(".select2").select2({
 
+      //   });
 
+      $('.select2').each(function() {
+        $(this).select2({
+          dropdownParent: $(this).parent(),
+          placeholder: "Select",
+          allowClear: true,
+        });
+      })
 
       $(document).on('select2:open', (e) => {
         const selectId = e.target.id
@@ -495,6 +500,17 @@
       }
       var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';
       return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
+    }
+
+
+    function urlExists(url, callback) {
+      $.ajax({
+        type: 'HEAD',
+        url: url,
+        success: function() {
+          callback(true);
+        }
+      });
     }
   </script>
 </body>
