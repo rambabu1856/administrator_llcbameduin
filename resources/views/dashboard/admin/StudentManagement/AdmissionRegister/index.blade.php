@@ -1,7 +1,7 @@
 <x-layouts.administrator.layout>
 
   <x-slot name="css">
-    <link rel="stylesheet" href="{{ asset('admin_assets/plugins/jquery-ui/jquery-ui.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('admin_assets/plugins/jquery_ui_info/jquery-ui.min.css') }}">
 
 
   </x-slot>
@@ -128,19 +128,19 @@
 
             <div class="row">
 
-              <x-form.input grid="col-sm-12 col-md-12" lblClass="required" lblText="Student Name" type="text"
+              <x-form.input grid="col-sm-12 col-md-6" lblClass="required" lblText="Student Name" type="text"
                 name="txtModalStudentName"></x-form.input>
 
-              <x-form.input grid="col-sm-12 col-md-4" lblClass="required" lblText="Enrollment Number Number"
+              <x-form.input grid="col-sm-12 col-md-3" lblClass="required" lblText="Enrollment Number Number"
                 type="text" name="txtModalEnrollmentNumber"></x-form.input>
 
-              <x-form.input grid="col-sm-12 col-md-4" lblClass="required" lblText="Roll Number" type="text"
+              <x-form.input grid="col-sm-12 col-md-3" lblClass="required" lblText="Roll Number" type="text"
                 name="txtModalRollNo"></x-form.input>
-
-              <x-form.date-time-picker grid="col-sm-12 col-md-4" lblClass="required" lblText="Admission Date"
-                name="txtModalAdmissionDate" dateFormat="DD/MM/YYYY" />
             </div>
-
+            <hr>
+            <div class="col-sm-12 col-md-12 bg-secondary">
+              <h6 class="text-warning text-uppercase text-center">Admission Details</h6>
+            </div>
             <x-table.table id="tblModalAdmissionDetails" :tableHeaders="['Enrollment Number', 'Roll Number', 'Academic Year', 'Grade', 'Admission Date', 'Action']">
               <x-table.table-body>
 
@@ -153,7 +153,7 @@
   </x-modal.modal>
 
   <x-slot name="script">
-    <script src="{{ asset('admin_assets/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('admin_assets/plugins/jquery_ui_info/jquery-ui.min.js') }}"></script>
     <script>
       // Course Change Function
 

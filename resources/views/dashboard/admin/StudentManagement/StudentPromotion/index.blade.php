@@ -1,7 +1,7 @@
 <x-layouts.administrator.layout>
 
   <x-slot name="css">
-    <link rel="stylesheet" href="{{ asset('admin_assets/plugins/jquery-ui/jquery-ui.min.css') }}">
+
   </x-slot>
 
   <x-slot name="content">
@@ -76,7 +76,7 @@
         <div class="card ">
           <x-card.card-body>
 
-            <x-table.table id="tblStudentAdmissionRegister" :tableHeaders="[
+            <x-table.table id="tblStudentPromotion" :tableHeaders="[
                 'Sl No',
                 'Enrollment No',
                 'Roll No',
@@ -98,100 +98,100 @@
       </div>
     </section>
 
+    <x-modal.modal id="modalPromoteStudent" modalSize="modal-xl">
+
+      <x-modal.modal-title id="modalEditProfileTitle"></x-modal.modal-title>
+
+      <x-form.form action="" method="POST" name="modalPromoteForm">
+
+        <x-modal.modal-body>
+
+          <input type="hidden" name="txtModalStudentId" id="txtModalStudentId">
+          <input type="hidden" name="txtModalImageUrl" id="txtModalImageUrl">
+
+          <div class="row">
+            <div class="col-sm-12 col-md-3">
+
+              <div class="col-md-12 text-center">
+
+                <img id="preview" src="{{ asset('storage/media/web_images/student.png') }}" alt="Student Image"
+                  class="img-thumbnail" style="min-height: 220px;" />
+
+              </div>
+
+            </div>
+
+            <div class="col-sm-12 col-md-9">
+
+              <div class="row">
+
+                <x-form.input grid="col-sm-12 col-md-3" lblClass="required" lblText="Student Name" type="text"
+                  name="txtModalStudentName"></x-form.input>
+
+                <x-form.input grid="col-sm-12 col-md-3" lblClass="required" lblText="Enrollment Number" type="text"
+                  name="txtModalEnrollmentNumber"></x-form.input>
+
+                <x-form.input grid="col-sm-12 col-md-3" lblClass="required" lblText="Roll Number" type="text"
+                  name="txtModalRollNo"></x-form.input>
+
+                <x-form.select2 grid="col-sm-12 col-md-3" lblClass="required" lblText="Mode of Transaction"
+                  name="cmbModalModeOfTransaction" :options="$modeOfTransaction"></x-form.select2>
+              </div>
+
+              <div class="row">
+
+                <x-form.select2 grid="col-sm-12 col-md-6 sbcRefenceNumber " lblClass="required"
+                  lblText="SB Collect Reference Number" name="cmbModalSbcReferenceNumber"
+                  :options="[]"></x-form.select2>
+
+                <x-form.input grid="col-sm-12 col-md-6  otherFeeReferenceNumber " lblClass="required"
+                  lblText="Fee Receipt ReferenceNumber" type="text" name="txtOtherFeeReferenceNumber"
+                  value=""></x-form.input>
+
+                <x-form.input grid="col-sm-12 col-md-3" lblClass="required" lblText="Fee Receipt Date"
+                  type="text" name="txtModalReceiptDate" value=""></x-form.input>
+
+                <x-form.input grid="col-sm-12 col-md-3 " lblClass="required" lblText="Fee Receipt Amount"
+                  type="text" name="txtModalReceiptAmount" value=""></x-form.input>
+
+              </div>
+
+              <div class="p-1" style="background:#cfe9ee;">
+                <div class="form-group row p-0 m-0 ">
+                  <label for="" class="col-sm-8 col-md-10 text-dark">Eligible Fee</label>
+                  <label for="" class="col-sm-4 col-md-2 text-right text-dark"
+                    id="lblEligibleAmount"></label>
+                </div>
+                <div class="form-group row  p-0 m-0">
+                  <label for="" class="col-sm-8 col-md-10 text-dark">Amount Received</label>
+                  <label for="" class="col-sm-4 col-md-2 text-right text-dark" id="lblReceiptAmount"></label>
+                </div>
+                {{-- <div class="form-group row  p-0 m-0 mt-2 mb-1">
+                  <label for="" class="col-sm-8 col-md-10 pt-1 pb-1 text-dark text-right">Balance</label>
+                  <label for="" class="col-sm-4 col-md-2  pt-1 pb-1 text-dark text-right "
+                    style="border-top: 1px solid black; border-bottom: 3px double black;"
+                    id="lblBalanceAmount"></label>
+                </div> --}}
+              </div>
+              <x-modal.modal-footer name="btnModalSubmitStudentPromotionForm"></x-modal.modal-footer>
+            </div>
+
+            <x-table.table id="feeGroup" :tableHeaders="['#', 'Batch', 'Session <-> Class', 'Fee Group <-> Head of Account', 'Amount']">
+              <x-table.table-body></x-table.table-body>
+            </x-table.table>
+
+          </div>
+
+        </x-modal.modal-body>
+
+      </x-form.form>
+
+    </x-modal.modal>
+
   </x-slot>
 
-  <x-modal.modal id="modalPromoteStudent" modalSize="modal-xl">
-
-    <x-modal.modal-title id="modalEditProfileTitle"></x-modal.modal-title>
-
-    <x-form.form action="" method="POST" name="modalEditProfileForm">
-
-      <x-modal.modal-body>
-
-        <input type="hidden" name="txtModalStudentId" id="txtModalStudentId">
-        <input type="hidden" name="txtModalImageUrl" id="txtModalImageUrl">
-
-        <div class="row">
-          <div class="col-sm-12 col-md-3">
-
-            <div class="col-md-12 text-center">
-
-              <img id="preview" src="{{ asset('storage/media/web_images/student.png') }}" alt="Student Image"
-                class="img-thumbnail" style="min-height: 220px;" />
-
-            </div>
-
-          </div>
-
-          <div class="col-sm-12 col-md-9">
-
-            <div class="row">
-
-              <x-form.input grid="col-sm-12 col-md-3" lblClass="required" lblText="Student Name" type="text"
-                name="txtModalStudentName"></x-form.input>
-
-              <x-form.input grid="col-sm-12 col-md-3" lblClass="required" lblText="Enrollment Number" type="text"
-                name="txtModalEnrollmentNumber"></x-form.input>
-
-              <x-form.input grid="col-sm-12 col-md-3" lblClass="required" lblText="Roll Number" type="text"
-                name="txtModalRollNo"></x-form.input>
-
-              <x-form.select2 grid="col-sm-12 col-md-3" lblClass="required" lblText="Mode of Transaction"
-                name="cmbModalModeOfTransaction" :options="$modeOfTransaction"></x-form.select2>
-            </div>
-
-            <div class="row">
-
-              <x-form.select2 grid="col-sm-12 col-md-6 sbcRefenceNumber" lblClass="required"
-                lblText="SB Collect Reference Number" name="cmbModalSbcRefenceNumber"
-                :options="[]"></x-form.select2>
-
-              <x-form.input grid="col-sm-12 col-md-6   otherFeeReferenceNumber hide" lblClass="required"
-                lblText="Fee Receipt ReferenceNumber" type="text"
-                name="txtOtherFeeReferenceNumber"></x-form.input>
-
-              <x-form.input grid="col-sm-12 col-md-3" lblClass="required" lblText="Fee Receipt Date" type="text"
-                name="txtModalReceiptDate" value="" readonly></x-form.input>
-
-              <x-form.input grid="col-sm-12 col-md-3 " lblClass="required" lblText="Fee Receipt Amount"
-                type="text" name="txtModalReceiptAmount" readonly></x-form.input>
-
-            </div>
-            <div class="p-1" style="background:#cfe9ee;">
-
-              <div class="form-group row p-0 m-0 ">
-                <label for="" class="col-sm-8 col-md-10 text-dark">Eligible Fee</label>
-                <label for="" class="col-sm-4 col-md-2 text-right text-dark" id="lblEligibleAmount"></label>
-              </div>
-
-              <div class="form-group row  p-0 m-0">
-                <label for="" class="col-sm-8 col-md-10 text-dark">Amount Received</label>
-                <label for="" class="col-sm-4 col-md-2 text-right text-dark" id="lblReceiptAmount"></label>
-              </div>
-
-              <div class="form-group row  p-0 m-0 mt-2 mb-1">
-                <label for="" class="col-sm-8 col-md-10 pt-1 pb-1 text-dark text-right">Balance</label>
-                <label for="" class="col-sm-4 col-md-2  pt-1 pb-1 text-dark text-right "
-                  style="border-top: 1px solid black; border-bottom: 3px double black;" id="lblBalanceAmount"></label>
-              </div>
-            </div>
-
-            <x-modal.modal-footer name="btnModalSubmitStudentPromotionForm"></x-modal.modal-footer>
-
-          </div>
-          <x-table.table id="feeGroup" :tableHeaders="['#', 'Batch', 'Session <-> Class', 'Fee Group <-> Head of Account', 'Amount']">
-            <x-table.table-body></x-table.table-body>
-          </x-table.table>
-
-
-        </div>
-      </x-modal.modal-body>
-
-    </x-form.form>
-  </x-modal.modal>
-
   <x-slot name="script">
-    <script src="{{ asset('admin_assets/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+
     <script>
       // Course Change Function
       var courseId, batchId;
@@ -248,7 +248,7 @@
         // BATCH CHANGE
         $(document).on("change", "#cmbBatch", function() {
 
-          $("#tblStudentAdmissionRegister tbody").empty();
+          $("#tblStudentPromotion tbody").empty();
           batchId = $('option:selected', this).val();
 
           if (batchId > 0 && batchId != null) {
@@ -285,7 +285,7 @@
         // GRADE CHANGE
         $(document).on("change", "#cmbFromGrade", function() {
 
-          $("#tblStudentAdmissionRegister tbody").empty();
+          $("#tblStudentPromotion tbody").empty();
 
           gradeId = $('option:selected', this).val();
           batchId = $('#cmbBatch').val();
@@ -327,49 +327,6 @@
           }
         });
 
-        // ACADEMIC YEAR CHANGE
-        // $(document).on("change", "#cmbAcademicYear", function(e) {
-        //   e.preventDefault();
-        //   $("#tblStudentAdmissionRegister tbody").empty();
-
-        //   academicYearId = $('option:selected', this).val();
-
-        //   if (academicYearId > 0) {
-
-        //     $("#tblStudentAdmissionRegister tbody").empty();
-
-        //     $.ajax({
-        //       type: "POST",
-        //       url: "{{ url('admin/getAcademicYearGrade') }}",
-        //       data: {
-        //         batchId: batchId,
-        //         academicYearId: academicYearId
-        //       },
-        //       beforeSend: function() {
-        //         $('#cmbGrade').empty();
-        //         $('.loading').show();
-        //       },
-        //       success: function(response) {
-
-        //         $.each(response, function(i, v) {
-
-        //           $('#cmbGrade').append('<option value=' + v.grade.id + '>' + v.grade.title +
-        //             '</option>');
-
-        //         });
-        //         $('#cmbGrade').val(null).trigger('change');
-        //       },
-        //       error: function(xhr, status, text) {
-
-        //       },
-        //       complete: function() {
-        //         $('.loading').hide();
-        //       }
-        //     });
-        //   }
-
-        // });
-
         // SEARCH STUDENTS WITH FILTER
         $('#btnSearch').on('click', function(e) {
 
@@ -390,6 +347,12 @@
             fetchDataToTable()
           }
         });
+
+        // RESET TABLE AND SEARCH FIELDS
+        $(".resetForm").click(function(e) {
+          $("form select").val(null).trigger("change");
+          $('form').trigger("reset");
+        })
 
         // POPUP STUDENT PROMOTE MODAL
         $(document).on("click", ".btnPromoteStudent", function(e) {
@@ -439,8 +402,11 @@
                 )
 
               });
-              $('[data-toggle="tooltip"]').tooltip();
+              $("#cmbModalModeOfTransaction").val(null).trigger('change')
               $("#lblEligibleAmount").html(toIndianCurrency(totalEligibleAmount));
+
+              $(".otherFeeReferenceNumber").addClass(" hide");
+              $(".sbcRefenceNumber").removeClass(" hide");
             },
             error: function(xhr, status, text) {
               $('.loading').hide();
@@ -504,6 +470,8 @@
 
           e.preventDefault();
 
+          resetModalFields();
+
           var transactionModeId = $(this).val();
 
           var feeReceiptFromDate = $('#txtFeeReceiptFromDate').val()
@@ -531,20 +499,20 @@
               dataType: "json",
               success: function(response) {
 
-                $("#cmbModalSbcRefenceNumber").empty();
+                $("#cmbModalSbcReferenceNumber").empty();
 
                 $.each(response, function(i, v) {
 
                   var studentName = (v.student_name).toUpperCase()
 
-                  $('#cmbModalSbcRefenceNumber').append('<option  value=' + v
+                  $('#cmbModalSbcReferenceNumber').append('<option  value=' + v
                     .transaction_reference_no +
                     '><span class="text-uppercase">' + v.transaction_reference_no +
                     ' <- -> ' + studentName +
                     '</span></option>');
                 });
 
-                $('#cmbModalSbcRefenceNumber').val(null).trigger('change');
+                $('#cmbModalSbcReferenceNumber').val(null).trigger('change');
               }
             });
           } else {
@@ -555,9 +523,14 @@
         });
 
         // SB COLLECT REFERENCE NUMBER CHANGE
-        $(document).on("change", "#cmbModalSbcRefenceNumber", function(e) {
+        $(document).on("change", "#cmbModalSbcReferenceNumber", function(e) {
 
           e.preventDefault();
+
+          $("#txtModalReceiptDate").prop("disabled", false);
+          $('#txtModalReceiptDate').val('');
+          $("#txtModalReceiptAmount").prop("disabled", false);
+          $('#txtModalReceiptAmount').val('');
 
           var sbcRefenceNumber = $(this).val();
 
@@ -571,24 +544,77 @@
               dataType: "json",
               success: function(response) {
 
-
                 $('#txtModalReceiptDate').val(moment(response.transaction_date).format("DD/MM/YYYY"))
+                $("#txtModalReceiptDate").prop("disabled", true);
+
                 $('#txtModalReceiptAmount').val(response.receipt_amount)
+                $("#txtModalReceiptAmount").prop("disabled", true);
 
                 totalReceiptAmount = parseFloat(response.receipt_amount)
                 $("#lblReceiptAmount").html(toIndianCurrency(totalReceiptAmount));
 
                 balanceAmount = totalEligibleAmount - totalReceiptAmount;
                 $("#lblBalanceAmount").html(toIndianCurrency(balanceAmount));
-
               }
             });
           }
         });
 
+        $(document).on("click", "#btnModalSubmitStudentPromotionForm", function() {
 
+          var txtstudentId = $('#txtModalStudentId').val();
+          var cmbCourseId = $('#cmbCourse').val();
+          var cmbBatchId = $('#cmbBatch').val();
+          var txtToGradeId = $('#txtToGrade').val();
+          var txtRollNo = $('#txtModalRollNo').val();
+          var txtEnrollmentNumber = $('#txtModalEnrollmentNumber').val();
+          var cmbModeOfTransactionId = $('#cmbModalModeOfTransaction').val();
+          var cmbModalSbcReferenceNumber = $('#cmbModalSbcReferenceNumber').val();
+          var txtOtherFeeReferenceNumber = $('#txtOtherFeeReferenceNumber').val();
+          var txtReceiptDate = $('#txtModalReceiptDate').val();
+          var txtReceiptAmount = $('#txtModalReceiptAmount').val();
+
+
+          var feeReference = cmbModalSbcReferenceNumber !== null ? cmbModalSbcReferenceNumber : (
+            txtOtherFeeReferenceNumber)
+
+          if ($('#cmbModalModeOfTransaction').val() === null) {
+            toastr.error('Select Mode of Transaction');
+          } else if (feeReference === "" || feeReference === null) {
+            toastr.error('Select/Enter Fee Reference Number');
+          } else if ($('#txtModalReceiptDate').val() === null || $('#txtModalReceiptDate').val() === "") {
+            toastr.error('Select Fee Deposit Date');
+          } else if ($('#txtModalReceiptAmount').val() === null || $('#txtModalReceiptAmount').val() === "") {
+            toastr.error('Enter Fee Amount');
+          } else {
+            $.ajax({
+              type: "POST",
+              url: "{{ route('admin.student_promotion.store') }}",
+              data: {
+                'txtstudentId': txtstudentId,
+                'cmbCourseId': cmbCourseId,
+                'cmbBatchId': cmbBatchId,
+                'txtToGradeId': txtToGradeId,
+                'txtRollNo': txtRollNo,
+                'txtEnrollmentNumber': txtEnrollmentNumber,
+                'cmbModeOfTransactionId': cmbModeOfTransactionId,
+                'feeReference': feeReference,
+                'txtReceiptDate': txtReceiptDate,
+                'txtReceiptAmount': txtReceiptAmount,
+              },
+              dataType: "json",
+              async: false,
+              success: function(response) {
+                console.log(response);
+              }
+            });
+          }
+
+
+        });
       });
 
+      //   STUDENT LIST TABLE
       function fetchDataToTable(e) {
         $.ajax({
           type: "GET",
@@ -596,7 +622,7 @@
           data: $("#searchForm").serialize(),
           async: false,
           beforeSend: function() {
-            $('#tblStudentAdmissionRegister tbody').empty();
+            $('#tblStudentPromotion tbody').empty();
             $('.loading').show();
           },
           success: function(response) {
@@ -627,7 +653,7 @@
                   var is_tc_withdrawn = ""
                 }
 
-                $("#tblStudentAdmissionRegister tbody").append('<tr>' +
+                $("#tblStudentPromotion tbody").append('<tr>' +
                   '<td>' + sl_no + '</td>' +
                   '<td><span class="badge badge-warning text-sm">' + row.enrollment_no +
                   '</span></td>' +
@@ -666,14 +692,21 @@
         });
       }
 
-      $(".resetForm").click(function(e) {
-        $("form select").val(null).trigger("change");
-        $('form').trigger("reset");
-      })
-
+      // RESET MODAL ON POPUP
       function resetModal() {
-        $("#modalEditProfileForm select").val(null).trigger("change");
-        $('#modalEditProfileForm').trigger("reset");
+        $("#modalPromoteForm select").val(null).trigger("change");
+        $('#modalPromoteForm').trigger("reset");
+      }
+
+      function resetModalFields() {
+        $('#cmbModalSbcReferenceNumber').empty()
+        $('#cmbModalSbcReferenceNumber').val(null).trigger('change');
+        $('#txtOtherFeeReferenceNumber').val('');
+
+        $("#txtModalReceiptDate").prop("disabled", false);
+        $('#txtModalReceiptDate').val('');
+        $("#txtModalReceiptAmount").prop("disabled", false);
+        $('#txtModalReceiptAmount').val('');
       }
     </script>
   </x-slot>

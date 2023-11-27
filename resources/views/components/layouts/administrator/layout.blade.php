@@ -30,6 +30,7 @@
   <link rel="stylesheet" href="{{ asset('admin_assets/plugins/datatables-buttons/css/buttons.bootstrap4.css') }}">
 
   {{ $css }}
+  <link rel="stylesheet" href="{{ asset('admin_assets/plugins/jquery_ui_info/jquery-ui.min.css') }}">
 
   <link rel="stylesheet" href="{{ asset('admin_assets/dist/css/adminlte.min.css') }}">
 
@@ -86,6 +87,7 @@
 
   <script src="{{ asset('admin_assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}">
   </script>
+  <script src="{{ asset('admin_assets/plugins/jquery_ui_info/jquery-ui.min.js') }}"></script>
   <script src="{{ asset('admin_assets/plugins/chart.js/Chart.min.js') }}"></script>
   <script src="{{ asset('admin_assets/dist/js/adminlte.min.js') }}"></script>
 
