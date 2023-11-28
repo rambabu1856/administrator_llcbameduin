@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Admin\StudentManagement;
 
+use Carbon\Carbon;
 use App\Models\Select\Batch;
+use App\Models\Select\Grade;
 use Illuminate\Http\Request;
 use App\Models\Select\Campus;
 use App\Models\Select\Course;
 use App\Models\Select\Gender;
-use Carbon\Carbon;
 use App\Models\Select\IsActive;
 use App\Models\Select\Religion;
 use App\Models\Select\Community;
@@ -19,7 +20,7 @@ use App\Models\StudentManagement\AdmissionRegister;
 
 class AdmissionRegisterController extends Controller
 {
-	public $campus, $department, $course, $batch, $academicYear, $gender, $community, $religion, $yesNo;
+	public $campus, $department, $course, $batch, $grade, $academicYear, $gender, $community, $religion, $yesNo;
 
 	public function __construct()
 	{
@@ -27,6 +28,7 @@ class AdmissionRegisterController extends Controller
 		$this->department = Department::get();
 		$this->course = Course::get();
 		$this->batch = Batch::orderBy('title', 'DESC')->get();
+		$this->grade = Grade::get();
 		$this->academicYear = AcademicYear::orderBy('batch_id', 'DESC')->orderBy('grade_id', 'ASC')->get();
 		$this->gender = Gender::get();
 		$this->community = Community::get();
@@ -64,6 +66,8 @@ class AdmissionRegisterController extends Controller
 			$academicYear = [];
 		}
 
+		$grade = $this->grade;
+
 		$gender = $this->gender;
 		$community = $this->community;
 		$religion = $this->religion;
@@ -76,6 +80,7 @@ class AdmissionRegisterController extends Controller
 				'department',
 				'course',
 				'batch',
+				'grade',
 				'academicYear',
 				'gender',
 				'community',

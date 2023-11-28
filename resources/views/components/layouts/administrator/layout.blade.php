@@ -13,27 +13,15 @@
   <link rel="shortcut icon" href="{{ asset('images/logo.jpg') }}" type="image/x-icon">
 
   <link rel="stylesheet" type='text/css' href="{{ asset('admin_assets/plugins/fontawesome-6/css/all.min.css') }}">
-  <link rel="stylesheet"
-    href="{{ asset('admin_assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('admin_assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+
   <link rel="stylesheet" href="{{ asset('admin_assets/plugins/sweetalert2/sweetalert2.min.css') }}">
   <link rel="stylesheet" href="{{ asset('admin_assets/plugins/toastr/toastr.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('admin_assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ asset('admin_assets/plugins/select2/css/select2.min.css') }}">
   <link rel="stylesheet" href="{{ asset('admin_assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('admin_assets/plugins/daterangepicker/daterangepicker.css') }}">
-  <link rel="stylesheet" href="{{ asset('admin_assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
-  <link rel="stylesheet"
-    href="{{ asset('admin_assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
-  <link rel="stylesheet"
-    href="{{ asset('admin_assets/plugins/datatables-rowgroup/css/rowGroup.bootstrap4.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('admin_assets/plugins/datatables-buttons/css/buttons.bootstrap4.css') }}">
-
+  <link rel="stylesheet" href="{{ asset('admin_assets/plugins/jquery_ui_info/jquery-ui.min.css') }}">
   {{ $css }}
 
   <link rel="stylesheet" href="{{ asset('admin_assets/dist/css/adminlte.min.css') }}">
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 
   <link rel='stylesheet' type='text/css'
     href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900italic,900'>
@@ -79,16 +67,8 @@
   <script src="{{ asset('admin_assets/plugins/toastr/toastr.min.js') }}"></script>
   <script src="{{ asset('admin_assets/plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
   <script src="{{ asset('admin_assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
-  <script src="{{ asset('admin_assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-  <script src="{{ asset('admin_assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-  <script src="{{ asset('admin_assets/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
-  <script src="{{ asset('admin_assets/plugins/datatables-rowgroup/js/dataTables.rowGroup.js') }}"></script>
-
-  <script src="{{ asset('admin_assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}">
-  </script>
-  <script src="{{ asset('admin_assets/plugins/chart.js/Chart.min.js') }}"></script>
+  <script src="{{ asset('admin_assets/plugins/jquery_ui_info/jquery-ui.min.js') }}"></script>
   <script src="{{ asset('admin_assets/dist/js/adminlte.min.js') }}"></script>
-
 
 
   {{ $script }}

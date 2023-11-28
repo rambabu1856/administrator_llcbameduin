@@ -46,22 +46,21 @@ class SelectBox extends Controller
 
   public function getAcademicYearFromGradeAndBatch(Request $request)
   {
-    $academicYear = AcademicYear::with('year')->with('grade')->get();
 
-    $fromAcademicYear = $academicYear->where('course_id', $request->courseId)->where('batch_id', $request->batchId)->where('grade_id', $request->gradeId)->first();
 
-    $toAcademicYear = $academicYear->where('course_id', $request->courseId)->where('batch_id', $request->batchId)->where('grade_id', (int)$request->gradeId + 1)->first();
+
+
+    $academicYear = AcademicYear::with('year')->with('grade')->where('course_id', $request->courseId)->where('batch_id', $request->batchId)->where('grade_id', $request->gradeId)->first();
 
     $year = [];
 
-    $year['fromAcademicYearId'] = $fromAcademicYear->id;
-    $year['fromAcademicYearTitle'] = $fromAcademicYear->year->title;
-
-    $year['toAcademicYearId'] = $toAcademicYear->id;
-    $year['toAcademicYearTitle'] = $toAcademicYear->year->title;
-
-    $year['toGradeId'] = $toAcademicYear->grade->id;
-    $year['toGradeTitle'] = $toAcademicYear->grade->title;
+    if (!empty($academicYear)) {
+      $year['fromAcademicYearId'] = $academicYear->id;
+      $year['fromAcademicYearTitle'] = $academicYear->year->title;
+      $year['isActive'] = 1; // TRUE
+    } else {
+      $year['isActive'] = 0; // False
+    }
 
     return $year;
   }

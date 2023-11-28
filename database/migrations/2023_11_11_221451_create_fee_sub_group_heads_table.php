@@ -22,8 +22,8 @@ return new class extends Migration
             $table->foreignId('examination_fee_group_id')->nullable()->constrained('examination_fee_groups')->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->string('title', 100);
+            $table->decimal('amount', 10, 2)->nullable()->default(0);
             $table->boolean('is_active')->default(0);
-
             $table->timestamps();
         });
     }

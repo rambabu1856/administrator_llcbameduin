@@ -12,11 +12,15 @@
       <div class="container-fluid">
 
         {{-- SEARCH FORM --}}
-        <x-card.card-heading heading="Filter" name="">
+        <x-card.card-heading heading="Set Fee for Current Academic Year" name="">
 
           <x-form.form action="" method="POST" name="searchForm">
 
             <x-card.card-body>
+              <div class="row mb-3">
+                <small class="text-danger">Note: First Create Academic Year for the class then Proceed if found
+                  error. </small>
+              </div>
 
               <div class="row">
 
@@ -38,16 +42,6 @@
 
                 <x-form.select2 grid="col-md-2" lblClass="required" lblText="Academic Year" name="cmbFromAcademicYear"
                   :options="[]">
-                </x-form.select2>
-              </div>
-              <div class="row">
-
-                <x-form.select2 grid="col-md-2 offset-md-6" lblClass="required" lblText="Set Fee For Class"
-                  name="cmbToGrade" :options="[]">
-                </x-form.select2>
-
-                <x-form.select2 grid="col-md-2" lblClass="required" lblText="Set Fee For Academic Year"
-                  name="cmbToAcademicYear" :options="[]">
                 </x-form.select2>
 
 
@@ -133,6 +127,10 @@
 
         });
 
+        // $(document).on("change", "#cmbBatch", function() {
+        //   $('#cmbFromGrade').val(null).trigger('change');
+        // })
+
         $(document).on("change", "#cmbFromGrade", function() {
 
           courseId = $('option:selected', '#cmbCourse').val();
@@ -157,34 +155,16 @@
             success: function(response) {
               $('.loading').hide();
               console.log(response);
-
-              $('#cmbFromAcademicYear').append('<option value=' + response
-                .fromAcademicYearId + ' selected>' + response
-                .fromAcademicYearTitle + '</option>');
-
-
-              // Below mentioned Selectd options Used to Create Fee Structure
-              $('#cmbToGrade').append('<option value=' + response.toGradeId +
-                ' selected>' + response.toGradeTitle + '</option>');
-
-
-              $('#cmbToAcademicYear').append('<option value=' + response
-                .toAcademicYearId + ' selected>' + response
-                .toAcademicYearTitle + '</option>');
-
-              // This set attribute to Disable to avouid error and keystrokes;
-              $('#cmbFromAcademicYear').val(response.fromAcademicYearId).trigger(
-                'change');
-              $("#cmbFromAcademicYear").prop("disabled", true);
-
-              $('#cmbToGrade').val(response.toGradeId).trigger('change');
-              $("#cmbToGrade").prop("disabled", true);
-
-              $('#cmbToAcademicYear').val(response.toAcademicYearId).trigger(
-                'change');
-              $("#cmbToAcademicYear").prop("disabled", true);
-
-
+              if (response.isActive == 1) {
+                $('#cmbFromAcademicYear').append('<option value=' + response
+                  .fromAcademicYearId + ' selected>' + response
+                  .fromAcademicYearTitle + '</option>');
+                $('#cmbFromAcademicYear').val(response.fromAcademicYearId).trigger(
+                  'change');
+                $("#cmbFromAcademicYear").prop("disabled", true);
+              } else {
+                toastr.error("Error: Check Academic Year");
+              }
 
             }
           });
@@ -192,10 +172,15 @@
         });
 
         $('#btnSearch').on('click', function() {
+
+          // alert($('#cmbFeeGroupHead').val());
+
           $.ajax({
-            type: "POST",
+            type: "GET",
             url: "{{ route('admin.fee_structure.create') }}",
-            data: "data",
+            data: {
+              feeGroupHeadId: $('#cmbFeeGroupHead').val()
+            },
             dataType: "json",
             success: function(response) {
               console.log(response);

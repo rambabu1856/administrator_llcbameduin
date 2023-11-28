@@ -84,7 +84,11 @@ class FeeStructureController extends Controller
     //         echo $feeStructure->name;
     //     }
     // }
-    dd($request->all());
+
+    $model = FeeSubGroupHead::where('fee_group_head_id', $request->feeGroupHeadId)->get();
+
+    dd($model);
+    return $model;
   }
 
 
