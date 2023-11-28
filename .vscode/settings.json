@@ -1,9 +1,9 @@
 {
-  "editor.fontSize": 18,
-  "editor.fontFamily": "FiraCode-Retina",
+  "editor.fontSize": 15,
+  "editor.fontFamily": "Fira Code",
+  "editor.fontLigatures": true,
   // "editor.fontLigatures": true,
   "editor.fontWeight": "400",
-  "editor.fontLigatures": "'calt', 'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'zero', 'onum'",
   "editor.formatOnSave": true,
   "editor.tabSize": 2,
   "editor.renderWhitespace": "trailing",
@@ -12,4 +12,9 @@
   "terminal.integrated.fontWeight": 500,
   "terminal.integrated.fontFamily": "'FiraCode-Retina', monospace",
   "terminal.integrated.letterSpacing": 1,
-}
+  "auto-rename-tag.activationOnLanguage": [
+    "php",
+    "javascript",
+    "html"
+  ]
+},
