@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin\FeeManagement;
 
+use App\Models\Select\Grade;
 use Illuminate\Http\Request;
+use App\Models\Select\Course;
 use App\Http\Controllers\Controller;
 use App\Models\StudentManagement\Student;
 use App\Models\FeeManagement\FeeGroupHead;
@@ -11,7 +13,14 @@ use App\Models\FeeManagement\FeeSubGroupHead;
 
 class FeeStructureController extends Controller
 {
+    protected $fee_group_head, $course, $grade;
 
+    public function __construct()
+    {
+        $this->fee_group_head = FeeGroupHead::get();
+        $this->course = Course::get();
+        $this->grade = Grade::get();
+    }
 
 
     public function getEligibleFee(Request $request)
@@ -52,46 +61,6 @@ class FeeStructureController extends Controller
         return $feeStructure;
     }
 
-
-
-    // public function getEligibleFee(Request $request)
-    // {
-    //     $feeSubGroupHeads = FeeStructure::with('feeSubGroupHead')
-    //         ->with('feeGroupHead')
-    //         ->with('batch')
-    //         ->where('course_id', $request->courseId)
-    //         ->where('batch_id', $request->batchId)
-    //         ->where('grade_id', $request->gradeId)
-    //         ->get();
-
-
-    //         foreach ($admission_fees as $key => $item) {
-
-    //             if ($data->getReservationCategory->reservation_group_id == 3 && $item->fee_group_heads_id == 1) {
-    //               unset($admission_fees[$key]);
-    //             }
-
-    //             if ($data->getReservationCategory->reservation_group_id == 3 && $item->fee_group_heads_id == 2) {
-    //               unset($admission_fees[$key]);
-    //             }
-
-    //             if ($data->gender_id > 1 && $item->fee_group_heads_id == 2) {
-    //               unset($admission_fees[$key]);
-    //             }
-
-    //             if ($data->community_id < 3 && $item->fee_group_heads_id == 2) {
-    //               unset($admission_fees[$key]);
-    //             }
-
-    //             // if ($data->getMigration->oubu_category_id == 2 && $item->fee_group_heads_id == 18) {
-    //             //   unset($admission_fees[$key]);
-    //             // }
-    //     return $feeSubGroupHeads;
-    // }
-
-
-
-
     public function index()
     {
 
@@ -103,6 +72,12 @@ class FeeStructureController extends Controller
         //         echo $feeStructure->name;
         //     }
         // }
+
+        $fee_group_head = $this->fee_group_head;
+        $course = $this->course;
+        $grade = $this->grade;
+
+        return view('dashboard.admin.FeeManagement.FeeStructure.FeeStructure', compact('fee_group_head', 'course', 'grade'));
     }
 
 

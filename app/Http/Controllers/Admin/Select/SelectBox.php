@@ -11,109 +11,137 @@ use App\Models\Accounts\Transaction;
 
 class SelectBox extends Controller
 {
-    public function getBatch(Request $request)
-    {
-        $batch = Batch::where('course_id', $request->id)->orderBy('title', 'desc')->get();
-        return $batch;
+  public function getBatch(Request $request)
+  {
+    $batch = Batch::where('course_id', $request->id)->orderBy('title', 'desc');
+
+    if ($request->isActive) {
+      $batch = $batch->where('is_active', true);
     }
 
-    public function promoteStudentFromGrade(Request $request)
-    {
-        $maxGrade = AcademicYear::max('grade_id');
-        // From Grade
-        $fromGrades = AcademicYear::with('grade')
-            ->where('batch_id', $request->batchId)
-            ->where('grade_id', '<', (int)$maxGrade)->get();
-        return $fromGrades;
+    $batch = $batch->get();
+    return $batch;
+  }
+
+  public function promoteStudentFromGrade(Request $request)
+  {
+    $maxGrade = AcademicYear::max('grade_id');
+    // From Grade
+    $fromGrades = AcademicYear::with('grade')
+      ->where('batch_id', $request->batchId)
+      ->where('grade_id', '<', (int)$maxGrade)->get();
+    return $fromGrades;
+  }
+
+  public function promoteStudentToGrade(Request $request)
+  {
+
+    // To Grade
+    $toGrades = AcademicYear::with('grade')
+      ->where('batch_id', $request->batchId)
+      ->where('grade_id', (int)$request->gradeId + 1)->get();
+
+    return $toGrades;
+  }
+
+  public function getAcademicYearFromGradeAndBatch(Request $request)
+  {
+    $academicYear = AcademicYear::with('year')->with('grade')->get();
+
+    $fromAcademicYear = $academicYear->where('course_id', $request->courseId)->where('batch_id', $request->batchId)->where('grade_id', $request->gradeId)->first();
+
+    $toAcademicYear = $academicYear->where('course_id', $request->courseId)->where('batch_id', $request->batchId)->where('grade_id', (int)$request->gradeId + 1)->first();
+
+    $year = [];
+
+    $year['fromAcademicYearId'] = $fromAcademicYear->id;
+    $year['fromAcademicYearTitle'] = $fromAcademicYear->year->title;
+
+    $year['toAcademicYearId'] = $toAcademicYear->id;
+    $year['toAcademicYearTitle'] = $toAcademicYear->year->title;
+
+    $year['toGradeId'] = $toAcademicYear->grade->id;
+    $year['toGradeTitle'] = $toAcademicYear->grade->title;
+
+    return $year;
+  }
+
+  public function getAcademicYear(Request $request)
+  {
+    $academicYear = AcademicYear::with('year')
+      ->where('batch_id', $request->batchId)->get();
+    return $academicYear;
+  }
+
+
+  public function getGradeFromAcademicYear(Request $request)
+
+  {
+    $academicYear = AcademicYear::with('grade')->where('batch_id', $request->batchId)
+      ->where('id', $request->academicYearId)
+      ->get();
+
+    return $academicYear;
+  }
+
+  public function getSbcReferenceNumber(Request $request)
+  {
+
+    if ($request->feeReceiptFromDate && $request->feeReceiptToDate) {
+      $from = Carbon::createFromFormat('d/m/Y', $request->feeReceiptFromDate)->format('Y-m-d');
+      $to = Carbon::createFromFormat('d/m/Y', $request->feeReceiptToDate)->format('Y-m-d');
+    } else {
+      $from = $request->feeReceiptFromDate;
+      $to = $request->feeReceiptToDate;
     }
 
-    public function promoteStudentToGrade(Request $request)
-    {
-
-        // To Grade
-        $toGrades = AcademicYear::with('grade')
-            ->where('batch_id', $request->batchId)
-            ->where('grade_id', (int)$request->gradeId + 1)->get();
-
-        return $toGrades;
-    }
-
-    public function getAcademicYear(Request $request)
-    {
-        $academicYear = AcademicYear::with('year')
-            ->where('batch_id', $request->batchId)->get();
-        return $academicYear;
-    }
+    //1= 'Admission Fee' 2.  Examination Fee etc...
+    $feeGroup =    $request->feeGroup;
 
 
-    public function getAcademicYearGrade(Request $request)
+    if ($request->sbcRefenceNumber) {
 
-    {
-        $academicYear = AcademicYear::with('grade')->where('batch_id', $request->batchId)
-            ->where('id', $request->academicYearId)
-            ->get();
+      $scbReferenceNumbers = Transaction::select('receipt_amount', 'transaction_date')
+        ->where('transaction_reference_no', 'LIKE', $request->sbcRefenceNumber);
 
-        return $academicYear;
-    }
+      return $scbReferenceNumbers->first();
+    } else {
 
-    public function getSbcReferenceNumber(Request $request)
-    {
+      $transaction = Transaction::where(function ($q) use ($request) {
+        $q->where('student_name', 'like', '%' . $request->subStringOfName . '%')
+          ->orWhere('enrollment_number', 'like', '%' . $request->enrollmentNumber . '%');
+      })->where('mode_of_transaction_id', 2);
 
-        if ($request->feeReceiptFromDate && $request->feeReceiptToDate) {
-            $from = Carbon::createFromFormat('d/m/Y', $request->feeReceiptFromDate)->format('Y-m-d');
-            $to = Carbon::createFromFormat('d/m/Y', $request->feeReceiptToDate)->format('Y-m-d');
-        } else {
-            $from = $request->feeReceiptFromDate;
-            $to = $request->feeReceiptToDate;
+      if ($transaction->exists()) {
+        // Fetch Single SBC
+        $scbReferenceNumbers = $transaction->where('is_sbc_used', 0);
+
+        if ($feeGroup > 0) {
+          $scbReferenceNumbers = $scbReferenceNumbers->where('fee_group_head_id', $feeGroup);
+        }
+        if ($from) {
+          $scbReferenceNumbers = $scbReferenceNumbers->whereBetween('transaction_date', [$from, $to]);
         }
 
-        //1= 'Admission Fee' 2.  Examination Fee etc...
-        $feeGroup =    $request->feeGroup;
+        // $scbReferenceNumbers = $scbReferenceNumbers;
+      } else {
 
+        // Fetch All SBC
+        $scbReferenceNumbers = Transaction::where('mode_of_transaction_id', 2)
+          ->where('is_sbc_used', 0);
 
-        if ($request->sbcRefenceNumber) {
-
-            $scbReferenceNumbers = Transaction::select('receipt_amount', 'transaction_date')
-                ->where('transaction_reference_no', 'LIKE', $request->sbcRefenceNumber);
-
-            return $scbReferenceNumbers->first();
-        } else {
-
-            $transaction = Transaction::where(function ($q) use ($request) {
-                $q->where('student_name', 'like', '%' . $request->subStringOfName . '%')
-                    ->orWhere('enrollment_number', 'like', '%' . $request->enrollmentNumber . '%');
-            })->where('mode_of_transaction_id', 2);
-
-            if ($transaction->exists()) {
-                // Fetch Single SBC
-                $scbReferenceNumbers = $transaction->where('is_sbc_used', 0);
-
-                if ($feeGroup > 0) {
-                    $scbReferenceNumbers = $scbReferenceNumbers->where('fee_group_head_id', $feeGroup);
-                }
-                if ($from) {
-                    $scbReferenceNumbers = $scbReferenceNumbers->whereBetween('transaction_date', [$from, $to]);
-                }
-
-                // $scbReferenceNumbers = $scbReferenceNumbers;
-            } else {
-
-                // Fetch All SBC
-                $scbReferenceNumbers = Transaction::where('mode_of_transaction_id', 2)
-                    ->where('is_sbc_used', 0);
-
-                if ($feeGroup > 0) {
-                    $scbReferenceNumbers = $scbReferenceNumbers->where('fee_group_head_id', $feeGroup);
-                }
-
-                if ($from) {
-                    $scbReferenceNumbers = $scbReferenceNumbers->whereBetween('transaction_date', [$from, $to]);
-                }
-
-                // $scbReferenceNumbers = $scbReferenceNumbers;
-            }
-
-            return $scbReferenceNumbers->get();
+        if ($feeGroup > 0) {
+          $scbReferenceNumbers = $scbReferenceNumbers->where('fee_group_head_id', $feeGroup);
         }
+
+        if ($from) {
+          $scbReferenceNumbers = $scbReferenceNumbers->whereBetween('transaction_date', [$from, $to]);
+        }
+
+        // $scbReferenceNumbers = $scbReferenceNumbers;
+      }
+
+      return $scbReferenceNumbers->get();
     }
+  }
 }
