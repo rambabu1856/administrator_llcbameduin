@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\FeeManagement;
 
 use App\Http\Controllers\Controller;
+use App\Models\Select\AcademicYear;
 use Illuminate\Http\Request;
 
 class FeeGroupHeadController extends Controller
@@ -14,7 +15,7 @@ class FeeGroupHeadController extends Controller
      */
     public function index()
     {
-        dd('group_head');
+       
     }
 
     /**

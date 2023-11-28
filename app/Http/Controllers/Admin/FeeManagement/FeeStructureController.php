@@ -10,6 +10,7 @@ use App\Models\StudentManagement\Student;
 use App\Models\FeeManagement\FeeGroupHead;
 use App\Models\FeeManagement\FeeStructure;
 use App\Models\FeeManagement\FeeSubGroupHead;
+use App\Models\Select\AcademicYear;
 
 class FeeStructureController extends Controller
 {
@@ -64,15 +65,6 @@ class FeeStructureController extends Controller
   public function index()
   {
 
-    // $feeGroup = FeeGroupHead::with('feeSubGroupHeads.feeStructures')->find(1);
-    // foreach ($feeGroup->feeSubGroups as $feeSubGroup) {
-    //     echo $feeSubGroup->name;
-
-    //     foreach ($feeSubGroup->feeStructures as $feeStructure) {
-    //         echo $feeStructure->name;
-    //     }
-    // }
-
     $fee_group_head = $this->fee_group_head;
     $course = $this->course;
     $grade = $this->grade;
@@ -83,7 +75,16 @@ class FeeStructureController extends Controller
 
   public function create(Request $request)
   {
-    Admi
+
+    // $feeGroup = FeeGroupHead::with('feeSubGroupHeads.feeStructures')->find(1);
+    // foreach ($feeGroup->feeSubGroups as $feeSubGroup) {
+    //     echo $feeSubGroup->name;
+
+    //     foreach ($feeSubGroup->feeStructures as $feeStructure) {
+    //         echo $feeStructure->name;
+    //     }
+    // }
+    dd($request->all());
   }
 
 

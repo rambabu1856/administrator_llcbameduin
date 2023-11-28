@@ -1,0 +1,16 @@
+{
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs": true,
+    "editor.fontSize": 16,
+    "bladeFormatter.format.indentSize": 2,
+    "terminal.integrated.fontSize": 14,
+    "terminal.integrated.fontFamily": "'Fira Code', monospace",
+    "terminal.integrated.letterSpacing": 1,
+    "editor.fontFamily": "Fira Code",
+    "editor.fontLigatures": true,
+    "editor.tabSize": 2,
+    "editor.wordWrap": "on",
+    "editor.renderWhitespace": "none",
+}
