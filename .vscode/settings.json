@@ -8,10 +8,10 @@
   "editor.tabSize": 2,
   "editor.renderWhitespace": "trailing",
   "files.autoSave": "afterDelay",
-  "terminal.integrated.fontSize": 18,
+  "terminal.integrated.fontSize": 15,
   "terminal.integrated.fontWeight": 500,
   "terminal.integrated.fontFamily": "'FiraCode-Retina', monospace",
-  "terminal.integrated.letterSpacing": 1,
+
   "auto-rename-tag.activationOnLanguage": [
     "php",
     "javascript",
