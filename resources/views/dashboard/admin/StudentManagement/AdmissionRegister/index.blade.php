@@ -37,11 +37,10 @@
                 <x-form.select2 grid="col-md-3" lblClass="required" lblText="Select Batch" name="cmbBatch"
                   :options="[]"></x-form.select2>
 
-                <x-form.select2 grid="col-md-2" lblClass="required" lblText="Class" name="cmbFromGrade"
-                  :options="$grade">
+                <x-form.select2 grid="col-md-2" lblClass="required" lblText="Class" name="cmbGrade" :options="[]">
                 </x-form.select2>
 
-                <x-form.select2 grid="col-md-2" lblClass="required" lblText="Academic Year" name="cmbFromAcademicYear"
+                <x-form.select2 grid="col-md-2" lblClass="required" lblText="Academic Year" name="cmbAcademicYear"
                   :options="[]">
                 </x-form.select2>
 
@@ -190,44 +189,76 @@
 
         });
 
-        $(document).on("change", "#cmbFromGrade", function() {
+        $(document).on("change", "#cmbBatch", function() {
+
+          courseId = $('option:selected', '#cmbCourse').val();
+          batchId = $('option:selected', '#cmbBatch').val();
+
+          if (batchId > 0) {
+            $.ajax({
+              type: "POST",
+              url: "{{ url('admin/getGrade') }}",
+              data: {
+                courseId: courseId,
+                batchId: batchId,
+              },
+              async: true,
+              cache: false,
+              dataType: 'json',
+              beforeSend: function() {
+                $('#cmbGrade').empty();
+                $('.loading').show();
+              },
+              success: function(response) {
+                $('.loading').hide();
+                $.each(response, function(idx, val) {
+                  $('#cmbGrade').append('<option value=' + val.grade.id + ' >' + val.grade.title +
+                    '</option>');
+                });
+                $('#cmbGrade').val(null).trigger('change')
+              }
+            });
+          }
+        })
+
+        $(document).on("change", "#cmbGrade", function() {
 
           courseId = $('option:selected', '#cmbCourse').val();
           batchId = $('option:selected', '#cmbBatch').val();
           gradeId = $('option:selected', this).val();
+          if (gradeId > 0) {
+            $.ajax({
+              type: "POST",
+              url: "{{ url('admin/getAcademicYearFromGradeAndBatch') }}",
+              data: {
 
-          $.ajax({
-            type: "POST",
-            url: "{{ url('admin/getAcademicYearFromGradeAndBatch') }}",
-            data: {
+                courseId: courseId,
+                batchId: batchId,
+                gradeId: gradeId,
 
-              courseId: courseId,
-              batchId: batchId,
-              gradeId: gradeId,
+              },
+              beforeSend: function() {
+                $("#tblFeeStructure tbody").empty();
+                $('#cmbAcademicYear').empty();
+                // $('.loading').show();
+              },
+              success: function(response) {
+                $('.loading').hide();
 
-            },
-            beforeSend: function() {
-              $("#tblFeeStructure tbody").empty();
-              $('#cmbFromAcademicYear').empty();
-              // $('.loading').show();
-            },
-            success: function(response) {
-              $('.loading').hide();
-              console.log(response);
-              if (response.isActive == 1) {
-                $('#cmbFromAcademicYear').append('<option value=' + response
-                  .fromAcademicYearId + ' selected>' + response
-                  .fromAcademicYearTitle + '</option>');
-                $('#cmbFromAcademicYear').val(response.fromAcademicYearId).trigger(
-                  'change');
-                $("#cmbFromAcademicYear").prop("disabled", true);
-              } else {
-                toastr.error("Error: Check Academic Year");
+                if (response.isActive == 1) {
+                  $('#cmbAcademicYear').append('<option value=' + response
+                    .fromAcademicYearId + ' selected>' + response
+                    .fromAcademicYearTitle + '</option>');
+                  $('#cmbAcademicYear').val(response.fromAcademicYearId).trigger(
+                    'change');
+                  // $("#cmbAcademicYear").prop("disabled", true);
+                } else if (response.isActive == 0) {
+                  toastr.error("Error: Check Academic Year");
+                }
+
               }
-
-            }
-          });
-
+            });
+          }
         });
 
         $('#btnSearch').on('click', function(e) {
@@ -236,8 +267,6 @@
 
           if ($("#cmbBatch").val() == null) {
             toastr.error("Please Select Batch")
-          } else if ($("#cmbAcademicYear").val() == null) {
-            toastr.error("Please Select Academic Year")
           } else if ($("#cmbGrade").val() == null) {
             toastr.error("Please Select Class")
           } else {
@@ -245,7 +274,6 @@
           }
 
         });
-
 
         $(document).on("click", ".btnEditProfile", function(e) {
           e.preventDefault();
@@ -332,7 +360,6 @@
           })
 
         });
-
 
         $(document).on("click", ".btnEditAdmissionDate", function(e) {
           e.preventDefault();

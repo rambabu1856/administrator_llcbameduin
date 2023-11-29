@@ -22,6 +22,13 @@ class SelectBox extends Controller
     $batch = $batch->get();
     return $batch;
   }
+  public function getGrade(Request $request)
+  {
+    $academicYear = AcademicYear::with('grade')->where('batch_id', $request->batchId)
+      ->get();
+
+    return $academicYear;
+  }
 
   public function promoteStudentFromGrade(Request $request)
   {
@@ -47,22 +54,22 @@ class SelectBox extends Controller
   public function getAcademicYearFromGradeAndBatch(Request $request)
   {
 
+    if (!empty($request->gradeId)) {
 
+      $academicYear = AcademicYear::with('year')->with('grade')->where('course_id', $request->courseId)->where('batch_id', $request->batchId)->where('grade_id', $request->gradeId)->first();
 
+      $year = [];
+      // dd(!empty($request->gradeId));
 
-    $academicYear = AcademicYear::with('year')->with('grade')->where('course_id', $request->courseId)->where('batch_id', $request->batchId)->where('grade_id', $request->gradeId)->first();
-
-    $year = [];
-
-    if (!empty($academicYear)) {
-      $year['fromAcademicYearId'] = $academicYear->id;
-      $year['fromAcademicYearTitle'] = $academicYear->year->title;
-      $year['isActive'] = 1; // TRUE
-    } else {
-      $year['isActive'] = 0; // False
+      if (!empty($academicYear)) {
+        $year['fromAcademicYearId'] = $academicYear->id;
+        $year['fromAcademicYearTitle'] = $academicYear->year->title;
+        $year['isActive'] = 1; // TRUE
+      } else {
+        $year['isActive'] = 0; // False
+      }
+      return $year;
     }
-
-    return $year;
   }
 
   public function getAcademicYear(Request $request)

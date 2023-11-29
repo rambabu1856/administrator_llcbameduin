@@ -60,11 +60,6 @@ class AdmissionRegisterController extends Controller
 			$batch = $this->batch;
 		}
 
-		if ($batch != []) {
-			$academicYear = $this->academicYear->whereIn('batch_id', $request->cmbBatch);
-		} else {
-			$academicYear = [];
-		}
 
 		$grade = $this->grade;
 
@@ -81,7 +76,6 @@ class AdmissionRegisterController extends Controller
 				'course',
 				'batch',
 				'grade',
-				'academicYear',
 				'gender',
 				'community',
 				'religion',
@@ -92,7 +86,7 @@ class AdmissionRegisterController extends Controller
 
 	public function create(Request $request)
 	{
-
+		// dd($request->all());
 		$studentProfileData = Student::with('campus')
 			->with('department')
 			->with('course')

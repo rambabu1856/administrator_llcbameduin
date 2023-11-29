@@ -42,6 +42,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     // SELECT BOX
     Route::POST('getBatch', [SelectBox::class, 'getBatch'])->name('getBatch');
+    Route::POST('getGrade', [SelectBox::class, 'getGrade'])->name('getGrade');
+
     Route::POST('promoteStudentFromGrade ', [SelectBox::class, 'promoteStudentFromGrade'])->name('promoteStudentFromGrade');
     Route::POST('promoteStudentToGrade ', [SelectBox::class, 'promoteStudentToGrade'])->name('promoteStudentToGrade');
     Route::POST('getAcademicYear', [SelectBox::class, 'getAcademicYear'])->name('getAcademicYear');
@@ -49,7 +51,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::POST('getGradeFromAcademicYear', [SelectBox::class, 'getGradeFromAcademicYear'])->name('getGradeFromAcademicYear');
     Route::POST('getSbcReferenceNumber', [SelectBox::class, 'getSbcReferenceNumber'])->name('getSbcReferenceNumber');
 
-        // STUDENT MANAGEMENT
+    // STUDENT MANAGEMENT
     Route::resource('/student_profile', StudentProfileController::class);
     Route::resource('/student_admission_register', AdmissionRegisterController::class);
     Route::resource('/student_promotion', StudentPromotionController::class);

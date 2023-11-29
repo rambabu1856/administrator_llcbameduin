@@ -23,6 +23,6 @@ class AcademicYear extends Model
 
     public function grade()
     {
-        return $this->hasOne(Grade::class, 'id', 'grade_id');
+        return $this->belongsTo(Grade::class, 'grade_id');
     }
 }
