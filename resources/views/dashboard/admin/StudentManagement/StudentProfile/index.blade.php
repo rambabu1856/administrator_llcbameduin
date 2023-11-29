@@ -1,6 +1,6 @@
 <x-layouts.administrator.layout>
   <x-slot name="css">
-    <link rel="stylesheet" href="{{ asset('admin_assets/plugins/jquery_ui_info/jquery-ui.min.css') }}">
+
   </x-slot>
 
   <x-slot name="content">
@@ -21,7 +21,7 @@
 
         {{-- SEARCH FORM --}}
 
-        <x-card.card-heading heading="Filter" name="{{ headingSearchForm }}">
+        <x-card.card-heading heading="Filter" name="headingSearchForm">
 
           <x-form.form action="" method="POST" name="searchForm">
 
@@ -313,7 +313,7 @@
   </x-slot>
 
   <x-slot name="script">
-    <script src="{{ asset('admin_assets/plugins/jquery_ui_info/jquery-ui.min.js') }}"></script>
+
     <script>
       // Course Change Function
 

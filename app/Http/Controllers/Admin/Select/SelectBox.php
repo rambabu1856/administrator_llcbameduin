@@ -11,6 +11,7 @@ use App\Models\Accounts\Transaction;
 
 class SelectBox extends Controller
 {
+  //  FETCH ALL BATCH
   public function getBatch(Request $request)
   {
     $batch = Batch::where('course_id', $request->id)->orderBy('title', 'desc');
@@ -22,6 +23,8 @@ class SelectBox extends Controller
     $batch = $batch->get();
     return $batch;
   }
+
+  // FETCH ALL GRADES
   public function getGrade(Request $request)
   {
     $academicYear = AcademicYear::with('grade')->where('batch_id', $request->batchId)
@@ -30,17 +33,19 @@ class SelectBox extends Controller
     return $academicYear;
   }
 
-  public function promoteStudentFromGrade(Request $request)
-  {
-    $maxGrade = AcademicYear::max('grade_id');
-    // From Grade
-    $fromGrades = AcademicYear::with('grade')
-      ->where('batch_id', $request->batchId)
-      ->where('grade_id', '<', (int)$maxGrade)->get();
-    return $fromGrades;
-  }
+  // STUDENT PROMOTION :: FROM GRADE 
+  // public function promoteStudentFromGrade(Request $request)
+  // {
+  //   $maxGrade = AcademicYear::max('grade_id');
+  //   // From Grade
+  //   $fromGrades = AcademicYear::with('grade')
+  //     ->where('batch_id', $request->batchId)
+  //     ->where('grade_id', '<', (int)$maxGrade)->get();
+  //   return $fromGrades;
+  // }
 
-  public function promoteStudentToGrade(Request $request)
+  // STUDENT PROMOTION :: TO GRADE 
+  public function promoteToGrade(Request $request)
   {
 
     // To Grade

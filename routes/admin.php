@@ -44,8 +44,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::POST('getBatch', [SelectBox::class, 'getBatch'])->name('getBatch');
     Route::POST('getGrade', [SelectBox::class, 'getGrade'])->name('getGrade');
 
-    Route::POST('promoteStudentFromGrade ', [SelectBox::class, 'promoteStudentFromGrade'])->name('promoteStudentFromGrade');
-    Route::POST('promoteStudentToGrade ', [SelectBox::class, 'promoteStudentToGrade'])->name('promoteStudentToGrade');
+    Route::POST('promoteToGrade ', [SelectBox::class, 'promoteToGrade'])->name('promoteToGrade');
     Route::POST('getAcademicYear', [SelectBox::class, 'getAcademicYear'])->name('getAcademicYear');
     Route::POST('getAcademicYearFromGradeAndBatch', [SelectBox::class, 'getAcademicYearFromGradeAndBatch'])->name('getAcademicYearFromGradeAndBatch');
     Route::POST('getGradeFromAcademicYear', [SelectBox::class, 'getGradeFromAcademicYear'])->name('getGradeFromAcademicYear');

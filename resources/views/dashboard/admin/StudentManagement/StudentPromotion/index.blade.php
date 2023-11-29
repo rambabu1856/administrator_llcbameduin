@@ -258,7 +258,7 @@
           if (batchId > 0 && batchId != null) {
             $.ajax({
               type: "POST",
-              url: "{{ url('admin/promoteStudentFromGrade') }}",
+              url: "{{ url('admin/getGrade') }}",
               data: {
                 batchId: batchId
               },
@@ -297,7 +297,7 @@
           if (batchId > 0 && batchId != null && gradeId > 0 && gradeId != null) {
             $.ajax({
               type: "POST",
-              url: "{{ url('admin/promoteStudentToGrade') }}",
+              url: "{{ url('admin/promoteToGrade') }}",
               data: {
                 gradeId: gradeId,
                 batchId: batchId

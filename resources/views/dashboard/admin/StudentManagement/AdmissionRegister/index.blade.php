@@ -275,7 +275,7 @@
 
         });
 
-        $(document).on("click", ".btnEditProfile", function(e) {
+        $(document).on("click", ".btnShowModalAdmissionRegister", function(e) {
           e.preventDefault();
           var studentId = $(this).data('id');
 
@@ -331,7 +331,7 @@
                 '"/></td>' +
 
                 '<td>' +
-                '<button type="button" class="btn btnEditAdmissionDate" name="btnEditProfile" data-toggle="tooltip" title="Update" data-id="' +
+                '<button type="button" class="btn btnSubmitAdmissionDetails" name="btnSubmitAdmissionDetails" data-toggle="tooltip" title="Update" data-id="' +
                 v.id + '"><i class="fa-regular fa-pen-to-square"></i></button></td>' +
                 '</tr>'
               )
@@ -361,7 +361,7 @@
 
         });
 
-        $(document).on("click", ".btnEditAdmissionDate", function(e) {
+        $(document).on("click", ".btnSubmitAdmissionDetails", function(e) {
           e.preventDefault();
 
           var admissionRegisterId = $(this).data('id');
@@ -448,9 +448,9 @@
                   '<td><span class="badge badge-danger text-sm">' + is_tc_withdrawn + '</span></td>' +
                   '<td>' +
                   '<div class="btn-group">' +
-                  '<button type="button" class="btn bg-indigo btnViewProfile" name="btnEditProfile" data-toggle="tooltip" title="View" data-id="' +
-                  v.id + '"><i class="fa-regular fa-pen-to-square"></i></button>' +
-                  '<button type="button" class="btn bg-pink btnEditProfile" name="btnEditProfile" data-toggle="tooltip" title="Edit" data-id="' +
+                  '<button type="button" class="btn bg-indigo btnViewProfile" name="btnviewProfile" data-toggle="tooltip" title="View" data-id="' +
+                  v.id + '"><i class="fa-regular fa-eye"></i></button>' +
+                  '<button type="button" class="btn bg-pink btnShowModalAdmissionRegister" name="btnShowModalAdmissionRegister" data-toggle="tooltip" title="Edit" data-id="' +
                   v.id + '"><i class="fa-regular fa-pen-to-square"></i></button>' +
                   '</div>' +
                   '</td>' +
