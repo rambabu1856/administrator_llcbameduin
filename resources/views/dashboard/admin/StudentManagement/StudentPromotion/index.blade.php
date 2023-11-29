@@ -27,15 +27,15 @@
               <div class="row">
 
                 <x-form.select2 grid="col-md-3" lblClass="required" lblText="Select Course" name="cmbCourse"
-                  :options="$course" reqired></x-form.select2>
+                  :options="$course"></x-form.select2>
 
                 <x-form.select2 grid="col-md-3" lblClass="required" lblText="Select Batch" name="cmbBatch"
                   :options="[]"></x-form.select2>
 
-                <x-form.select2 grid="col-md-3" lblClass="required" lblText="Select From Class" name="cmbFromGrade"
-                  :options="[]"></x-form.select2>
+                <x-form.select2 grid="col-md-3" lblClass="required" lblText="Select Promote From Class"
+                  name="cmbFromGrade" :options="[]"></x-form.select2>
 
-                <x-form.select2 grid="col-md-3" lblClass="required" lblText="Select To Class" name="cmbToGrade"
+                <x-form.select2 grid="col-md-3" lblClass="required" lblText="Promote To Class" name="cmbToGrade"
                   :options="[]"></x-form.select2>
 
                 {{-- <x-form.select2 grid="col-md-3" lblClass="required" lblText="Select Academic Year"
@@ -307,7 +307,9 @@
                 $('.loading').show();
               },
               success: function(response) {
-
+                if (response.length === 0) {
+                  toastr.error('Promote to Class not found. Check Academic Year for Class/Grade');
+                }
                 $.each(response, function(i, v) {
 
                   $('#cmbToGrade').append('<option value="' + v.grade.id + '" selected >' + v.grade
@@ -337,12 +339,10 @@
             toastr.error("Please Select Course")
           } else if ($("#cmbBatch").val() == null) {
             toastr.error("Please Select Batch")
-            //   } else if ($("#cmbAcademicYear").val() == null) {
-            //     toastr.error("Please Select Academic Year")
           } else if ($("#cmbFromGrade").val() == null) {
             toastr.error("Please Select From Class")
           } else if ($("#cmbToGrade").val() == null) {
-            toastr.error("Please Select To Class")
+            toastr.error("'Promote to Class not found. Check Academic Year for Class/Grade'")
           } else {
             fetchDataToTable()
           }
